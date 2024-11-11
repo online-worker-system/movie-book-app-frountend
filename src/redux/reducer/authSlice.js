@@ -11,14 +11,15 @@ export const sendOtpApi = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(SENDOTP_API, { email });
-      if (response.data.success) {
-        toast.success("OTP Sent Successfully");
-        return response.data;
-      } else {
+
+      if (!response.data.success) {
         throw new Error(response.data.message);
       }
+
+      toast.success("OTP Sent Successfully");
+      return response.data;
     } catch (error) {
-      toast.error("Could Not Send OTP");
+      toast.error(error.response.data.message);
       return rejectWithValue(error.message || "Error sending OTP");
     }
   }
@@ -51,14 +52,15 @@ export const signUpApi = createAsyncThunk(
         confirmPassword,
         otp,
       });
-      if (response.data.success) {
-        toast.success("Signup Successful");
-        return response.data;
-      } else {
+
+      if (!response.data.success) {
         throw new Error(response.data.message);
       }
+
+      toast.success("Signup Successfull");
+      return response.data;
     } catch (error) {
-      toast.error("Signup Failed");
+      toast.error(error.response.data.message);
       return rejectWithValue(error.message || "Error during signup");
     }
   }

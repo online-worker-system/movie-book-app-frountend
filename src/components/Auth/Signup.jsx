@@ -75,6 +75,7 @@ function Signup() {
 
     dispatch(setSignupData(signupData));
     const resultAction = await dispatch(sendOtpApi(formData.email, navigate));
+    console.log("sugn: ", resultAction);
 
     if (sendOtpApi.fulfilled.match(resultAction)) {
       console.log("evething is woring");
@@ -82,8 +83,6 @@ function Signup() {
     } else {
       console.log("OTP not sent:", resultAction.payload || resultAction.error);
     }
-
-    toast.success("OTP has been sent to your email");
 
     // Reset the form
     setFormData({
