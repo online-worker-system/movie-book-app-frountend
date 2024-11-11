@@ -8,7 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import './index.css';
 function App() {
   return (
-    <div>
+    <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
     <div>
     <Toaster position="top-right" />
     </div>
