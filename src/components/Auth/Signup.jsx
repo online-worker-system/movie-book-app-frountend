@@ -23,7 +23,15 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { userName, lastName, email, contactNumber, password, confirmPassword, accountType } = formData;
+  const {
+    userName,
+    lastName,
+    email,
+    contactNumber,
+    password,
+    confirmPassword,
+    accountType,
+  } = formData;
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
@@ -42,7 +50,7 @@ function Signup() {
     return regex.test(number);
   };
 
-  const handleOnSubmit =async (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
@@ -66,12 +74,11 @@ function Signup() {
     };
 
     dispatch(setSignupData(signupData));
-    const resultAction=await dispatch(sendOtpApi(formData.email, navigate));
+    const resultAction = await dispatch(sendOtpApi(formData.email, navigate));
 
-    
     if (sendOtpApi.fulfilled.match(resultAction)) {
-      console.log("evething is woring")
-      navigate('/otp');  // Redirect upon successful login
+      console.log("evething is woring");
+      navigate("/otp"); // Redirect upon successful login
     } else {
       console.log("OTP not sent:", resultAction.payload || resultAction.error);
     }

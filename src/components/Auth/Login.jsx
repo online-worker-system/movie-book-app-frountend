@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginApi } from "../../redux/reducer/authSlice";  // Adjust the path to where the slice is
+import { loginApi } from "../../redux/reducer/authSlice"; // Adjust the path to where the slice is
 
 function Login() {
   const navigate = useNavigate();
@@ -23,14 +23,15 @@ function Login() {
   };
 
   const handleOnSubmit = async (e) => {
-    e.preventDefault();  // Prevent page reload
-    console.log("Form submission started");  // Debugging line
+    e.preventDefault(); // Prevent page reload
+    console.log("Form submission started"); // Debugging line
 
     // Dispatch login action and wait for response
     const resultAction = await dispatch(loginApi({ email, password }));
+    console.log("ress: ", resultAction);
 
     if (loginApi.fulfilled.match(resultAction)) {
-      navigate('/dashboard');  // Redirect upon successful login
+      navigate("/dashboard"); // Redirect upon successful login
     } else {
       console.log("Login failed:", resultAction.payload || resultAction.error);
     }
@@ -55,7 +56,7 @@ function Login() {
           className="form-style w-full"
         />
       </label>
-      
+
       <label className="relative">
         <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
           Password <sup className="text-pink-200">*</sup>
@@ -80,7 +81,7 @@ function Login() {
           )}
         </span>
       </label>
-      
+
       <button
         type="submit"
         className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"

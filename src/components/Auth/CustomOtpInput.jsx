@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input"; // This is the external library
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtpApi, signUpApi } from "../../redux/reducer/authSlice"; // Corrected import
 
-function CustomOtpInput() { // Renamed component
+function CustomOtpInput() {
+  // Renamed component
   const [otp, setOtp] = useState("");
   const { signupData, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -16,16 +17,23 @@ function CustomOtpInput() { // Renamed component
     }
   }, [signupData, navigate]);
 
-  const handleVerifyAndSignup =async (e) => {
+  const handleVerifyAndSignup = async (e) => {
     e.preventDefault();
 
-
-    console.log(signupData)
+    console.log(signupData);
     if (!signupData) return; // Prevent submission if signupData is not available
 
-    const { accountType, userName, lastName, email, contactNumber, password,confirmPassword } = signupData;
+    const {
+      accountType,
+      userName,
+      lastName,
+      email,
+      contactNumber,
+      password,
+      confirmPassword,
+    } = signupData;
 
-   const resultAction=await dispatch(
+    const resultAction = await dispatch(
       signUpApi({
         otp,
         email,
@@ -40,13 +48,14 @@ function CustomOtpInput() { // Renamed component
     );
 
     if (signUpApi.fulfilled.match(resultAction)) {
-        console.log("evething is woring")
-        navigate('/');  // Redirect upon successful login
-      } else {
-        console.log("please enter correct otp:", resultAction.payload || resultAction.error);
-      }
-  
-
+      console.log("evething is woring");
+      navigate("/"); // Redirect upon successful login
+    } else {
+      console.log(
+        "please enter correct otp:",
+        resultAction.payload || resultAction.error
+      );
+    }
   };
 
   return (
