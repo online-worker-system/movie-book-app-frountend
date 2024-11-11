@@ -130,6 +130,7 @@ const authSlice = createSlice({
       })
       .addCase(loginApi.fulfilled, (state) => {
         state.isLoading = false;
+       
       })
       .addCase(loginApi.rejected, (state, action) => {
         state.isLoading = false;

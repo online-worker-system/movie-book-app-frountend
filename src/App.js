@@ -7,6 +7,9 @@ import CustomOtpInput from './components/Auth/CustomOtpInput';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 function App() {
+
+
+
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
     <div>
