@@ -64,7 +64,7 @@ function Signup() {
     }
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("Password do not match");
       return;
     }
 
@@ -84,16 +84,16 @@ function Signup() {
       console.log("OTP not sent:", resultAction.payload || resultAction.error);
     }
 
-    // Reset the form
-    setFormData({
-      userName: "",
-      lastName: "",
-      email: "",
-      contactNumber: "",
-      password: "",
-      confirmPassword: "",
-      accountType: "Viewer",
-    });
+    // // Reset the form
+    // setFormData({
+    //   userName: "",
+    //   lastName: "",
+    //   email: "",
+    //   contactNumber: "",
+    //   password: "",
+    //   confirmPassword: "",
+    //   accountType: "Viewer",
+    // });
   };
 
   return (

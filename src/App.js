@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
       <div>
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
       </div>
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>

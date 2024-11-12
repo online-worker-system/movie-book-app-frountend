@@ -26,6 +26,7 @@ const Home = () => {
   }, [dispatch]);
 
   console.log("All movies fetched", allMovies);
+
   return (
     <div>
       <NavBar />
@@ -47,7 +48,10 @@ const Home = () => {
                 </span>
                 <div className="flex items-start justify-center">
                   {movie.genres.map((genre, index) => (
-                    <div key={index} className="flex items-center justify-center text-[rgb(105,105,100)] font-[400]">
+                    <div
+                      key={index}
+                      className="flex items-center justify-center text-[rgb(105,105,100)] font-[400]"
+                    >
                       <div>{genre}</div>
                       {index !== movie.genres.length - 1 && <div>/</div>}
                     </div>
