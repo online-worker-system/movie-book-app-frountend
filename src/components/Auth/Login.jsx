@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginApi } from "../../redux/reducer/authSlice"; // Adjust the path to where the slice is
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { loginApi } from "../../redux/reducer/authSlice";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const { email, password } = formData;
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
@@ -23,17 +22,16 @@ function Login() {
   };
 
   const handleOnSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload
-    console.log("Form submission started"); // Debugging line
+    e.preventDefault();
+    console.log("login data: ", formData);
+    
+    const result = await dispatch(loginApi(formData));
+    console.log("loginjsx ress: ", result);
 
-    // Dispatch login action and wait for response
-    const resultAction = await dispatch(loginApi({ email, password }));
-    console.log("ress: ", resultAction);
-
-    if (loginApi.fulfilled.match(resultAction)) {
-      navigate("/dashboard"); // Redirect upon successful login
+    if (loginApi.fulfilled.match(result)) {
+      navigate("/dashboard");
     } else {
-      console.log("Login failed:", resultAction.payload || resultAction.error);
+      console.log("Login failed:", result.payload || result.error);
     }
   };
 
@@ -50,7 +48,7 @@ function Login() {
           required
           type="email"
           name="email"
-          value={email}
+          value={formData.email}
           onChange={handleOnChange}
           placeholder="Enter email address"
           className="form-style w-full"
@@ -65,7 +63,7 @@ function Login() {
           required
           type={showPassword ? "text" : "password"}
           name="password"
-          value={password}
+          value={formData.password}
           onChange={handleOnChange}
           placeholder="Enter Password"
           className="form-style w-full !pr-10"

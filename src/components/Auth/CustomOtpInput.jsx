@@ -1,15 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import OtpInput from "react-otp-input"; // This is the external library
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOtpApi, signUpApi } from "../../redux/reducer/authSlice"; // Corrected import
+import { useNavigate } from "react-router-dom";
+import OtpInput from "react-otp-input";
+import { sendOtpApi, signUpApi } from "../../redux/reducer/authSlice";
 
 function CustomOtpInput() {
-  // Renamed component
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
   const { signupData, loading } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!signupData) {
@@ -19,9 +18,8 @@ function CustomOtpInput() {
 
   const handleVerifyAndSignup = async (e) => {
     e.preventDefault();
-
-    console.log(signupData);
-    if (!signupData) return; // Prevent submission if signupData is not available
+    console.log("signup data: ", signupData);
+    if (!signupData) return;
 
     const {
       accountType,
@@ -33,7 +31,7 @@ function CustomOtpInput() {
       confirmPassword,
     } = signupData;
 
-    const resultAction = await dispatch(
+    const result = await dispatch(
       signUpApi({
         otp,
         email,
@@ -43,18 +41,14 @@ function CustomOtpInput() {
         contactNumber,
         password,
         confirmPassword,
-        navigate,
       })
     );
+    console.log("signup res: ", result);
 
-    if (signUpApi.fulfilled.match(resultAction)) {
-      console.log("evething is woring");
-      navigate("/"); // Redirect upon successful login
+    if (signUpApi.fulfilled.match(result)) {
+      navigate("/");
     } else {
-      console.log(
-        "please enter correct otp:",
-        resultAction.payload || resultAction.error
-      );
+      console.log("please enter correct otp:", result.payload || result.error);
     }
   };
 
@@ -84,4 +78,4 @@ function CustomOtpInput() {
   );
 }
 
-export default CustomOtpInput; // Updated export to match the new name
+export default CustomOtpInput;

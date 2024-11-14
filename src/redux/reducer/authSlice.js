@@ -11,6 +11,7 @@ export const sendOtpApi = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(SENDOTP_API, { email });
+      console.log("SENDOTP_API res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -52,6 +53,7 @@ export const signUpApi = createAsyncThunk(
         confirmPassword,
         otp,
       });
+      console.log("SIGNUP_API res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -69,17 +71,18 @@ export const signUpApi = createAsyncThunk(
 // ------------------ login API -------------------
 export const loginApi = createAsyncThunk(
   "auth/login",
-  async ({ email, password }, { dispatch, rejectWithValue }) => {
+  async (formData, { dispatch, rejectWithValue }) => {
     try {
-      console.log("Inside login auth", email, password, LOGIN_API);
-      const response = await AxiosInstance.post(LOGIN_API, { email, password });
+      const response = await AxiosInstance.post(LOGIN_API, formData);
+      console.log("LOGIN_API res:", response.data);
 
-      console.log("API Response:", response.data);
       if (!response.data.success) {
         throw new Error(response.data.message || "Unexpected login error");
       }
+
       toast.success("Login Successful");
       dispatch(setToken(response.data.token));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", JSON.stringify(response.data.token));
       return response.data;
     } catch (error) {
@@ -95,7 +98,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     isLoading: false,
-    token: null,
+    token: localStorage.getItem("token")
+      ? JSON.parse(localStorage.getItem("token"))
+      : null,
     error: null,
     signupData: {},
   },
