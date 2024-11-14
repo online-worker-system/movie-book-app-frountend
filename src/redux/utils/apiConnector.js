@@ -33,8 +33,8 @@ AxiosInstance.interceptors.response.use(
       const status = error.response.status;
       if (status === 401) {
         // If unauthorized, clear token and redirect to login
-        localStorage.clear();
-        window.location.href = "/login";
+        // localStorage.clear();
+        // window.location.href = "/login";
         toast.error("Unauthorized. Please login again.");
       } else if (status === 402) {
         // window.location.href = "/upgrade-plan";

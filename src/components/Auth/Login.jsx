@@ -24,14 +24,12 @@ function Login() {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     console.log("login data: ", formData);
-    
+
     const result = await dispatch(loginApi(formData));
     console.log("loginjsx ress: ", result);
 
     if (loginApi.fulfilled.match(result)) {
-      navigate("/dashboard");
-    } else {
-      console.log("Login failed:", result.payload || result.error);
+      navigate("/");
     }
   };
 

@@ -47,8 +47,6 @@ function CustomOtpInput() {
 
     if (signUpApi.fulfilled.match(result)) {
       navigate("/");
-    } else {
-      console.log("please enter correct otp:", result.payload || result.error);
     }
   };
 

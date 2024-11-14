@@ -47,8 +47,6 @@ const AddCinema = () => {
 
     if (addCinema.fulfilled.match(result)) {
       console.log("Add Cinema Success");
-    } else {
-      console.log("Add Cinema failed:", result.payload || result.error);
     }
   };
 
