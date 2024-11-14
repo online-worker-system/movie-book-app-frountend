@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { addCinema } from "../../redux/reducer/adminSlice";
 
 const AddCinema = () => {
-  //   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.admin);
   const [formData, setFormData] = useState({
     cinemaName: "",
     pincode: "",
@@ -52,52 +51,72 @@ const AddCinema = () => {
 
   return (
     <div className="mt-10 flex flex-col justify-center items-center">
-      <h1>Add Cinema</h1>
-      <form onSubmit={handleOnSubmit} className="mt-7 bg-gray-300 p-10">
-        <label className="w-full">
-          <p className="mb-1 leading-[1.375rem] text-richblack-5">
-            Cinema Name <sup className="text-pink-200">*</sup>
-          </p>
+      <h1 className="text-2xl font-medium">Add Cinema</h1>
+      <form
+        onSubmit={handleOnSubmit}
+        className="mt-3 min-w-80 mx-auto p-8 bg-gray-100 shadow-lg rounded-lg space-y-6"
+      >
+        <div>
+          <label
+            htmlFor="cinemaName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Cinema Name
+          </label>
           <input
-            required
             type="text"
+            id="cinemaName"
             name="cinemaName"
             value={formData.cinemaName}
             onChange={handleOnChange}
             placeholder="Enter cinema name"
-            className="w-full"
-          />
-        </label>
-        <label className="w-full">
-          <p className="mt-3 mb-1 leading-[1.375rem] text-richblack-5">
-            Pincode <sup className="text-pink-200">*</sup>
-          </p>
-          <input
             required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="pincode"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Pincode
+          </label>
+          <input
             type="text"
+            id="pincode"
             name="pincode"
             value={formData.pincode}
             onChange={handleOnChange}
             placeholder="Enter pincode"
-            className="w-full"
+            required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
           />
-        </label>
-        <select
-          onChange={handleOnChange}
-          name="cityId"
-          id="cityId"
-          className="w-full mt-5 mb-1 leading-[1.375rem] text-richblack-5"
-        >
-          <option value="">Select One</option>
-          {cities.map((city) => {
-            return <option value={city.cityId}>{city.cityName}</option>;
-          })}
-        </select>
+        </div>
+        <div>
+          <label
+            htmlFor="city"
+            className="block text-sm font-medium text-gray-700"
+          >
+            City
+          </label>
+          <select
+            onChange={handleOnChange}
+            name="cityId"
+            id="cityId"
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
+            required
+          >
+            <option value="">Select City</option>
+            {cities.map((city) => {
+              return <option key={city.cityId} value={city.cityId}>{city.cityName}</option>;
+            })}
+          </select>
+        </div>
         <button
           type="submit"
-          className="w-full mt-7 rounded-lg bg-yellow-50 py-2 font-medium"
+          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
-          Add
+          {isLoading ? "Adding..." : "Add Cinema"}
         </button>
       </form>
     </div>

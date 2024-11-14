@@ -1,162 +1,140 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import AxiosInstance from "../utils/apiConnector";
+import { toast } from "react-hot-toast";
+import { movieendpoints } from "../api";
 
-// Initial state of the form and movie list
+const { GET_ALL_MOVIES_API, ADD_MOVIE_API, UPDATE_MOVIE_API } = movieendpoints;
+
 const initialState = {
-    movies: [], // Store fetched movie list here
-    movieName: '',
-    categories: [],
-    releaseDate: '',
-    summary: '',
-    castMembers: '',
-    supportingLanguages: '',
-    thumbnailImage: null,
-    genres: [],
-    loading: false,
-    error: null,
+  movies: [],
+  movieName: "",
+  categories: [],
+  releaseDate: "",
+  summary: "",
+  castMembers: "",
+  supportingLanguages: "",
+  thumbnailImage: null,
+  genres: [],
+  loading: false,
+  error: null,
 };
 
 // Async thunk to fetch all movies from the API
-export const fetchMovies = createAsyncThunk(
-    'movie/fetchMovies',
-    async(_, { rejectWithValue }) => {
-        try {
-            const response = await axios.get(
-                'https://movie-book-app-backend.vercel.app/api/v1/movie/getAllMovies'
-            );
-            return response.data; // Return the movie data if successful
-        } catch (error) {
-            // Handle errors properly
-            if (error.response) {
-                // The request was made, but the server responded with an error status
-                return rejectWithValue(error.response.data.message || 'Failed to fetch movies');
-            } else if (error.request) {
-                // The request was made but no response was received
-                return rejectWithValue('No response from server');
-            } else {
-                // Something else happened while setting up the request
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-);
+export const getAllMovies = createAsyncThunk(
+  "movie/fetchMovies",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get(GET_ALL_MOVIES_API);
 
-// Async thunk to update movie details in the database
-export const updateMovie = createAsyncThunk(
-    'movie/updateMovie',
-    async(formData, { rejectWithValue }) => {
-        try {
-            const response = await axios.put(
-                'https://movie-book-app-backend.vercel.app/api/v1/movie/updateMovie',
-                formData, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-            return response.data; // Return the updated movie data if successful
-        } catch (error) {
-            // Handle errors properly
-            if (error.response) {
-                // The request was made, but the server responded with an error status
-                return rejectWithValue(error.response.data.message || 'Failed to update movie');
-            } else if (error.request) {
-                // The request was made but no response was received
-                return rejectWithValue('No response from server');
-            } else {
-                // Something else happened while setting up the request
-                return rejectWithValue(error.message);
-            }
-        }
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("fetchMovies error:", error);
+      return rejectWithValue(error.message || "Error while fetching movies");
     }
+  }
 );
 
 // Async thunk to submit the movie form to the API using axios
 export const submitMovieForm = createAsyncThunk(
-    'movie/submitForm',
-    async(formData, { rejectWithValue }) => {
-        try {
-            const response = await axios.post(
-                'https://movie-book-app-backend.vercel.app/api/v1/movie/addMovie',
-                formData, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-            return response.data; // Return the response data if successful
-        } catch (error) {
-            // Handle errors properly
-            if (error.response) {
-                // The request was made, but the server responded with an error status
-                return rejectWithValue(error.response.data.message || 'Failed to submit movie');
-            } else if (error.request) {
-                // The request was made but no response was received
-                return rejectWithValue('No response from server');
-            } else {
-                // Something else happened while setting up the request
-                return rejectWithValue(error.message);
-            }
-        }
+  "movie/submitForm",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post(ADD_MOVIE_API, formData);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("addMovie error:", error);
+      return rejectWithValue(error.message || "Error while adding movie");
     }
+  }
+);
+
+// Async thunk to update movie details in the database
+export const updateMovie = createAsyncThunk(
+  "movie/updateMovie",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post(UPDATE_MOVIE_API, formData);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("updateMovie error:", error);
+      return rejectWithValue(error.message || "Error while updating movie");
+    }
+  }
 );
 
 // Slice to manage form state
 const movieSlice = createSlice({
-    name: 'movie',
-    initialState,
-    reducers: {
-        setFormData: (state, action) => {
-            const { name, value } = action.payload;
-            state[name] = value; // Update state with new form data
-        },
+  name: "movie",
+  initialState,
+  reducers: {
+    setFormData: (state, action) => {
+      const { name, value } = action.payload;
+      state[name] = value;
     },
-    extraReducers: (builder) => {
-        // Handling fetchMovies async actions
-        builder
-            .addCase(fetchMovies.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(fetchMovies.fulfilled, (state, action) => {
-                state.loading = false;
-                state.movies = action.payload; // Set the fetched movies to state
-                state.error = null;
-            })
-            .addCase(fetchMovies.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload; // Set error message if API call failed
-            })
+  },
+  extraReducers: (builder) => {
+    // Handling fetchMovies async actions
+    builder
+      .addCase(getAllMovies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllMovies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.movies = action.payload;
+        state.error = null;
+      })
+      .addCase(getAllMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
-        // Handling submitMovieForm async actions
-        .addCase(submitMovieForm.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(submitMovieForm.fulfilled, (state, action) => {
-                state.loading = false;
-                state.error = null; // Successfully submitted the form
-            })
-            .addCase(submitMovieForm.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload; // Set error message if API call failed
-            })
+      // Handling submitMovieForm async actions
+      .addCase(submitMovieForm.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(submitMovieForm.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(submitMovieForm.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
-        // Handling updateMovie async actions
-        .addCase(updateMovie.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(updateMovie.fulfilled, (state, action) => {
-                state.loading = false;
-                state.error = null; // Successfully updated the movie
-            })
-            .addCase(updateMovie.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload; // Set error message if update failed
-            });
-    },
+      // Handling updateMovie async actions
+      .addCase(updateMovie.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateMovie.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(updateMovie.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
-export const { setFormData } = movieSlice.actions; // Export the action to update form data
-export default movieSlice.reducer; // Export the reducer to be added in the store
+export const { setFormData } = movieSlice.actions;
+export default movieSlice.reducer;

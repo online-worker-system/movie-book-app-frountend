@@ -4,7 +4,6 @@ export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sendotp",
   SIGNUP_API: BASE_URL + "/auth/signup",
   LOGIN_API: BASE_URL + "/auth/login",
-  GET_MOVIES: BASE_URL + "/movie/getAllMovies",
 };
 
 export const adminendpoints = {
@@ -13,4 +12,10 @@ export const adminendpoints = {
   UPDATE_SCREEN_API: BASE_URL + "/cinema/updateScreen",
   ADD_SHOW_API: BASE_URL + "/show/addShow",
   LIVE_YOUR_SHOW_API: BASE_URL + "/show/liveYourShow",
+};
+
+export const movieendpoints = {
+  GET_ALL_MOVIES_API: BASE_URL + "/movie/getAllMovies",
+  ADD_MOVIE_API: BASE_URL + "/movie/addMovie",
+  UPDATE_MOVIE_API: BASE_URL + "/movie/updateMovie",
 };

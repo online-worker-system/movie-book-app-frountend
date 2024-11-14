@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { loginApi } from "../../redux/reducer/authSlice";
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -92,6 +92,6 @@ function Login() {
       </div>
     </form>
   );
-}
+};
 
 export default Login;

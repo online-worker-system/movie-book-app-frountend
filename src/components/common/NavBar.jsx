@@ -8,16 +8,18 @@ const NavBar = () => {
     <div className="w-full min-h-[50px] bg-white flex items-start justify-center mt-4">
       <div className="w-[90%] max-h-max flex items-center justify-between">
         <div className=" w-[60%] flex items-center justify-start gap-4">
-          <div className="flex items-center gap-1 justify-center text-[rgb(47,47,47)] font-sans font-[500] text-[16px] transform scale-y-150">
+          <NavLink
+            to="/"
+            className="flex items-center gap-1 justify-center text-[rgb(47,47,47)] font-sans font-[500] text-[16px] transform scale-y-150"
+          >
             <h2>book</h2>
             <div className="bg-red-500 text-white rotate-12 inline-block">
               <div className="-rotate-12  w-[25px] h-[20px] flex items-center justify-center">
                 <h2>my</h2>
               </div>
             </div>
-
             <h2>cinema</h2>
-          </div>
+          </NavLink>
           <div className="w-[75%] flex items-center justify-center">
             <div className="relative w-full">
               <input
