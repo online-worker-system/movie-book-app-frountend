@@ -46,7 +46,7 @@ const homeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // ------------------- sendOtp -------------------
+      
       .addCase(getAllMoviesApi.pending, (state) => {
         state.isLoading = true;
       })
