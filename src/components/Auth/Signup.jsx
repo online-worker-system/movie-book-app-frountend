@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { sendOtpApi, setSignupData } from "../../redux/reducer/authSlice";
 
-function Signup() {
+const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -68,10 +68,10 @@ function Signup() {
     }
 
     dispatch(setSignupData(formData));
-    const resultAction = await dispatch(sendOtpApi(formData.email));
-    console.log("sendOtpApi jsx res: ", resultAction);
+    const result = await dispatch(sendOtpApi(formData.email));
+    console.log("sendOtpApi jsx res: ", result);
 
-    if (sendOtpApi.fulfilled.match(resultAction)) {
+    if (sendOtpApi.fulfilled.match(result)) {
       navigate("/otp");
     }
   };
@@ -196,6 +196,6 @@ function Signup() {
       </form>
     </div>
   );
-}
+};
 
 export default Signup;
