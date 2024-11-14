@@ -31,7 +31,17 @@ function Login() {
     console.log("ress: ", resultAction);
 
     if (loginApi.fulfilled.match(resultAction)) {
-      navigate("/dashboard"); // Redirect upon successful login
+
+     
+    
+
+      
+
+     
+    let token=0;
+      // Store token in local storage
+      localStorage.setItem("accessToken", token);
+      navigate("/"); // Redirect upon successful login
     } else {
       console.log("Login failed:", resultAction.payload || resultAction.error);
     }
