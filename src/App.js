@@ -9,7 +9,6 @@ import AddMoviePage from "./components/Pages/AddMoviePage";
 import { Toaster } from "react-hot-toast";
 import "./index.css";
 
-
 function App() {
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
@@ -22,8 +21,11 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/otp" element={<CustomOtpInput />}></Route>
         <Route path="/addCinema" element={<AddCinema />}></Route>
-        <Route path="/movies/:movie_name/:movie_id" element={<MoviesPage></MoviesPage>}></Route>
-        <Route path="/movies/addMovie" element={<AddMoviePage></AddMoviePage>}></Route>
+        <Route
+          path="/movies/:movie_name/:movie_id"
+          element={<MoviesPage />}
+        ></Route>
+        <Route path="/movies/addMovie" element={<AddMoviePage />}></Route>
       </Routes>
     </div>
   );
