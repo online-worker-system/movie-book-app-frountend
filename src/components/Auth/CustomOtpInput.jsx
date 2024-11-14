@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
-import { sendOtpApi, signUpApi } from "../../redux/reducer/authSlice";
+import { signUpApi } from "../../redux/reducer/authSlice";
 
-function CustomOtpInput() {
+const CustomOtpInput = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
-  const { signupData, loading } = useSelector((state) => state.auth);
+  const { signupData, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!signupData) {
@@ -47,8 +47,6 @@ function CustomOtpInput() {
 
     if (signUpApi.fulfilled.match(result)) {
       navigate("/");
-    } else {
-      console.log("please enter correct otp:", result.payload || result.error);
     }
   };
 
@@ -70,12 +68,12 @@ function CustomOtpInput() {
           }}
           renderInput={(props) => <input {...props} name="otp" />}
         />
-        <button type="submit" className="mt-4">
+        <button disabled={isLoading} type="submit" className="mt-4">
           Verify OTP
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default CustomOtpInput;

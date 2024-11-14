@@ -52,7 +52,6 @@ const homeSlice = createSlice({
       })
       .addCase(getAllMoviesApi.fulfilled, (state, action) => {
         state.isLoading = false;
-
         state.allMovies = action.payload.data;
       })
       .addCase(getAllMoviesApi.rejected, (state, action) => {

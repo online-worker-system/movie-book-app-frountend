@@ -64,7 +64,7 @@ export const updateScreen = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(UPDATE_SCREEN_API, formData);
-      console.log("addCinema res: ", response);
+      console.log("updateScreen res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);

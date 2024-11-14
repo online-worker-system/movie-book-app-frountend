@@ -3,10 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { sendOtpApi } from "../../redux/reducer/authSlice";
-import { setSignupData } from "../../redux/reducer/authSlice";
+import { sendOtpApi, setSignupData } from "../../redux/reducer/authSlice";
 
-function Signup() {
+const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -69,13 +68,11 @@ function Signup() {
     }
 
     dispatch(setSignupData(formData));
-    const resultAction = await dispatch(sendOtpApi(formData.email));
-    console.log("sendOtpApi jsx res: ", resultAction);
+    const result = await dispatch(sendOtpApi(formData.email));
+    console.log("sendOtpApi jsx res: ", result);
 
-    if (sendOtpApi.fulfilled.match(resultAction)) {
+    if (sendOtpApi.fulfilled.match(result)) {
       navigate("/otp");
-    } else {
-      console.log("OTP not sent:", resultAction.payload || resultAction.error);
     }
   };
 
@@ -199,6 +196,6 @@ function Signup() {
       </form>
     </div>
   );
-}
+};
 
 export default Signup;
