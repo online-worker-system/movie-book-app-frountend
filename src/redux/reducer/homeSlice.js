@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosInstance from "../utils/apiConnector";
-import { endpoints } from "../api";
+import { movieEndPoins } from "../api";
 
-const { GET_MOVIES } = endpoints;
+const { GET_MOVIES } = movieEndPoins;
 
 // ------------------ get all movies API -------------------
 export const getAllMoviesApi = createAsyncThunk(
@@ -46,7 +46,7 @@ const homeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      
+
       .addCase(getAllMoviesApi.pending, (state) => {
         state.isLoading = true;
       })

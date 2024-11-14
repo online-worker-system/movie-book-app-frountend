@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { toast } from "react-hot-toast";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { sendOtpApi } from "../../redux/reducer/authSlice"; // Corrected import
-import { setSignupData } from "../../redux/reducer/authSlice"; // Corrected import
+import { toast } from "react-hot-toast";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { sendOtpApi } from "../../redux/reducer/authSlice";
+import { setSignupData } from "../../redux/reducer/authSlice";
 
 function Signup() {
   const navigate = useNavigate();
@@ -64,36 +64,19 @@ function Signup() {
     }
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("Password do not match");
       return;
     }
 
-    const signupData = {
-      ...formData,
-      accountType,
-    };
-
-    dispatch(setSignupData(signupData));
-    const resultAction = await dispatch(sendOtpApi(formData.email, navigate));
-    console.log("sugn: ", resultAction);
+    dispatch(setSignupData(formData));
+    const resultAction = await dispatch(sendOtpApi(formData.email));
+    console.log("sendOtpApi jsx res: ", resultAction);
 
     if (sendOtpApi.fulfilled.match(resultAction)) {
-      console.log("evething is woring");
-      navigate("/otp"); // Redirect upon successful login
+      navigate("/otp");
     } else {
       console.log("OTP not sent:", resultAction.payload || resultAction.error);
     }
-
-    // Reset the form
-    setFormData({
-      userName: "",
-      lastName: "",
-      email: "",
-      contactNumber: "",
-      password: "",
-      confirmPassword: "",
-      accountType: "Viewer",
-    });
   };
 
   return (

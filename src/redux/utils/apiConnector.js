@@ -3,18 +3,18 @@ import { toast } from "react-toastify";
 
 const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
-// Create an Axios instance with default configuration
+// Create an Axios instance
 const AxiosInstance = axios.create({
-  baseURL: REACT_APP_BASE_URL, // Your base URL from the .env file
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: REACT_APP_BASE_URL,
 });
 
 // Add a request interceptor
 AxiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Retrieve token from local storage
+    const token = localStorage.getItem("token")
+      ? JSON.parse(localStorage.getItem("token"))
+      : null;
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
