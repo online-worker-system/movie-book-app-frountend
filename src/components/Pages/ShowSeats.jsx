@@ -100,7 +100,9 @@ const ShowSeats = () => {
   return (
     <div>
       {loading ? (
-        <div className="text-center">Loading.....</div>
+        <div className="w-screen h-screen flex items-center justify-center">
+          <div class="custom-loader"></div>;
+        </div>
       ) : (
         <div>
           {seatArray.length === 0 ? (

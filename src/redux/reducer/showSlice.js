@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import AxiosInstance from "../utils/apiConnector";
-
+import {movieEndPoins} from "../api"
 // Initial state
 const initialState = {
   cinemas: [],
@@ -11,12 +11,13 @@ const initialState = {
 };
 
 // Async thunk to fetch all movies from the API
+const {GET_SHOWS_CINEMAS_API} = movieEndPoins;
 export const fetchShowDetailes = createAsyncThunk(
   "show/cinema",
   async ({ movieId }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://movie-book-app-backend.vercel.app/api/v1/movie/getMovieCinema",
+        GET_SHOWS_CINEMAS_API,
         { movieId }
       );
       return response.data; // Return the movie data if successful
