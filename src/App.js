@@ -15,6 +15,7 @@ import UpdateScreen from "./components/Pages/UpdateScreen";
 import AdminProtected from "./components/protected/AdminProtected";
 import SuperAdminProtected from "./components/protected/SuperAdminProtected";
 import ShowSeats from "./components/Pages/ShowSeats";
+import CinemasShowPage from "./components/Pages/CinemasShowPage";
 function App() {
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
@@ -34,6 +35,8 @@ function App() {
           path="/buytickets/:movie_id/:cinema_id/seats"
           element={<ShowSeats />}
         ></Route>
+
+        <Route path="/shows/:movieName/:movie_id" element={<CinemasShowPage></CinemasShowPage>}></Route>
         <Route
           path="/movie/addMovie"
           element={
