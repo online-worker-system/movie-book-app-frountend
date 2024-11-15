@@ -27,7 +27,6 @@ const Home = () => {
     fetchMovies(); // Call the async function
   }, [dispatch]);
 
-  console.log("All movies fetched", allMovies);
 
   const movieClickHandler = (movieName, movieId) => {
     navigate(`/movie/${movieName}/${movieId}`);  // Correctly invoke navigate

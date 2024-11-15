@@ -20,4 +20,5 @@ export const movieEndPoins={
   ADD_MOVIE_API: BASE_URL + "/movie/addMovie",
   UPDATE_MOVIE_API: BASE_URL + "/movie/updatemovie",
   GET_MOVIES: BASE_URL + "/movie/getAllMovies",
+  GET_MOVIE_DETAILES:BASE_URL + "/movie/getMovieDetails"
 }

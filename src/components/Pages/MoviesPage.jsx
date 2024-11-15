@@ -27,8 +27,6 @@ const MoviesPage = () => {
 
   // Filter selected movie and recommended movies
   useEffect(() => {
-
-    console.log(allMovies)
     if (allMovies && allMovies.length > 0) {
       const selectedMovie = allMovies.find((movie) => movie._id === movie_id);
       if (selectedMovie) {

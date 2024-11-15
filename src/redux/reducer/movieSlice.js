@@ -3,7 +3,7 @@ import axios from "axios";
 import AxiosInstance from "../utils/apiConnector";
 import { movieEndPoins } from "../api";
 
-const { ADD_MOVIE_API, UPDATE_MOVIE_API } = movieEndPoins;
+const { ADD_MOVIE_API, UPDATE_MOVIE_API ,GET_MOVIE_DETAILES } = movieEndPoins;
 // Initial state
 const initialState = {
   movieName: "",
@@ -25,7 +25,7 @@ export const fetchMovieApi = createAsyncThunk(
   async ({ movieId }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://movie-book-app-backend.vercel.app/api/v1/movie/getMovieDetails",
+        GET_MOVIE_DETAILES,
         { movieId }
       );
       return response.data; // Return the movie data if successful
