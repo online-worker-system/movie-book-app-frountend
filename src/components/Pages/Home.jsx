@@ -26,7 +26,6 @@ const Home = () => {
     fetchMovies();
   }, [dispatch]);
 
-  console.log("All movies fetched", allMovies);
 
   const movieClickHandler = (movieName, movieId) => {
     navigate(`/movie/${movieName}/${movieId}`);

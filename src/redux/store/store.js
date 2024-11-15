@@ -3,6 +3,7 @@ import authReducer from "../reducer/authSlice";
 import homeReducer from "../reducer/homeSlice";
 import movieReducer from "../reducer/movieSlice";
 import adminReducer from "../reducer/adminSlice";
+import seatReducer from "../reducer/seatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     home: homeReducer,
     movie: movieReducer,
     admin: adminReducer,
+    seat:seatReducer
   },
 });
