@@ -9,7 +9,6 @@ const UpdateMoviePage = () => {
   const dispatch = useDispatch();
   const { movie_id } = useParams();
   const { movie } = useSelector((state) => state.movie);
-  console.log(movie);
   const formData = useSelector((state) => state.movie);
   const { loading, error } = formData;
   console.log(formData);
@@ -270,6 +269,7 @@ const UpdateMoviePage = () => {
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
           >
             {loading ? "Updating..." : "Update Movie"}

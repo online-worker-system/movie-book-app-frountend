@@ -5,11 +5,12 @@ import { addCinema } from "../../redux/reducer/adminSlice";
 const AddCinema = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.admin);
-  const [formData, setFormData] = useState({
+  const initialState = {
     cinemaName: "",
     pincode: "",
     cityId: "",
-  });
+  }
+  const [formData, setFormData] = useState(initialState);
 
   const cities = [
     {
@@ -46,6 +47,7 @@ const AddCinema = () => {
 
     if (addCinema.fulfilled.match(result)) {
       console.log("Add Cinema Success");
+      setFormData(initialState);
     }
   };
 
@@ -54,7 +56,7 @@ const AddCinema = () => {
       <h1 className="text-2xl font-medium">Add Cinema</h1>
       <form
         onSubmit={handleOnSubmit}
-        className="mt-3 min-w-80 mx-auto p-8 bg-gray-100 shadow-lg rounded-lg space-y-6"
+        className="mt-5 min-w-80 mx-auto p-8 bg-gray-100 shadow-lg rounded-lg space-y-6"
       >
         <div>
           <label
@@ -103,6 +105,7 @@ const AddCinema = () => {
             onChange={handleOnChange}
             name="cityId"
             id="cityId"
+            value={formData.cityId}
             className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
             required
           >
@@ -118,6 +121,7 @@ const AddCinema = () => {
         </div>
         <button
           type="submit"
+          disabled={isLoading}
           className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
           {isLoading ? "Adding..." : "Add Cinema"}

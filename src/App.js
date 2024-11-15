@@ -10,6 +10,8 @@ import CustomOtpInput from "./components/Auth/CustomOtpInput";
 import AddCinema from "./components/admin/AddCinema";
 import AddMoviePage from "./components/superadmin/AddMoviePage";
 import UpdateMoviePage from "./components/superadmin/UpdateMoviePage";
+import AddCity from "./components/Pages/AddCity";
+import UpdateScreen from "./components/Pages/UpdateScreen";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/otp" element={<CustomOtpInput />}></Route>
         <Route path="/addCinema" element={<AddCinema />}></Route>
+        <Route path="/addCity" element={<AddCity />}></Route>
+        <Route path="/updateScreen" element={<UpdateScreen />}></Route>
         <Route path="/movie/addMovie" element={<AddMoviePage />}></Route>
         <Route
           path="/movie/:movieName/:movie_id"

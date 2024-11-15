@@ -43,7 +43,7 @@ const AddMoviePage = () => {
       <h1 className="text-2xl font-medium">Add Movie</h1>
       <form
         onSubmit={handleSubmit}
-        className="mt-3 max-w-3xl mx-auto p-8 bg-gray-100 shadow-lg rounded-lg space-y-6"
+        className="mt-5 max-w-3xl mx-auto p-8 bg-gray-100 shadow-lg rounded-lg space-y-6"
       >
         {/* Movie Name */}
         <div>
@@ -241,6 +241,7 @@ const AddMoviePage = () => {
         {/* Submit Button */}
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
           {loading ? "Submitting..." : "Submit Movie"}

@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import AxiosInstance from "../utils/apiConnector";
-import { movieEndPoins } from "../api";
+import { toast } from "react-hot-toast";
+import { movieEndPoins, adminendpoints } from "../api";
 
-const { ADD_MOVIE_API, UPDATE_MOVIE_API } = movieEndPoins;
+const { ADD_MOVIE_API, UPDATE_MOVIE_API, GET_MOVIE_DETAILS } = movieEndPoins;
+const { ADD_CITY_API } = adminendpoints;
+
 // Initial state
 const initialState = {
   movieName: "",
@@ -24,10 +26,8 @@ export const fetchMovieApi = createAsyncThunk(
   "movie/fetchMovies",
   async ({ movieId }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "https://movie-book-app-backend.vercel.app/api/v1/movie/getMovieDetails",
-        { movieId }
-      );
+      const response = await AxiosInstance.post(GET_MOVIE_DETAILS, { movieId });
+      console.log("ol: ", response.data);
       return response.data; // Return the movie data if successful
     } catch (error) {
       // Handle errors properly
@@ -46,7 +46,8 @@ export const fetchMovieApi = createAsyncThunk(
     }
   }
 );
-//update
+
+//update movie
 export const updateMovie = createAsyncThunk(
   "movie/updateMovie",
   async (movieFormData, { dispatch, rejectWithValue }) => {
@@ -79,6 +80,27 @@ export const submitMovieForm = createAsyncThunk(
   }
 );
 
+export const addCity = createAsyncThunk(
+  "cinema/addCity",
+  async (cityName, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post(ADD_CITY_API, { cityName });
+      console.log("addCity res: ", response);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success("City Added Successfully");
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("addCity error:", error);
+      return rejectWithValue(error.message || "Error while adding city");
+    }
+  }
+);
+
 // Reducer and actions
 const movieSlice = createSlice({
   name: "movie",
@@ -106,6 +128,19 @@ const movieSlice = createSlice({
         state.error = null;
       })
       .addCase(submitMovieForm.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(addCity.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addCity.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(addCity.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
