@@ -7,7 +7,7 @@ import MoviesPage from "./components/Pages/MoviesPage";
 import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
 import CustomOtpInput from "./components/Auth/CustomOtpInput";
-import AddCinema from "./components/admin/AddCinema";
+import AddCinema from "./components/Pages/AddCinema";
 import AddMoviePage from "./components/superadmin/AddMoviePage";
 import UpdateMoviePage from "./components/superadmin/UpdateMoviePage";
 import AddCity from "./components/Pages/AddCity";
@@ -15,6 +15,8 @@ import UpdateScreen from "./components/Pages/UpdateScreen";
 import AdminProtected from "./components/protected/AdminProtected";
 import SuperAdminProtected from "./components/protected/SuperAdminProtected";
 import ShowSeats from "./components/Pages/ShowSeats";
+import AddShow from "./components/Pages/AddShow";
+import LiveYourShow from "./components/Pages/LiveYourShow";
 function App() {
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
@@ -59,7 +61,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/addCinema"
+          path="/cinema/addCinema"
           element={
             <AdminProtected>
               <AddCinema />
@@ -67,10 +69,26 @@ function App() {
           }
         ></Route>
         <Route
-          path="/updateScreen"
+          path="/cinema/updateScreen"
           element={
             <AdminProtected>
               <UpdateScreen />
+            </AdminProtected>
+          }
+        ></Route>
+        <Route
+          path="/show/addShow"
+          element={
+            <AdminProtected>
+              <AddShow />
+            </AdminProtected>
+          }
+        ></Route>
+        <Route
+          path="/show/liveYourShow"
+          element={
+            <AdminProtected>
+              <LiveYourShow />
             </AdminProtected>
           }
         ></Route>

@@ -21,7 +21,7 @@ const UpdateScreen = () => {
       seat: "",
       price: "",
     },
-    screenId: "6734d38d05c1c1189768c88d",
+    screenId: "673769dd0fcd6f4ce3954fee",
   };
   const [formData, setFormData] = useState(initialState);
 
