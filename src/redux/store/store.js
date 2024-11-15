@@ -11,6 +11,6 @@ export const store = configureStore({
     home: homeReducer,
     movie: movieReducer,
     admin: adminReducer,
-    seat:seatReducer
+    seat: seatReducer,
   },
 });
