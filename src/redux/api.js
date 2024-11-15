@@ -14,10 +14,8 @@ export const adminendpoints = {
   LIVE_YOUR_SHOW_API: BASE_URL + "/show/liveYourShow",
 };
 
-
-
-export const movieEndPoins={
+export const movieEndPoins = {
   ADD_MOVIE_API: BASE_URL + "/movie/addMovie",
   UPDATE_MOVIE_API: BASE_URL + "/movie/updatemovie",
   GET_MOVIES: BASE_URL + "/movie/getAllMovies",
-}
+};

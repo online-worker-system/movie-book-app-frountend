@@ -108,7 +108,11 @@ const AddCinema = () => {
           >
             <option value="">Select City</option>
             {cities.map((city) => {
-              return <option key={city.cityId} value={city.cityId}>{city.cityName}</option>;
+              return (
+                <option key={city.cityId} value={city.cityId}>
+                  {city.cityName}
+                </option>
+              );
             })}
           </select>
         </div>

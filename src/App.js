@@ -1,13 +1,13 @@
 import "./App.css";
+import "./index.css";
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Home from "./components/Pages/Home";
 import MoviesPage from "./components/Pages/MoviesPage";
 import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
 import CustomOtpInput from "./components/Auth/CustomOtpInput";
 import AddCinema from "./components/admin/AddCinema";
-import { Toaster } from "react-hot-toast";
-import "./index.css";
 import AddMoviePage from "./components/superadmin/AddMoviePage";
 import UpdateMoviePage from "./components/superadmin/UpdateMoviePage";
 
@@ -23,9 +23,15 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/otp" element={<CustomOtpInput />}></Route>
         <Route path="/addCinema" element={<AddCinema />}></Route>
-        <Route path="/movie/addMovie" element={<AddMoviePage/>}></Route>
-        <Route path="/movie/:movieName/:movie_id" element={<MoviesPage></MoviesPage>}></Route>
-        <Route path="/movie/updatemovie/:movie_id" element={<UpdateMoviePage></UpdateMoviePage>}></Route>
+        <Route path="/movie/addMovie" element={<AddMoviePage />}></Route>
+        <Route
+          path="/movie/:movieName/:movie_id"
+          element={<MoviesPage />}
+        ></Route>
+        <Route
+          path="/movie/updatemovie/:movie_id"
+          element={<UpdateMoviePage />}
+        ></Route>
       </Routes>
     </div>
   );

@@ -20,21 +20,19 @@ const MoviesPage = () => {
         await dispatch(getAllMoviesApi());
       }
     };
-    
+
     fetchMovies();
   }, [dispatch, allMovies]);
-  
 
   // Filter selected movie and recommended movies
   useEffect(() => {
-
-    console.log(allMovies)
     if (allMovies && allMovies.length > 0) {
       const selectedMovie = allMovies.find((movie) => movie._id === movie_id);
       if (selectedMovie) {
         setMovie(selectedMovie);
-        setRecommendedArray(allMovies.filter((movie) => movie._id !== movie_id));
-        
+        setRecommendedArray(
+          allMovies.filter((movie) => movie._id !== movie_id)
+        );
       }
     }
   }, [allMovies, movie_id]);

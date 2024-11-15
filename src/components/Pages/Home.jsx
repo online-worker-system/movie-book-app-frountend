@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-import NavBar from "../common/NavBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
-import HomeSlider from "../common/HomeSlider";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../common/NavBar";
+import HomeSlider from "../common/HomeSlider";
+import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { allMovies } = useSelector((state) => state.home);
-  const navigate = useNavigate();  // Correctly call useNavigate here
 
   useEffect(() => {
-    // Separate async function to handle API call
     const fetchMovies = async () => {
       const resultAction = await dispatch(getAllMoviesApi());
 
@@ -24,13 +23,13 @@ const Home = () => {
       }
     };
 
-    fetchMovies(); // Call the async function
+    fetchMovies();
   }, [dispatch]);
 
   console.log("All movies fetched", allMovies);
 
   const movieClickHandler = (movieName, movieId) => {
-    navigate(`/movie/${movieName}/${movieId}`);  // Correctly invoke navigate
+    navigate(`/movie/${movieName}/${movieId}`);
   };
 
   return (
@@ -54,7 +53,9 @@ const Home = () => {
                 />
               </div>
               <div className="flex flex-col items-start justify-center">
-                <span className="text-[20px] font-[500]">{movie.movieName}</span>
+                <span className="text-[20px] font-[500]">
+                  {movie.movieName}
+                </span>
                 <div className="flex items-start justify-center">
                   {movie.genres.map((genre, index) => (
                     <div

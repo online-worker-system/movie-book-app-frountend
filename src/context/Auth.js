@@ -12,7 +12,6 @@ const AuthProvider = ({ children }) => {
     console.log("Decoded Token:", decodedToken);
 
     try {
-     
       if (response.ok) {
         console.log("shi khel gya bc");
         setIsLoggedIn(true);
