@@ -26,7 +26,11 @@ const LiveYourShow = () => {
   }, []);
 
   if (isLoading) {
-    return <p className="text-center">Loading...</p>;
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="custom-loader text-center"></div>
+      </div>
+    );
   }
 
   return (

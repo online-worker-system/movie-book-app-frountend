@@ -26,6 +26,7 @@ function App() {
         <Toaster position="top-center" />
       </div>
       <Routes>
+        {/* ------------------ Open Routes ------------------- */}
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
@@ -38,11 +39,12 @@ function App() {
           path="/buytickets/:movie_id/:cinema_id/seats"
           element={<ShowSeats />}
         ></Route>
-
         <Route
           path="/shows/:movieName/:movie_id"
           element={<CinemasShowPage></CinemasShowPage>}
         ></Route>
+
+        {/* ------------------ Super-Admin Routes ------------------- */}
         <Route
           path="/movie/addMovie"
           element={
@@ -67,6 +69,8 @@ function App() {
             </SuperAdminProtected>
           }
         ></Route>
+
+        {/* ------------------ Admin Routes ------------------- */}
         <Route
           path="/cinema/addCinema"
           element={

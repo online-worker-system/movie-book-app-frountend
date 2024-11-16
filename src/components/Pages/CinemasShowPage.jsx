@@ -28,7 +28,7 @@ const CinemasShowPage = () => {
   if (loading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
-        <div class="custom-loader text-center"></div>
+        <div className="custom-loader text-center"></div>
       </div>
     );
   }

@@ -16,6 +16,7 @@ export const adminendpoints = {
   ADD_SHOW_API: BASE_URL + "/show/addShow",
   LIVE_YOUR_SHOW_API: BASE_URL + "/show/liveYourShow",
   GET_UNLIVE_SHOWS_API: BASE_URL + "/show/getUnliveShows",
+  GET_CITIES_API: BASE_URL + "/cinema/getCities",
 };
 
 export const movieEndPoins = {

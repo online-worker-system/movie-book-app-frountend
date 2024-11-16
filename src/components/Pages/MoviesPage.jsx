@@ -41,7 +41,7 @@ const MoviesPage = () => {
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
-        <div class="custom-loader"></div>;
+        <div className="custom-loader"></div>
       </div>
     );
   }

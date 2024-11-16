@@ -27,8 +27,6 @@ const AddShow = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log("form:", formData);
-
     // Check if showEnd is earlier than showStart
     if (new Date(formData.showEnd) < new Date(formData.showStart)) {
       toast.error("End date cannot be earlier than the start date.");
@@ -59,7 +57,11 @@ const AddShow = () => {
   }, [formData.cinemaId]);
 
   if (isLoading) {
-    return <p className="text-center">Loading...</p>;
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="custom-loader text-center"></div>
+      </div>
+    );
   }
 
   return (
