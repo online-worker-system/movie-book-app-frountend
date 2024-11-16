@@ -10,6 +10,7 @@ const ShowSeats = () => {
   const dispatch = useDispatch();
   const { cinema_id, movie_id } = useParams();
 
+  const { timing } = useParams();
   const { seatsInfo, loading } = useSelector((state) => state.seat);
 
   const [seatArray, setSeatArray] = useState([]);
@@ -37,7 +38,7 @@ const ShowSeats = () => {
     // Filter data when seatsInfo changes
     if (seatsInfo?.length > 0) {
       // Filter by timing first
-      const filteredData = seatsInfo.filter((item) => item.timing === "3-6pm");
+      const filteredData = seatsInfo.filter((item) => item.timing === timing);
 
       if (filteredData.length > 0) {
         // Assuming `filteredData` contains one object after filtering

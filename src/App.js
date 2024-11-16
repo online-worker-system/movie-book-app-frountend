@@ -32,11 +32,14 @@ function App() {
           element={<MoviesPage />}
         ></Route>
         <Route
-          path="/buytickets/:movie_id/:cinema_id/seats"
+          path="/buytickets/:movie_id/:cinema_id/:timing/seats"
           element={<ShowSeats />}
         ></Route>
 
-        <Route path="/shows/:movieName/:movie_id" element={<CinemasShowPage></CinemasShowPage>}></Route>
+        <Route
+          path="/shows/:movieName/:movie_id"
+          element={<CinemasShowPage></CinemasShowPage>}
+        ></Route>
         <Route
           path="/movie/addMovie"
           element={
