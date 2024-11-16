@@ -33,7 +33,6 @@ export const signUpApi = createAsyncThunk(
     {
       accountType,
       userName,
-      lastName,
       email,
       contactNumber,
       password,
@@ -46,7 +45,6 @@ export const signUpApi = createAsyncThunk(
       const response = await AxiosInstance.post(SIGNUP_API, {
         accountType,
         userName,
-        lastName,
         email,
         contactNumber,
         password,

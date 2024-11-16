@@ -8,9 +8,7 @@ import RegularSeat from "../seatComponents/RegularSeat";
 
 const ShowSeats = () => {
   const dispatch = useDispatch();
-  const { cinema_id, movie_id } = useParams();
-
-  const { timing } = useParams();
+  const { cinema_id, movie_id, timing } = useParams();
   const { seatsInfo, loading } = useSelector((state) => state.seat);
 
   const [seatArray, setSeatArray] = useState([]);
@@ -102,7 +100,7 @@ const ShowSeats = () => {
     <div>
       {loading ? (
         <div className="w-screen h-screen flex items-center justify-center">
-          <div class="custom-loader"></div>;
+          <div className="custom-loader"></div>
         </div>
       ) : (
         <div>

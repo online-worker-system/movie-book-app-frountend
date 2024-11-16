@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GrFormSearch } from "react-icons/gr";
-import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../redux/reducer/homeSlice";
+
 const NavBar = () => {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();

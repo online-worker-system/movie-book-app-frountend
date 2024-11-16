@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { sendOtpApi, setSignupData } from "../../redux/reducer/authSlice";
-
+import { Link } from "react-router-dom";
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     userName: "",
-    lastName: "",
     email: "",
     contactNumber: "",
     password: "",
@@ -24,7 +24,6 @@ const Signup = () => {
 
   const {
     userName,
-    lastName,
     email,
     contactNumber,
     password,
@@ -69,130 +68,142 @@ const Signup = () => {
 
     dispatch(setSignupData(formData));
     const result = await dispatch(sendOtpApi(formData.email));
-    console.log("sendOtpApi jsx res: ", result);
-
     if (sendOtpApi.fulfilled.match(result)) {
       navigate("/otp");
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-        <div className="flex gap-x-4">
-          <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              User Name<sup className="text-pink-200">*</sup>
-            </p>
-            <input
-              required
-              type="text"
-              name="userName"
-              value={userName}
-              onChange={handleOnChange}
-              placeholder="Enter first name"
-              className="form-style w-full"
-            />
+    <div className="mt-7 flex flex-col justify-center items-center">
+      <h1 className="text-2xl font-medium">SignUp</h1>
+      <form
+        onSubmit={handleOnSubmit}
+        className="mt-5 min-w-80 mx-auto p-8 bg-gray-100 shadow-lg rounded-lg flex flex-col gap-y-4"
+      >
+        <div>
+          <label
+            htmlFor="userName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            User Name
           </label>
-          <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              Last Name <sup className="text-pink-200">*</sup>
-            </p>
-            <input
-              required
-              type="text"
-              name="lastName"
-              value={lastName}
-              onChange={handleOnChange}
-              placeholder="Enter last name"
-              className="form-style w-full"
-            />
-          </label>
-        </div>
-        <label className="w-full">
-          <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-            Email Address <sup className="text-pink-200">*</sup>
-          </p>
           <input
-            required
             type="text"
+            id="userName"
+            name="userName"
+            value={userName}
+            onChange={handleOnChange}
+            placeholder="Enter user name"
+            required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
             name="email"
             value={email}
             onChange={handleOnChange}
             placeholder="Enter email address"
-            className="form-style w-full"
-          />
-        </label>
-        <label className="w-full">
-          <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-            Contact Number <sup className="text-pink-200">*</sup>
-          </p>
-          <input
             required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="contactNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Contact Number
+          </label>
+          <input
             type="text"
+            id="contactNumber"
             name="contactNumber"
             value={contactNumber}
             onChange={handleOnChange}
             placeholder="Enter contact number"
-            className="form-style w-full"
+            required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
           />
-        </label>
-        <div className="flex gap-x-4">
-          <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              Create Password <sup className="text-pink-200">*</sup>
-            </p>
-            <input
-              required
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              onChange={handleOnChange}
-              placeholder="Enter Password"
-              className="form-style w-full !pr-10"
-            />
-            <span
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
-            >
-              {showPassword ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-              ) : (
-                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-              )}
-            </span>
+        </div>
+        <div className="relative">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Create Password
           </label>
-          <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              Confirm Password <sup className="text-pink-200">*</sup>
-            </p>
-            <input
-              required
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={handleOnChange}
-              placeholder="Confirm Password"
-              className="form-style w-full !pr-10"
-            />
-            <span
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
-            >
-              {showConfirmPassword ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-              ) : (
-                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-              )}
-            </span>
+          <input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            name="password"
+            value={password}
+            onChange={handleOnChange}
+            placeholder="Enter password"
+            required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
+          />
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 top-[35px] z-[10] cursor-pointer"
+          >
+            {showPassword ? (
+              <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+            ) : (
+              <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+            )}
+          </span>
+        </div>
+        <div className="relative">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Confirm Password
           </label>
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            id="confirmPassword"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={handleOnChange}
+            placeholder="Enter confirm password"
+            required
+            className="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2"
+          />
+          <span
+            onClick={() => setShowConfirmPassword((prev) => !prev)}
+            className="absolute right-3 top-[35px] z-[10] cursor-pointer"
+          >
+            {showConfirmPassword ? (
+              <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+            ) : (
+              <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+            )}
+          </span>
         </div>
         <button
           type="submit"
-          className="mt-6 rounded-[8px] bg-pink-50 py-[8px] px-[12px] font-medium text-richblack-900"
+          disabled={isLoading}
+          className="w-full mt-3 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
-          Create Account
+          {isLoading ? "Creating..." : "Create Account"}
         </button>
+
+        <div className="mt-3 flex justify-center text-sm text-richblack-500 gap-1">
+          <span>Already have an account ?</span>
+          <Link to="/login" className="hover:underline text-blue-500">
+            Login
+          </Link>
+        </div>
       </form>
     </div>
   );

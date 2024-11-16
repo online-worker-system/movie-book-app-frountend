@@ -18,13 +18,11 @@ const CustomOtpInput = () => {
 
   const handleVerifyAndSignup = async (e) => {
     e.preventDefault();
-    console.log("signup data: ", signupData);
     if (!signupData) return;
 
     const {
       accountType,
       userName,
-      lastName,
       email,
       contactNumber,
       password,
@@ -37,22 +35,25 @@ const CustomOtpInput = () => {
         email,
         accountType,
         userName,
-        lastName,
         contactNumber,
         password,
         confirmPassword,
       })
     );
-    console.log("signup res: ", result);
 
+    console.log("signup res: ", result);
     if (signUpApi.fulfilled.match(result)) {
       navigate("/");
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleVerifyAndSignup}>
+    <div className="mt-32 flex flex-col justify-center items-center">
+      <h1 className="text-2xl font-medium">Verify OTP</h1>
+      <form
+        className="mt-5 min-w-80 mx-auto p-8 bg-gray-100 shadow-lg rounded-lg space-y-6"
+        onSubmit={handleVerifyAndSignup}
+      >
         <OtpInput
           value={otp}
           onChange={setOtp}
@@ -68,8 +69,12 @@ const CustomOtpInput = () => {
           }}
           renderInput={(props) => <input {...props} name="otp" />}
         />
-        <button disabled={isLoading} type="submit" className="mt-4">
-          Verify OTP
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full mt-3 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+          {isLoading ? "Verifying..." : "Verify OTP"}
         </button>
       </form>
     </div>

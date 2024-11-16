@@ -11,6 +11,7 @@ const {
   ADD_SHOW_API,
   LIVE_YOUR_SHOW_API,
   GET_UNLIVE_SHOWS_API,
+  GET_CITIES_API,
 } = adminendpoints;
 
 // set this in api call to handle formData in server
@@ -166,6 +167,26 @@ export const getUnliveShows = createAsyncThunk(
   }
 );
 
+export const getCities = createAsyncThunk(
+  "city/getCities",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get(GET_CITIES_API);
+      console.log("getCities Response:", response.data);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("getCities error:", error);
+      return rejectWithValue(error.message || "Error while getting cities");
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -249,6 +270,17 @@ const adminSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getUnliveShows.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      // ------------------- getCities -------------------
+      .addCase(getCities.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCities.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getCities.rejected, (state) => {
         state.isLoading = false;
       });
   },

@@ -47,6 +47,14 @@ const UpdateScreen = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="custom-loader text-center"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-10 flex flex-col justify-center items-center">
       <h1 className="text-2xl font-medium">Update Screen</h1>

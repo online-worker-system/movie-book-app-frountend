@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCinema } from "../../redux/reducer/adminSlice";
+import { addCinema, getCities } from "../../redux/reducer/adminSlice";
 
 const AddCinema = () => {
   const dispatch = useDispatch();
@@ -9,27 +9,16 @@ const AddCinema = () => {
     cinemaName: "",
     pincode: "",
     cityId: "",
-  }
+  };
   const [formData, setFormData] = useState(initialState);
+  const [cities, setCities] = useState([]);
 
-  const cities = [
-    {
-      cityId: "672c6d02cbfa80af4d4f1e61",
-      cityName: "Indore",
-    },
-    {
-      cityId: "672c6d11cbfa80af4d4f1e65",
-      cityName: "Mhow",
-    },
-    {
-      cityId: "672c6d1ccbfa80af4d4f1e68",
-      cityName: "Pithampur",
-    },
-    {
-      cityId: "67305e750b7d8df480b0bf96",
-      cityName: "Bhopal",
-    },
-  ];
+  const fetchCities = async () => {
+    const result = await dispatch(getCities());
+    if (getCities.fulfilled.match(result)) {
+      setCities(result?.payload?.data);
+    }
+  };
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
@@ -40,15 +29,24 @@ const AddCinema = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form: ", formData);
-
     const result = await dispatch(addCinema(formData));
-    console.log("addCinema res: ", result);
-
     if (addCinema.fulfilled.match(result)) {
       setFormData(initialState);
+      fetchCities();
     }
   };
+
+  useEffect(() => {
+    fetchCities();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="custom-loader text-center"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-10 flex flex-col justify-center items-center">
@@ -111,7 +109,7 @@ const AddCinema = () => {
             <option value="">Select City</option>
             {cities.map((city) => {
               return (
-                <option key={city.cityId} value={city.cityId}>
+                <option key={city._id} value={city._id}>
                   {city.cityName}
                 </option>
               );
