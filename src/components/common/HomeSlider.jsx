@@ -63,10 +63,16 @@ const HomeSlider = () => {
           <div className="flex items-center justify-center">
             <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
               <li>
-                <NavLink to="/addCinema">Add Cinema</NavLink>
+                <NavLink to="/cinema/addCinema">Add Cinema</NavLink>
               </li>
               <li>
-                <NavLink to="/updateScreen">Update Screen</NavLink>
+                <NavLink to="/cinema/updateScreen">Update Screen</NavLink>
+              </li>
+              <li>
+                <NavLink to="/show/addShow">Add Show</NavLink>
+              </li>
+              <li>
+                <NavLink to="/show/liveYourShow">Live Show</NavLink>
               </li>
             </ul>
           </div>

@@ -11,9 +11,11 @@ export const adminendpoints = {
   ADD_CINEMA_API: BASE_URL + "/cinema/addCinema",
   UPDATE_SCREEN_API: BASE_URL + "/cinema/updateScreen",
   GET_SHOW_CINEMA_API: BASE_URL + "/cinema/getShowCinema",
+  GET_ADMIN_CINEMAS_API: BASE_URL + "/cinema/getCinemaDetailes",
   ADD_CITY_API: BASE_URL + "/cinema/addCity",
   ADD_SHOW_API: BASE_URL + "/show/addShow",
   LIVE_YOUR_SHOW_API: BASE_URL + "/show/liveYourShow",
+  GET_UNLIVE_SHOWS_API: BASE_URL + "/show/getUnliveShows",
 };
 
 export const movieEndPoins = {

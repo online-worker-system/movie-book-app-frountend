@@ -27,7 +27,7 @@ export const fetchMovieApi = createAsyncThunk(
   async ({ movieId }, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(GET_MOVIE_DETAILS, { movieId });
-      console.log("ol: ", response.data);
+      console.log("fetchMovies res: ", response.data);
       return response.data; // Return the movie data if successful
     } catch (error) {
       // Handle errors properly
