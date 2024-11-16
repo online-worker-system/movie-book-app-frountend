@@ -43,7 +43,6 @@ const UpdateScreen = () => {
     e.preventDefault();
     const result = await dispatch(updateScreen(formData));
     if (updateScreen.fulfilled.match(result)) {
-      console.log("Update Screen Success");
       setFormData(initialState);
     }
   };

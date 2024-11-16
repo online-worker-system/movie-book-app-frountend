@@ -9,7 +9,6 @@ import RegularSeat from "../seatComponents/RegularSeat";
 const ShowSeats = () => {
   const dispatch = useDispatch();
   const { cinema_id, movie_id } = useParams();
-
   const { seatsInfo, loading } = useSelector((state) => state.seat);
 
   const [seatArray, setSeatArray] = useState([]);
