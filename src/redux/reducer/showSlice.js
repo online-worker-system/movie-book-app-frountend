@@ -62,6 +62,8 @@ const showSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchShowDetailes.rejected, (state, action) => {
+        state.cinemas = [];
+        state.movieDetailes = {};
         state.loading = false;
         state.error = action.payload;
       });

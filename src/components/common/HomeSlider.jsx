@@ -4,6 +4,7 @@ import sliderPictureArray from "../../utils/sliderPicture";
 
 const HomeSlider = () => {
   const [index, setIndex] = useState(0);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,22 +41,55 @@ const HomeSlider = () => {
           </ul>
         </div>
 
-        <div className="flex items-center justify-center">
-          <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
-            <li>
-              <NavLink>ListYourShow</NavLink>
-            </li>
-            <li>
-              <NavLink>Corporates</NavLink>
-            </li>
-            <li>
-              <NavLink>Offers</NavLink>
-            </li>
-            <li>
-              <NavLink>Gift Cards</NavLink>
-            </li>
-          </ul>
-        </div>
+        {user.accountType === "Viewer" && (
+          <div className="flex items-center justify-center">
+            <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+              <li>
+                <NavLink>ListYourShow</NavLink>
+              </li>
+              <li>
+                <NavLink>Corporates</NavLink>
+              </li>
+              <li>
+                <NavLink>Offers</NavLink>
+              </li>
+              <li>
+                <NavLink>Gift Cards</NavLink>
+              </li>
+            </ul>
+          </div>
+        )}
+        {user.accountType === "Admin" && (
+          <div className="flex items-center justify-center">
+            <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+              <li>
+                <NavLink to="/cinema/addCinema">Add Cinema</NavLink>
+              </li>
+              <li>
+                <NavLink to="/cinema/updateScreen">Update Screen</NavLink>
+              </li>
+              <li>
+                <NavLink to="/show/addShow">Add Show</NavLink>
+              </li>
+              <li>
+                <NavLink to="/show/liveYourShow">Live Show</NavLink>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        {user.accountType === "SuperAdmin" && (
+          <div className="flex items-center justify-center">
+            <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+              <li>
+                <NavLink to="/movie/addMovie">Add Movie</NavLink>
+              </li>
+              <li>
+                <NavLink to="/addCity">Add City</NavLink>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
       <div className="bg-[rgb(235,235,235)] w-full h-[320px] flex items-center justify-center">
         {

@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GrFormSearch } from "react-icons/gr";
+import { setToken } from "../../redux/reducer/homeSlice";
 
 const NavBar = () => {
+  const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const [isLogedIn, setIsLogedIn] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      setIsLogedIn(true);
+    } else {
+      setIsLogedIn(false);
+    }
+  }, []);
+
+  const logoutClickHandler = () => {
+    localStorage.removeItem("token");
+    dispatch(setToken(""));
+    setIsLogedIn(false);
+  };
+
   return (
     <div className="w-full min-h-[50px] bg-white flex items-start justify-center mt-4">
       <div className="w-[90%] max-h-max flex items-center justify-between">
@@ -33,9 +54,18 @@ const NavBar = () => {
           </div>
         </div>
         <div className="flex items-center justify-between gap-5">
-          <button className="w-[67px] h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
-            <NavLink to="/login">Sign in</NavLink>
-          </button>
+          {isLogedIn ? (
+            <button
+              onClick={logoutClickHandler}
+              className="w-[67px] h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]"
+            >
+              Log Out
+            </button>
+          ) : (
+            <button className="w-[67px] h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
+              <NavLink to="/login">Sign in</NavLink>
+            </button>
+          )}
           <span>
             <RxHamburgerMenu className="w-[30px] h-[25px] text-[gray]" />
           </span>

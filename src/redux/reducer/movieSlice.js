@@ -148,6 +148,7 @@ const movieSlice = createSlice({
       .addCase(fetchMovieApi.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.movie = {};
       })
       .addCase(fetchMovieApi.fulfilled, (state, action) => {
         state.loading = false;

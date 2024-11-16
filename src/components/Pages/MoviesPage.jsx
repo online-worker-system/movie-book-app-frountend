@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../common/NavBar";
 import MovieCard from "../common/MovieCard";
 import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
 
 const MoviesPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { movie_id } = useParams();
-  const { allMovies, isLoading } = useSelector((state) => state.home); // Using isLoading from redux state
+  const { allMovies, isLoading } = useSelector((state) => state.home);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const [movie, setMovie] = useState(null);
   const [recommendedArray, setRecommendedArray] = useState([]);
@@ -37,7 +39,6 @@ const MoviesPage = () => {
     }
   }, [allMovies, movie_id]);
 
-  // Show loading state while fetching
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
@@ -45,6 +46,14 @@ const MoviesPage = () => {
       </div>
     );
   }
+
+  const movieBookHandler = (movieName, movie_id) => {
+    navigate(`/shows/${movieName}/${movie_id}`);
+  };
+
+  const updateMovieHandler = (movie_id) => {
+    navigate(`/movie/updatemovie/${movie_id}`);
+  };
 
   return (
     <div>
@@ -95,9 +104,27 @@ const MoviesPage = () => {
                     ))}
                   </div>
 
-                  <button className="text-[18px] rounded-md text-white bg-[rgb(245,69,100)] font-medium leading-[24px] tracking-[0.2px] p-[12px_8px] whitespace-nowrap overflow-hidden text-ellipsis">
-                    Book Tickets
-                  </button>
+                  {user?.accountType === "SuperAdmin" && (
+                    <button
+                      onClick={() => {
+                        updateMovieHandler(movie_id);
+                      }}
+                      className="text-[18px] rounded-md text-white bg-[rgb(245,69,100)] font-medium leading-[24px] tracking-[0.2px] p-[12px_8px] whitespace-nowrap overflow-hidden text-ellipsis"
+                    >
+                      Update Movie
+                    </button>
+                  )}
+
+                  {user.accountType === "Viewer" && (
+                    <button
+                      onClick={() => {
+                        movieBookHandler(movie.movieName, movie._id);
+                      }}
+                      className="text-[18px] rounded-md text-white bg-[rgb(245,69,100)] font-medium leading-[24px] tracking-[0.2px] p-[12px_8px] whitespace-nowrap overflow-hidden text-ellipsis"
+                    >
+                      Book Tickets
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
