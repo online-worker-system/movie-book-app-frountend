@@ -41,7 +41,7 @@ const HomeSlider = () => {
           </ul>
         </div>
 
-        {user.accountType === "Viewer" && (
+        {user?.accountType === "Viewer" && (
           <div className="flex items-center justify-center">
             <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
               <li>
@@ -59,7 +59,7 @@ const HomeSlider = () => {
             </ul>
           </div>
         )}
-        {user.accountType === "Admin" && (
+        {user?.accountType === "Admin" && (
           <div className="flex items-center justify-center">
             <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
               <li>
@@ -78,7 +78,7 @@ const HomeSlider = () => {
           </div>
         )}
 
-        {user.accountType === "SuperAdmin" && (
+        {user?.accountType === "SuperAdmin" && (
           <div className="flex items-center justify-center">
             <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
               <li>
