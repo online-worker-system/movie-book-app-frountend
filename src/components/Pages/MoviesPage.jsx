@@ -39,7 +39,11 @@ const MoviesPage = () => {
 
   // Show loading state while fetching
   if (isLoading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div class="custom-loader"></div>;
+      </div>
+    );
   }
 
   return (

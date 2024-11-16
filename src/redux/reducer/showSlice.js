@@ -2,24 +2,20 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosInstance from "../utils/apiConnector";
 import { movieEndPoins } from "../api";
 
-const { SHOW_SEATS_API } = movieEndPoins;
+const { GET_SHOWS_CINEMAS_API } = movieEndPoins;
 
 const initialState = {
-  seatsInfo: [],
+  cinemas: [],
   loading: false,
   error: null,
-  movie: {},
+  movieDetailes: {},
 };
 
-// Async thunk to fetch all movies from the API
-export const fetchSeatsDetailes = createAsyncThunk(
-  "seat/showSeats",
-  async ({ movieId, cinemaId }, { rejectWithValue }) => {
+export const fetchShowDetailes = createAsyncThunk(
+  "show/cinema",
+  async ({ movieId }, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.post(SHOW_SEATS_API, {
-        movieId,
-        cinemaId,
-      });
+      const response = await AxiosInstance.post(GET_SHOWS_CINEMAS_API, { movieId });
       return response.data; // Return the movie data if successful
     } catch (error) {
       // Handle errors properly
@@ -39,13 +35,15 @@ export const fetchSeatsDetailes = createAsyncThunk(
   }
 );
 
-// Reducer and actions
-const seatSlice = createSlice({
-  name: "seat",
+const showSlice = createSlice({
+  name: "show",
   initialState,
   reducers: {
-    setSeatInfo: (state, action) => {
-      state.seatsInfo = action.payload.data;
+    setCinemas: (state, action) => {
+      state.cinemas = action.payload.data.cinemas;
+    },
+    setMovieDetailes: (state, action) => {
+      state.movieDetailes = action.payload.data.movieDetailes;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -53,21 +51,22 @@ const seatSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSeatsDetailes.pending, (state) => {
+      .addCase(fetchShowDetailes.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchSeatsDetailes.fulfilled, (state, action) => {
+      .addCase(fetchShowDetailes.fulfilled, (state, action) => {
         state.loading = false;
-        state.seatsInfo = action.payload.data;
+        state.movieDetailes = action.payload.data.movieDetails;
+        state.cinemas = action.payload.data.cinemas;
         state.error = null;
       })
-      .addCase(fetchSeatsDetailes.rejected, (state, action) => {
+      .addCase(fetchShowDetailes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { setLoading, setSeatInfo } = seatSlice.actions;
-export default seatSlice.reducer;
+export const { setCinemas, setMovieDetailes, setLoading } = showSlice.actions;
+export default showSlice.reducer;
