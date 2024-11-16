@@ -36,7 +36,7 @@ const Home = () => {
       <HomeSlider></HomeSlider>
       {isLoading ? (
         <div className="w-screen flex items-center justify-center">
-          <div class="custom-loader text-center"></div>
+          <div className="custom-loader text-center"></div>
         </div>
       ) : (
         <div className="flex items-center justify-center gap-8 flex-wrap py-8 bg-[rgb(245,245,245)]">

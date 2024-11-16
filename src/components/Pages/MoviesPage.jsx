@@ -7,15 +7,15 @@ import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
 
 const MoviesPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { movie_id } = useParams();
-  const { allMovies, isLoading } = useSelector((state) => state.home); // Using isLoading from redux state
+  const { allMovies, isLoading } = useSelector((state) => state.home);
   const user = JSON.parse(localStorage.getItem("user"));
+
   const [movie, setMovie] = useState(null);
   const [recommendedArray, setRecommendedArray] = useState([]);
-  const navigate = useNavigate();
-  // Fetch movies if not already available
 
-  console.log(user);
+  // Fetch movies if not already available
   useEffect(() => {
     const fetchMovies = async () => {
       if (!allMovies || allMovies.length === 0) {
@@ -39,11 +39,10 @@ const MoviesPage = () => {
     }
   }, [allMovies, movie_id]);
 
-  // Show loading state while fetching
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center">
-        <div class="custom-loader"></div>;
+        <div className="custom-loader"></div>
       </div>
     );
   }
@@ -55,6 +54,7 @@ const MoviesPage = () => {
   const updateMovieHandler = (movie_id) => {
     navigate(`/movie/updatemovie/${movie_id}`);
   };
+
   return (
     <div>
       {movie ? (
