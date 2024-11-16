@@ -3,6 +3,7 @@
   height: 50px;
   display: grid;
 }
+
 .custom-loader::before,
 .custom-loader::after {
   content: "";
@@ -14,6 +15,7 @@
   background-repeat: no-repeat;
   animation: s2 1s infinite;
 }
+
 .custom-loader::before {
   margin: 4px;
   filter: hue-rotate(45deg);

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchShowDetailes } from "../../redux/reducer/showSlice";
 import NavBar from "../common/NavBar";
+
 const CinemasShowPage = () => {
   const dispatch = useDispatch();
   const { cinemas, movieDetailes, loading } = useSelector(

@@ -1,26 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import AxiosInstance from "../utils/apiConnector";
+import { movieEndPoins } from "../api";
 
-import {movieEndPoins} from "../api"
-// Initial state
+const { SHOW_SEATS_API } = movieEndPoins;
+
 const initialState = {
-  seatsInfo:[],
+  seatsInfo: [],
   loading: false,
   error: null,
   movie: {},
 };
 
-const {SHOW_SEATS_API} =movieEndPoins
 // Async thunk to fetch all movies from the API
 export const fetchSeatsDetailes = createAsyncThunk(
   "seat/showSeats",
-  async ({ movieId,cinemaId }, { rejectWithValue }) => {
+  async ({ movieId, cinemaId }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        SHOW_SEATS_API,
-        { movieId,cinemaId }
-      );
+      const response = await AxiosInstance.post(SHOW_SEATS_API, {
+        movieId,
+        cinemaId,
+      });
       return response.data; // Return the movie data if successful
     } catch (error) {
       // Handle errors properly
@@ -40,13 +39,11 @@ export const fetchSeatsDetailes = createAsyncThunk(
   }
 );
 
-
 // Reducer and actions
 const seatSlice = createSlice({
   name: "seat",
   initialState,
   reducers: {
-    
     setSeatInfo: (state, action) => {
       state.seatsInfo = action.payload.data;
     },
@@ -62,15 +59,15 @@ const seatSlice = createSlice({
       })
       .addCase(fetchSeatsDetailes.fulfilled, (state, action) => {
         state.loading = false;
-        state.seatsInfo=action.payload.data;
+        state.seatsInfo = action.payload.data;
         state.error = null;
       })
       .addCase(fetchSeatsDetailes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
   },
 });
 
-export const { setLoading,setSeatInfo } = seatSlice.actions;
+export const { setLoading, setSeatInfo } = seatSlice.actions;
 export default seatSlice.reducer;

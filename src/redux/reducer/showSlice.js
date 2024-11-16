@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import AxiosInstance from "../utils/apiConnector";
-import {movieEndPoins} from "../api"
-// Initial state
+import { movieEndPoins } from "../api";
+
+const { GET_SHOWS_CINEMAS_API } = movieEndPoins;
+
 const initialState = {
   cinemas: [],
   loading: false,
@@ -10,16 +11,11 @@ const initialState = {
   movieDetailes: {},
 };
 
-// Async thunk to fetch all movies from the API
-const {GET_SHOWS_CINEMAS_API} = movieEndPoins;
 export const fetchShowDetailes = createAsyncThunk(
   "show/cinema",
   async ({ movieId }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        GET_SHOWS_CINEMAS_API,
-        { movieId }
-      );
+      const response = await AxiosInstance.post(GET_SHOWS_CINEMAS_API, { movieId });
       return response.data; // Return the movie data if successful
     } catch (error) {
       // Handle errors properly
@@ -39,7 +35,6 @@ export const fetchShowDetailes = createAsyncThunk(
   }
 );
 
-// Reducer and actions
 const showSlice = createSlice({
   name: "show",
   initialState,

@@ -7,8 +7,10 @@ const {
   GET_ALL_CINEMAS_API,
   ADD_CINEMA_API,
   UPDATE_SCREEN_API,
+  GET_ADMIN_CINEMAS_API,
   ADD_SHOW_API,
   LIVE_YOUR_SHOW_API,
+  GET_UNLIVE_SHOWS_API,
 } = adminendpoints;
 
 // set this in api call to handle formData in server
@@ -73,9 +75,29 @@ export const updateScreen = createAsyncThunk(
       toast.success("Screen Updated Successfully");
       return response.data;
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
       console.error("updateScreen error:", error);
       return rejectWithValue(error.message || "Error while updating screen");
+    }
+  }
+);
+
+export const getAdminCinemas = createAsyncThunk(
+  "cinema/getAdminCinemas",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get(GET_ADMIN_CINEMAS_API);
+      console.log("getAdminCinemas res: ", response);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("getAdminCinemas error:", error);
+      return rejectWithValue(error.message || "Error while getting cinemas");
     }
   }
 );
@@ -105,7 +127,7 @@ export const liveYourShow = createAsyncThunk(
   "show/liveYourShow",
   async (showId, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.post(LIVE_YOUR_SHOW_API, showId);
+      const response = await AxiosInstance.post(LIVE_YOUR_SHOW_API, { showId });
       console.log("liveYourShow Response:", response.data);
 
       if (!response.data.success) {
@@ -118,6 +140,28 @@ export const liveYourShow = createAsyncThunk(
       toast.error(error.response.data.message);
       console.error("liveYourShow error:", error);
       return rejectWithValue(error.message || "Error while live show");
+    }
+  }
+);
+
+export const getUnliveShows = createAsyncThunk(
+  "show/getUnliveShows",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get(GET_UNLIVE_SHOWS_API);
+      console.log("getUnliveShows Response:", response.data);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.error("getUnliveShows error:", error);
+      return rejectWithValue(
+        error.message || "Error while getting unlive show"
+      );
     }
   }
 );
@@ -164,6 +208,17 @@ const adminSlice = createSlice({
         state.isLoading = false;
       })
 
+      // ------------------- getAdminCinemas -------------------
+      .addCase(getAdminCinemas.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAdminCinemas.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getAdminCinemas.rejected, (state) => {
+        state.isLoading = false;
+      })
+
       // ------------------- addShow -------------------
       .addCase(addShow.pending, (state) => {
         state.isLoading = true;
@@ -183,6 +238,17 @@ const adminSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(liveYourShow.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      // ------------------- getUnliveShows -------------------
+      .addCase(getUnliveShows.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUnliveShows.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getUnliveShows.rejected, (state) => {
         state.isLoading = false;
       });
   },
