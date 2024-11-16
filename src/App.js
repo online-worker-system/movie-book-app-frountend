@@ -18,6 +18,7 @@ import ShowSeats from "./components/Pages/ShowSeats";
 import AddShow from "./components/Pages/AddShow";
 import LiveYourShow from "./components/Pages/LiveYourShow";
 import CinemasShowPage from "./components/Pages/CinemasShowPage";
+
 function App() {
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">

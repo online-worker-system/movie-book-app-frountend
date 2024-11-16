@@ -46,7 +46,6 @@ const AddCinema = () => {
     console.log("addCinema res: ", result);
 
     if (addCinema.fulfilled.match(result)) {
-      console.log("Add Cinema Success");
       setFormData(initialState);
     }
   };

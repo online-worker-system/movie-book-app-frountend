@@ -16,7 +16,6 @@ const AddCity = () => {
     e.preventDefault();
     const result = await dispatch(addCity(cityName));
     if (addCity.fulfilled.match(result)) {
-      console.log("Add City Success");
       setCityName("");
     }
   };
