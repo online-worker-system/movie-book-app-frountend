@@ -16,11 +16,11 @@ const CinemasShowPage = () => {
     const fetchShowsDetailesData = async (movie_id) => {
       const result = await dispatch(fetchShowDetailes({ movieId: movie_id }));
 
-      if (fetchShowDetailes.fulfilled.match(result)) {
-        console.log("Fetch successful");
-      } else {
-        console.error("Fetch failed");
-      }
+      // if (fetchShowDetailes.fulfilled.match(result)) {
+      //   console.log("Fetch successful");
+      // } else {
+      //   console.error("Fetch failed");
+      // }
     };
 
     fetchShowsDetailesData(movie_id);

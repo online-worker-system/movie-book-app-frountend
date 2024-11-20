@@ -16,10 +16,10 @@ const Home = () => {
 
       if (getAllMoviesApi.fulfilled.match(resultAction)) {
       } else {
-        console.log(
-          "Data not fetched",
-          resultAction.payload || resultAction.error
-        );
+        // console.log(
+        //   "Data not fetched",
+        //   resultAction.payload || resultAction.error
+        // );
       }
     };
 

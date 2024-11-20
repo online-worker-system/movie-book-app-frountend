@@ -17,14 +17,13 @@ const initialState = {
 export const capturePayment = createAsyncThunk(
   "bookings/capturePayment",
   async ({ showId, seatsBook }, { rejectWithValue }) => {
-    console.log("API call started with data:", { showId, seatsBook });
-    console.log("inside Capture Pymenr");
+   
     try {
       const response = await AxiosInstance.post(CAPTURE_PAYMENT_API, {
         showId,
         seatsBook: seatsBook,
       });
-      console.log("Payment data captured:", response.data);
+      
       return response.data; // Return payment data
     } catch (error) {
       if (error.response) {
@@ -44,7 +43,7 @@ export const capturePayment = createAsyncThunk(
 export const verifyPayment = createAsyncThunk(
   "bookings/verifyPayment",
   async (verificationData, { rejectWithValue }) => {
-    console.log("Verification Data : ", verificationData);
+    
     try {
       const response = await AxiosInstance.post(
         VERIFICATION_PAYMENT_API,

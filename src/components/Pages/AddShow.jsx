@@ -7,8 +7,8 @@ const AddShow = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.admin);
   const initialState = {
-    // movieId: "6735fe572e8a00b13d84dd71",
-    movieId: "6735c314a4fd81581f50c7e9",
+    movieId: "6735fe572e8a00b13d84dd71",
+    //local movieId: "6735c314a4fd81581f50c7e9",
     cinemaId: "",
     screenId: "",
     showStart: "",

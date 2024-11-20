@@ -26,9 +26,7 @@ const ShowSeats = () => {
 
   const { capturePaymentData } = useSelector((state) => state.payment);
 
-  console.log("capturePAyemnt :", capturePaymentData);
-
-  // console.log("Seat: ",seats)
+  
 
   useEffect(() => {
     const fetchSeatsData = async () => {
@@ -37,9 +35,9 @@ const ShowSeats = () => {
       );
 
       if (fetchSeatsDetailes.fulfilled.match(result)) {
-        console.log("Fetch successful");
+        // console.log("Fetch successful");
       } else {
-        console.error("Fetch failed");
+        // console.error("Fetch failed");
       }
     };
 
@@ -115,13 +113,11 @@ const ShowSeats = () => {
   const bookTicketsHandler = async () => {
     const requestData = { showId, seatsBook: seats };
 
-    console.log(requestData);
-    console.log("hello");
+  
     try {
       // Dispatch capturePayment thunk
       const captureResponse = await dispatch(capturePayment(requestData));
 
-      console.log("Payment captured successfully:", captureResponse);
 
       const amount = capturePaymentData.data.amount;
 
@@ -158,9 +154,9 @@ const ShowSeats = () => {
             const verifyResponse = await dispatch(
               verifyPayment(verificationData)
             );
-            console.log("Payment Verified:", verifyResponse);
+            // console.log("Payment Verified:", verifyResponse);
           } catch (error) {
-            console.error("Payment Verification Failed:", error.message);
+             console.error("Payment Verification Failed:", error.message);
           }
         },
       };
@@ -169,7 +165,7 @@ const ShowSeats = () => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("Error capturing payment:", error.message);
+      // console.error("Error capturing payment:", error.message);
     }
   };
 
