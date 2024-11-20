@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import sliderPictureArray from "../../utils/sliderPicture";
 
+console.log("hello");
 const HomeSlider = () => {
+  const [dummy,setdummy]=useState([]);
   const [index, setIndex] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -77,6 +79,7 @@ const HomeSlider = () => {
             </ul>
           </div>
         )}
+
 
         {user?.accountType === "SuperAdmin" && (
           <div className="flex items-center justify-center">
