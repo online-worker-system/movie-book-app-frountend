@@ -41,7 +41,7 @@ function App() {
         ></Route>
         <Route
           path="/shows/:movieName/:movie_id"
-          element={<CinemasShowPage></CinemasShowPage>}
+          element={<CinemasShowPage />}
         ></Route>
 
         {/* ------------------ Super-Admin Routes ------------------- */}

@@ -5,13 +5,13 @@ import { fetchShowDetailes } from "../../redux/reducer/showSlice";
 import NavBar from "../common/NavBar";
 
 const CinemasShowPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { movie_id } = useParams();
   const { cinemas, movieDetailes, loading } = useSelector(
     (state) => state.show
   );
 
-  const { movie_id } = useParams();
   useEffect(() => {
     const fetchShowsDetailesData = async (movie_id) => {
       const result = await dispatch(fetchShowDetailes({ movieId: movie_id }));
@@ -54,10 +54,10 @@ const CinemasShowPage = () => {
   return (
     <div>
       <NavBar></NavBar>
-      <div>
+      <div className="p-10">
         <p>
           {movieDetailes?.movieName}
-          <span>{movieDetailes?.supportingLanguage} </span>
+          <span> ({movieDetailes?.supportingLanguages?.join(", ")})</span>
         </p>
 
         <div>
@@ -94,17 +94,19 @@ const CinemasShowPage = () => {
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <h3 style={{ color: "#333" }}>{cinema.cinemaName}</h3>
               <p>
-                <strong>City:</strong> {cinema.city}
+                <span className="font-bold">Cinema:</span> {cinema.cinemaName}
+              </p>
+              <p className="capitalize">
+                <span className="font-bold">City:</span> {cinema.city}
               </p>
               <p>
-                <strong>Pincode:</strong> {cinema.pincode}
+                <span className="font-bold">Pincode:</span> {cinema.pincode}
               </p>
               <p>
-                <strong>Show Timing:</strong>{" "}
+                <span className="font-bold">Show Timing: </span>
                 <button
-                  className="border-[1px] border-[#999] p-[4px] text-[#4abd5d] h-[40px] w-[100px] text-center rounded-[4px]"
+                  className="border border-[#999] px-3 py-1 text-[#4abd5d] text-center rounded-md"
                   onClick={() => {
                     showClickHandler(movie_id, cinema.cinemaId, cinema.timing);
                   }}
@@ -113,9 +115,12 @@ const CinemasShowPage = () => {
                 </button>
               </p>
               <p>
-                <strong>Show Dates:</strong>{" "}
-                {new Date(cinema.showStart).toLocaleDateString()} -{" "}
-                {new Date(cinema.showEnd).toLocaleDateString()}
+                <span className="font-bold">Show Dates: </span>
+                {`${new Date(
+                  cinema.showStart
+                ).toLocaleDateString()} - ${new Date(
+                  cinema.showEnd
+                ).toLocaleDateString()}`}
               </p>
             </div>
           ))}
