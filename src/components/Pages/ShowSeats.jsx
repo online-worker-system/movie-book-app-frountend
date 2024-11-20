@@ -97,7 +97,7 @@ const ShowSeats = () => {
 
   useEffect(() => {
     const handleSocketEvents = () => {
-      console.log("Setting up socket listener");
+      console.log("Setting up socket listener...");
 
       socket.on("seatsUpdated", (updatedSeatIds) => {
         console.log("on seatsUpdated:", updatedSeatIds);
@@ -114,7 +114,7 @@ const ShowSeats = () => {
         updateSeatStatuses(seatsToRevertIds, "Available");
       });
 
-      console.log("Socket listener is set up");
+      console.log("Socket listener is set up...");
     };
 
     handleSocketEvents();
