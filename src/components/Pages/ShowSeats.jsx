@@ -61,7 +61,7 @@ const ShowSeats = () => {
       const seatIds = mySeats.map((seat) => seat._id);
       // console.log("Book: ", seatIds);
       const res = await axios.post(
-        "http://localhost:5000/api/v1/show/reserveSeats",
+        "https://movie-book-app-backend.vercel.app/api/v1/show/reserveSeats",
         {
           seatIds,
         },
