@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSeatsDetailes } from "../../redux/reducer/seatSlice";
 import VipSeat from "../seatComponents/VipSeat";
 import BolconySeat from "../seatComponents/BalconySeat";
 import RegularSeat from "../seatComponents/RegularSeat";
-
+import AxiosInstance from "../../redux/utils/apiConnector";
+import {
+  capturePayment,
+  verifyPayment,
+} from "../../redux/reducer/paymentSlice";
 const ShowSeats = () => {
   const dispatch = useDispatch();
   const { cinema_id, movie_id, timing } = useParams();
@@ -15,6 +20,15 @@ const ShowSeats = () => {
   const [regularSeat, setRegularSeat] = useState([]);
   const [balconySeat, setBalconySeat] = useState([]);
   const [vipSeat, setVipSeat] = useState([]);
+  const [showId, setShowId] = useState(null);
+
+  const seats = useSelector((state) => state.book.seats);
+
+  const { capturePaymentData } = useSelector((state) => state.payment);
+
+  console.log("capturePAyemnt :", capturePaymentData);
+
+  // console.log("Seat: ",seats)
 
   useEffect(() => {
     const fetchSeatsData = async () => {
@@ -38,6 +52,8 @@ const ShowSeats = () => {
       // Filter by timing first
       const filteredData = seatsInfo.filter((item) => item.timing === timing);
 
+      setShowId(filteredData[0]._id);
+      // console.log("SeastsINfo :",seatsInfo);
       if (filteredData.length > 0) {
         // Assuming `filteredData` contains one object after filtering
         const selectedShow = filteredData[0]; // Adjust logic if multiple shows can match
@@ -94,6 +110,67 @@ const ShowSeats = () => {
 
     // Build the final formatted string
     return `${day} ${month}, ${hours}:${formattedMinutes} ${ampm}`;
+  };
+
+  const bookTicketsHandler = async () => {
+    const requestData = { showId, seatsBook: seats };
+
+    console.log(requestData);
+    console.log("hello");
+    try {
+      // Dispatch capturePayment thunk
+      const captureResponse = await dispatch(capturePayment(requestData));
+
+      console.log("Payment captured successfully:", captureResponse);
+
+      const amount = capturePaymentData.data.amount;
+
+      console.log(amount);
+      // Razorpay payment options
+      const options = {
+        key: "rzp_test_4Pd7FCcIYATYXN", // Razorpay test key
+        amount,
+        currency: "INR",
+        name: "Book my Cinema", // Business name
+        order_id: capturePaymentData.data.id, // Order ID from capture response
+        callback_url: `${AxiosInstance.defaults.baseURL}/payment/verifyPayment`, // Verification endpoint
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9977347016",
+        },
+        notes: {
+          address: "ABC Office",
+        },
+        handler: async (razorpayResponse) => {
+          try {
+            // Prepare data for verification
+            const verificationData = {
+              razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+              razorpay_order_id: razorpayResponse.razorpay_order_id,
+              razorpay_signature: razorpayResponse.razorpay_signature,
+              showId,
+              seatsForBook: seats,
+              totalAmount: amount,
+            };
+
+            // Dispatch verifyPayment thunk
+            const verifyResponse = await dispatch(
+              verifyPayment(verificationData)
+            );
+            console.log("Payment Verified:", verifyResponse);
+          } catch (error) {
+            console.error("Payment Verification Failed:", error.message);
+          }
+        },
+      };
+
+      // Initialize Razorpay and open the payment window
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error("Error capturing payment:", error.message);
+    }
   };
 
   return (
@@ -176,6 +253,15 @@ const ShowSeats = () => {
           )}
         </div>
       )}
+
+      <div className="w-full flex items-center justify-center mt-4">
+        <button
+          onClick={bookTicketsHandler}
+          className="w-[150px] h-[40px] bg-red-500 text-white outline-none"
+        >
+          Book
+        </button>
+      </div>
     </div>
   );
 };

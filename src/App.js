@@ -18,6 +18,9 @@ import ShowSeats from "./components/Pages/ShowSeats";
 import AddShow from "./components/Pages/AddShow";
 import LiveYourShow from "./components/Pages/LiveYourShow";
 import CinemasShowPage from "./components/Pages/CinemasShowPage";
+import TermsAndCounditionPage from "./components/Pages/TermsAndCounditionPage";
+import TransactionPage from "./components/Pages/TransactionPage";
+import TicketBox from "./components/common/TicketBox";
 
 function App() {
   return (
@@ -31,6 +34,15 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/otp" element={<CustomOtpInput />}></Route>
+        <Route
+          path="/book/terms-countditions"
+          element={<TermsAndCounditionPage></TermsAndCounditionPage>}
+        ></Route>
+        <Route
+          path="/book/transactions"
+          element={<TransactionPage></TransactionPage>}
+        ></Route>
+
         <Route
           path="/movie/:movieName/:movie_id"
           element={<MoviesPage />}

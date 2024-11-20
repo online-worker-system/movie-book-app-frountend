@@ -27,3 +27,9 @@ export const movieEndPoins = {
   SHOW_SEATS_API: BASE_URL + "/cinema/getShowCinema",
   GET_SHOWS_CINEMAS_API: BASE_URL + "/movie/getMovieCinema",
 };
+
+export const bookingEndPoints = {
+  GET_ALL_BOOKINGS_API: BASE_URL + "/booking/fetchBookings",
+  CAPTURE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
+  VERIFICATION_PAYMENT_API: BASE_URL + "/payment/verifyPayment",
+};
