@@ -20,7 +20,7 @@ export const capturePayment = createAsyncThunk(
     try {
       const response = await AxiosInstance.post(CAPTURE_PAYMENT_API, {
         showId,
-        seatsBook: seatsBook,
+        seatsBook,
       });
 
       return response.data; // Return payment data

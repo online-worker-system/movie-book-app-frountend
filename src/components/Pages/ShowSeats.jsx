@@ -5,8 +5,13 @@ import { fetchSeatsDetailes } from "../../redux/reducer/seatSlice";
 import VipSeat from "../seatComponents/VipSeat";
 import BolconySeat from "../seatComponents/BalconySeat";
 import RegularSeat from "../seatComponents/RegularSeat";
+import {
+  capturePayment,
+  verifyPayment,
+} from "../../redux/reducer/paymentSlice";
 import { io } from "socket.io-client";
 import axios from "axios";
+import AxiosInstance from "../../redux/utils/apiConnector";
 
 // const socket = io("http://localhost:5000", {
 //   withCredentials: true, // Allow sending cookies or tokens
@@ -35,6 +40,12 @@ const ShowSeats = () => {
   const [vipSeat, setVipSeat] = useState([]);
   const [mySeats, setMySeats] = useState([]);
 
+  // add
+  const [showId, setShowId] = useState(null);
+  const seats = useSelector((state) => state.book.seats);
+  const { capturePaymentData } = useSelector((state) => state.payment);
+  console.log("capturePaymentData: ", capturePaymentData);
+
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
     const day = date.getDate();
@@ -42,26 +53,71 @@ const ShowSeats = () => {
     let hours = date.getHours();
     const minutes = date.getMinutes();
     const ampm = hours >= 12 ? "PM" : "AM";
-
-    // Convert to 12-hour format
-    hours = hours % 12;
-    hours = hours || 12; // Handle 0 as 12 for 12-hour clock
+    hours = hours % 12 || 12; // Convert to 12-hour format
 
     // Format minutes to always have two digits
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-
-    // Build the final formatted string
     return `${day} ${month}, ${hours}:${formattedMinutes} ${ampm}`;
   };
 
-  // Handle seat click
-  const toggleSeatSelection = (seat) => {
-    setMySeats(
-      (prevSeats) =>
-        prevSeats.some((selectedSeat) => selectedSeat._id === seat._id)
-          ? prevSeats.filter((selectedSeat) => selectedSeat._id !== seat._id) // Deselect seat
-          : [...prevSeats, seat] // Select seat
-    );
+  const bookTicketsHandler = async (seatIds) => {
+    const requestData = { showId: seatArray[0]._id, seatsBook: seatIds };
+
+    try {
+      // Dispatch capturePayment thunk
+      console.log("payment start: ", capturePaymentData);
+      const captureResponse = await dispatch(capturePayment(requestData));
+      console.log("payment end: ", captureResponse.payload);
+
+      const amount = captureResponse.payload.data.amount;
+      console.log(amount);
+
+      // Razorpay payment options
+      const options = {
+        key: "rzp_test_4Pd7FCcIYATYXN", // Razorpay test key
+        amount,
+        currency: "INR",
+        name: "Book my Cinema", // Business name
+        order_id: captureResponse.payload.data.id, // Order ID from capture response
+        callback_url: `${AxiosInstance.defaults.baseURL}/payment/verifyPayment`, // Verification endpoint
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9977347016",
+        },
+        notes: {
+          address: "ABC Office",
+        },
+        handler: async (razorpayResponse) => {
+          try {
+            // Prepare data for verification
+            const verificationData = {
+              razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+              razorpay_order_id: razorpayResponse.razorpay_order_id,
+              razorpay_signature: razorpayResponse.razorpay_signature,
+              showId: seatArray[0]._id,
+              seatsForBook: seatIds,
+              totalAmount: amount,
+            };
+
+            // Dispatch verifyPayment thunk
+            const verifyResponse = await dispatch(
+              verifyPayment(verificationData)
+            );
+            console.log("Payment Verified:", verifyResponse);
+          } catch (error) {
+            console.error("Payment Verification Failed:", error.message);
+          }
+        },
+      };
+      console.log("done");
+
+      // Initialize Razorpay and open the payment window
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      // console.error("Error capturing payment:", error.message);
+    }
   };
 
   // Book Now functionality
@@ -71,7 +127,7 @@ const ShowSeats = () => {
       // console.log("Book: ", seatIds);
       const res = await axios.post(
         "https://movie-book-app-backend.onrender.com/api/v1/show/reserveSeats",
-        // "http://localhost:5000/api/v1/shows/reserveSeats",
+        // "http://localhost:5000/api/v1/show/reserveSeats",
         {
           seatIds,
         },
@@ -85,6 +141,7 @@ const ShowSeats = () => {
       if (res?.data?.success) {
         // Navigate to the payment page and send seatIds as part of the state
         alert(res?.data?.message);
+        bookTicketsHandler(seatIds);
         // navigate("/make-payment", { state: { seatIds } });
       }
 
@@ -93,6 +150,34 @@ const ShowSeats = () => {
       console.error("Error booking seats:", error?.response?.data?.message);
       alert(error.response?.data?.message);
       window.location.reload();
+    }
+  };
+
+  // Handle seat click
+  const toggleSeatSelection = (seat) => {
+    setMySeats(
+      (prevSeats) =>
+        prevSeats.some((selectedSeat) => selectedSeat._id === seat._id)
+          ? prevSeats.filter((selectedSeat) => selectedSeat._id !== seat._id) // Deselect seat
+          : [...prevSeats, seat] // Select seat
+    );
+  };
+
+  const filterSeats = () => {
+    if (showSeatsArray.length > 0) {
+      setRegularSeat(
+        showSeatsArray.filter((seat) => seat.seatId.seatType === "REGULAR")
+      );
+      setBalconySeat(
+        showSeatsArray.filter((seat) => seat.seatId.seatType === "BALCONY")
+      );
+      setVipSeat(
+        showSeatsArray.filter((seat) => seat.seatId.seatType === "VIP")
+      );
+    } else {
+      setRegularSeat([]);
+      setBalconySeat([]);
+      setVipSeat([]);
     }
   };
 
@@ -156,68 +241,31 @@ const ShowSeats = () => {
         fetchSeatsDetailes({ movieId: movie_id, cinemaId: cinema_id })
       );
 
-      if (fetchSeatsDetailes.fulfilled.match(result)) {
-        console.log("Fetch successful");
-      } else {
+      if (!fetchSeatsDetailes.fulfilled.match(result)) {
         console.error("Fetch failed");
       }
     };
-
     fetchSeatsData();
   }, [dispatch, cinema_id, movie_id]);
 
   useEffect(() => {
-    const filterSeats = () => {
-      if (seatsInfo?.length > 0) {
-        // Filter by timing first
-        const filteredData = seatsInfo.filter((item) => item.timing === timing);
-
-        if (filteredData.length > 0) {
-          // Assuming `filteredData` contains one object after filtering
-          const { showSeats } = filteredData[0]; // Adjust logic if multiple shows can match
-
-          // Update seats state
-          setSeatArray(filteredData);
-          setShowSeatsArray(showSeats);
-          setRegularSeat(
-            showSeats.filter((item) => item.seatId.seatType === "REGULAR")
-          );
-          setBalconySeat(
-            showSeats.filter((item) => item.seatId.seatType === "BALCONY")
-          );
-          setVipSeat(
-            showSeats.filter((item) => item.seatId.seatType === "VIP")
-          );
-        } else {
-          setSeatArray([]);
-          setShowSeatsArray([]);
-          setRegularSeat([]);
-          setBalconySeat([]);
-          setVipSeat([]);
-        }
+    if (seatsInfo?.length > 0) {
+      const filteredData = seatsInfo.filter((item) => item.timing === timing);
+      if (filteredData.length > 0) {
+        const { showSeats } = filteredData[0];
+        // Update seats state
+        setSeatArray(filteredData);
+        setShowSeatsArray(showSeats);
+        filterSeats();
+      } else {
+        setSeatArray([]);
+        setShowSeatsArray([]);
+        filterSeats();
       }
-    };
-    filterSeats();
-  }, [seatsInfo]);
+    }
+  }, [seatsInfo, timing]);
 
   useEffect(() => {
-    const filterSeats = () => {
-      if (showSeatsArray.length > 0) {
-        setRegularSeat(
-          showSeatsArray.filter((seat) => seat.seatId.seatType === "REGULAR")
-        );
-        setBalconySeat(
-          showSeatsArray.filter((seat) => seat.seatId.seatType === "BALCONY")
-        );
-        setVipSeat(
-          showSeatsArray.filter((seat) => seat.seatId.seatType === "VIP")
-        );
-      } else {
-        setRegularSeat([]);
-        setBalconySeat([]);
-        setVipSeat([]);
-      }
-    };
     filterSeats();
   }, [showSeatsArray]);
 
@@ -234,11 +282,11 @@ const ShowSeats = () => {
           ) : (
             <div>
               <div className="w-screen flex flex-col items-center justify-start gap-2 p-4">
-                <div>{seatArray[0].cinemaId.cinemaName}</div>
+                <div>{seatArray[0]?.cinemaId?.cinemaName}</div>
                 <div className="flex items-center justify-start gap-3">
-                  <div>{seatArray[0].cinemaId.cinemaName} : </div>
-                  <div>{seatArray[0].cinemaId.cityId.cityName} |</div>
-                  <div>{formatDate(seatArray[0].showStart)}</div>
+                  <div>{seatArray[0]?.cinemaId?.cinemaName} : </div>
+                  <div>{seatArray[0]?.cinemaId?.cityId?.cityName} |</div>
+                  <div>{formatDate(seatArray[0]?.showStart)}</div>
                 </div>
               </div>
 
