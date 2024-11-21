@@ -115,7 +115,7 @@ const MoviesPage = () => {
                     </button>
                   )}
 
-                  {user.accountType === "Viewer" && (
+                  {user?.accountType === "Viewer" && (
                     <button
                       onClick={() => {
                         movieBookHandler(movie.movieName, movie._id);

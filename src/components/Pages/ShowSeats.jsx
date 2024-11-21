@@ -8,7 +8,16 @@ import RegularSeat from "../seatComponents/RegularSeat";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000", {
+//   withCredentials: true, // Allow sending cookies or tokens
+//   transports: ["websocket", "polling"],
+// });
+
+const socket = io("https://movie-book-app-backend.onrender.com", {
+  withCredentials: true, // Allow sending cookies or tokens
+  transports: ["websocket", "polling"],
+});
+
 const token = localStorage.getItem("token")
   ? JSON.parse(localStorage.getItem("token"))
   : null;
@@ -61,7 +70,8 @@ const ShowSeats = () => {
       const seatIds = mySeats.map((seat) => seat._id);
       // console.log("Book: ", seatIds);
       const res = await axios.post(
-        "https://movie-book-app-backend.vercel.app/api/v1/show/reserveSeats",
+        "https://movie-book-app-backend.onrender.com/api/v1/show/reserveSeats",
+        // "http://localhost:5000/api/v1/shows/reserveSeats",
         {
           seatIds,
         },
@@ -75,7 +85,7 @@ const ShowSeats = () => {
       if (res?.data?.success) {
         // Navigate to the payment page and send seatIds as part of the state
         alert(res?.data?.message);
-        navigate("/make-payment", { state: { seatIds } });
+        // navigate("/make-payment", { state: { seatIds } });
       }
 
       setMySeats([]); // Clear selected seats after booking
@@ -114,6 +124,18 @@ const ShowSeats = () => {
         updateSeatStatuses(seatsToRevertIds, "Available");
       });
 
+      socket.on("connect", () => {
+        console.log("Connected to the server:", socket.id);
+      });
+
+      socket.on("disconnect", () => {
+        console.log("Disconnected from the server");
+      });
+
+      socket.on("error", (err) => {
+        console.error("Socket.IO error:", err);
+      });
+
       console.log("Socket listener is set up...");
     };
 
@@ -121,6 +143,7 @@ const ShowSeats = () => {
 
     return () => {
       // Cleanup socket listeners
+      console.log("Socket listener clean up...");
       socket.off("seatsUpdated");
       socket.off("reservedSeats");
       socket.off("seatsToRevert");

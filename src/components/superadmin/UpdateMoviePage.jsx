@@ -11,7 +11,6 @@ const UpdateMoviePage = () => {
   const { movie } = useSelector((state) => state.movie);
   const formData = useSelector((state) => state.movie);
   const { loading, error } = formData;
-  console.log(formData);
 
   useEffect(() => {
     const getMovie = async (movie_id) => {

@@ -5,6 +5,8 @@ import movieReducer from "../reducer/movieSlice";
 import adminReducer from "../reducer/adminSlice";
 import seatReducer from "../reducer/seatSlice";
 import showReducer from "../reducer/showSlice";
+import bookReducer from "../reducer/bookingSlice";
+import paymentReducer from "../reducer/paymentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +16,7 @@ export const store = configureStore({
     admin: adminReducer,
     seat: seatReducer,
     show: showReducer,
+    book: bookReducer,
+    payment: paymentReducer,
   },
 });

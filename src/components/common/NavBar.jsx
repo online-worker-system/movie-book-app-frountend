@@ -21,6 +21,7 @@ const NavBar = () => {
 
   const logoutClickHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     dispatch(setToken(""));
     setIsLogedIn(false);
   };

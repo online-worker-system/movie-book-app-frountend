@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { sendOtpApi, setSignupData } from "../../redux/reducer/authSlice";
-
+import { Link } from "react-router-dom";
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -197,6 +197,13 @@ const Signup = () => {
         >
           {isLoading ? "Creating..." : "Create Account"}
         </button>
+
+        <div className="mt-3 flex justify-center text-sm text-richblack-500 gap-1">
+          <span>Already have an account ?</span>
+          <Link to="/login" className="hover:underline text-blue-500">
+            Login
+          </Link>
+        </div>
       </form>
     </div>
   );

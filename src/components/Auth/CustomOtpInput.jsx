@@ -41,7 +41,6 @@ const CustomOtpInput = () => {
       })
     );
 
-    console.log("signup res: ", result);
     if (signUpApi.fulfilled.match(result)) {
       navigate("/");
     }
