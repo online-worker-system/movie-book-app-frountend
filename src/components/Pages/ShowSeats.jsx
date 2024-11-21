@@ -44,7 +44,6 @@ const ShowSeats = () => {
   const [showId, setShowId] = useState(null);
   const seats = useSelector((state) => state.book.seats);
   const { capturePaymentData } = useSelector((state) => state.payment);
-  console.log("capturePaymentData: ", capturePaymentData);
 
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
@@ -65,13 +64,9 @@ const ShowSeats = () => {
 
     try {
       // Dispatch capturePayment thunk
-      console.log("payment start: ", capturePaymentData);
       const captureResponse = await dispatch(capturePayment(requestData));
-      console.log("payment end: ", captureResponse.payload);
 
       const amount = captureResponse.payload.data.amount;
-      console.log(amount);
-
       // Razorpay payment options
       const options = {
         key: "rzp_test_4Pd7FCcIYATYXN", // Razorpay test key
@@ -110,7 +105,6 @@ const ShowSeats = () => {
           }
         },
       };
-      console.log("done");
 
       // Initialize Razorpay and open the payment window
       const razorpay = new window.Razorpay(options);
@@ -124,7 +118,6 @@ const ShowSeats = () => {
   const handleBookNow = async () => {
     try {
       const seatIds = mySeats.map((seat) => seat._id);
-      // console.log("Book: ", seatIds);
       const res = await axios.post(
         "https://movie-book-app-backend.onrender.com/api/v1/show/reserveSeats",
         // "http://localhost:5000/api/v1/show/reserveSeats",
@@ -147,7 +140,6 @@ const ShowSeats = () => {
 
       setMySeats([]); // Clear selected seats after booking
     } catch (error) {
-      console.error("Error booking seats:", error?.response?.data?.message);
       alert(error.response?.data?.message);
       window.location.reload();
     }
