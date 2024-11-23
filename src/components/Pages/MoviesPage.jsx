@@ -158,11 +158,16 @@ const MoviesPage = () => {
                 {movie?.castMembers?.map((cast, index) => (
                   <div
                     key={index}
-                    className="py-2 px-3 sm:px-4 flex flex-col justify-center items-center bg-gray-300 rounded-sm"
+                    className="flex flex-col items-center justify-center"
                   >
-                    <p className="text-sm md:text-base font-medium whitespace-nowrap">
+                    <img
+                      className="h-[75px] w-[75px] md:h-[100px] md:w-[100px] rounded-full"
+                      src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
+                      alt="cast-image"
+                    />
+                    <h5 className="text-sm md:text-base mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
                       {cast}
-                    </p>
+                    </h5>
                     <h5 className="text-xs md:text-sm text-gray-500 tracking-[0.2px]">
                       Actor
                     </h5>
@@ -181,13 +186,11 @@ const MoviesPage = () => {
                     key={index}
                     className="flex flex-col items-center justify-center"
                   >
-                    <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px] bg-gray-300 rounded-full">
-                      <img
-                        className="h-[75px] w-[75px] md:h-[100px] md:w-[100px] bg-gray-300 rounded-full"
-                        src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
-                        alt="cast-image"
-                      />
-                    </div>
+                    <img
+                      className="h-[75px] w-[75px] md:h-[100px] md:w-[100px] rounded-full"
+                      src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
+                      alt="cast-image"
+                    />
                     <h5 className="text-sm md:text-base mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
                       {cast}
                     </h5>
@@ -200,7 +203,7 @@ const MoviesPage = () => {
             </div>
 
             <div>
-              <div className="mt-3 flex justify-between items-center">
+              <div className="mt-2 flex justify-between items-center">
                 <h4 className="text-xl sm:text-2xl lg:text-[28px] leading-8 font-bold tracking-[0.2px]">
                   You might also like
                 </h4>

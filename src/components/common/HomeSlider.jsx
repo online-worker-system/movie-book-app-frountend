@@ -17,9 +17,9 @@ const HomeSlider = ({ isShow = true }) => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center bg-[rgb(245,245,245)]">
-      {/* <div className="bg-[rgb(245,245,245)] flex flex-wrap items-center justify-between w-[90%] px-0 py-3">
-        <div className="flex items-center justify-center gap-3">
-          <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+      <div className="w-[90%] px-0 py-3 flex flex-wrap gap-2 items-center justify-between bg-[rgb(245,245,245)]">
+        <div>
+          <ul className="text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
             <li>
               <NavLink>Movies</NavLink>
             </li>
@@ -42,8 +42,8 @@ const HomeSlider = ({ isShow = true }) => {
         </div>
 
         {user?.accountType === "Viewer" && (
-          <div className="flex items-center justify-center">
-            <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+          <div>
+            <ul className="text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
               <li>
                 <NavLink>ListYourShow</NavLink>
               </li>
@@ -61,8 +61,8 @@ const HomeSlider = ({ isShow = true }) => {
         )}
 
         {user?.accountType === "Admin" && (
-          <div className="flex items-center justify-center">
-            <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+          <div>
+            <ul className="text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
               <li>
                 <NavLink to="/cinema/addCinema">Add Cinema</NavLink>
               </li>
@@ -80,8 +80,8 @@ const HomeSlider = ({ isShow = true }) => {
         )}
 
         {user?.accountType === "SuperAdmin" && (
-          <div className="flex items-center justify-center">
-            <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
+          <div>
+            <ul className="text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
               <li>
                 <NavLink to="/movie/addMovie">Add Movie</NavLink>
               </li>
@@ -91,7 +91,7 @@ const HomeSlider = ({ isShow = true }) => {
             </ul>
           </div>
         )}
-      </div> */}
+      </div>
       {isShow && (
         <div className="w-full home-banner-height sm:!h-full p-2 sm:px-3 sm:py-3 md:px-5 md:py-4 bg-[rgb(235,235,235)]">
           <img
