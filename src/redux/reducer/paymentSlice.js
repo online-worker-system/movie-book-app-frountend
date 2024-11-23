@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosInstance from "../utils/apiConnector";
 import { bookingEndPoints } from "../api";
 
-const { CAPTURE_PAYMENT_API, VERIFICATION_PAYMENT_API } = bookingEndPoints;
+const { CAPTURE_PAYMENT_API, VERIFICATION_PAYMENT_API, RESERVE_SEATS_API } = bookingEndPoints;
 
 const initialState = {
   seats: [],
@@ -12,6 +12,27 @@ const initialState = {
   capturePaymentData: null, // To store capture payment response
   paymentStatus: null, // To track payment status
 };
+
+// Async thunk to verify payment
+export const reserveSeats = createAsyncThunk(
+  "show/reserveSeats",
+  async ({ seatIds }, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post(RESERVE_SEATS_API, { seatIds });
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(
+          error.response.data.message || "Failed to reserve seats"
+        );
+      } else if (error.request) {
+        return rejectWithValue("No response from server");
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
 
 // Async thunk to capture payment
 export const capturePayment = createAsyncThunk(

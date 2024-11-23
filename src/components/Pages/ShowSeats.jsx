@@ -8,24 +8,20 @@ import RegularSeat from "../seatComponents/RegularSeat";
 import {
   capturePayment,
   verifyPayment,
+  reserveSeats,
 } from "../../redux/reducer/paymentSlice";
 import { io } from "socket.io-client";
-import axios from "axios";
 import AxiosInstance from "../../redux/utils/apiConnector";
 
 // const socket = io("http://localhost:5000", {
-//   withCredentials: true, // Allow sending cookies or tokens
+//   withCredentials: true,
 //   transports: ["websocket", "polling"],
 // });
 
 const socket = io("https://movie-book-app-backend.onrender.com", {
-  withCredentials: true, // Allow sending cookies or tokens
+  withCredentials: true,
   transports: ["websocket", "polling"],
 });
-
-const token = localStorage.getItem("token")
-  ? JSON.parse(localStorage.getItem("token"))
-  : null;
 
 const ShowSeats = () => {
   const navigate = useNavigate();
@@ -39,11 +35,6 @@ const ShowSeats = () => {
   const [balconySeat, setBalconySeat] = useState([]);
   const [vipSeat, setVipSeat] = useState([]);
   const [mySeats, setMySeats] = useState([]);
-
-  // add
-  const [showId, setShowId] = useState(null);
-  const seats = useSelector((state) => state.book.seats);
-  const { capturePaymentData } = useSelector((state) => state.payment);
 
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
@@ -61,20 +52,17 @@ const ShowSeats = () => {
 
   const bookTicketsHandler = async (seatIds) => {
     const requestData = { showId: seatArray[0]._id, seatsBook: seatIds };
-
     try {
-      // Dispatch capturePayment thunk
       const captureResponse = await dispatch(capturePayment(requestData));
 
       const amount = captureResponse.payload.data.amount;
-      // Razorpay payment options
       const options = {
-        key: "rzp_test_4Pd7FCcIYATYXN", // Razorpay test key
+        key: "rzp_test_4Pd7FCcIYATYXN",
         amount,
         currency: "INR",
-        name: "Book my Cinema", // Business name
-        order_id: captureResponse.payload.data.id, // Order ID from capture response
-        callback_url: `${AxiosInstance.defaults.baseURL}/payment/verifyPayment`, // Verification endpoint
+        name: "Book my Cinema",
+        order_id: captureResponse.payload.data.id,
+        callback_url: `${AxiosInstance.defaults.baseURL}/payment/verifyPayment`,
         prefill: {
           name: "Gaurav Kumar",
           email: "gaurav.kumar@example.com",
@@ -96,10 +84,8 @@ const ShowSeats = () => {
             };
 
             // Dispatch verifyPayment thunk
-            const verifyResponse = await dispatch(
-              verifyPayment(verificationData)
-            );
-            console.log("Payment Verified:", verifyResponse);
+            await dispatch(verifyPayment(verificationData));
+            navigate("/book/transactions");
           } catch (error) {
             console.error("Payment Verification Failed:", error.message);
           }
@@ -110,39 +96,24 @@ const ShowSeats = () => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      // console.error("Error capturing payment:", error.message);
+      console.error("Error capturing payment:", error.message);
     }
   };
 
   // Book Now functionality
   const handleBookNow = async () => {
-    try {
-      const seatIds = mySeats.map((seat) => seat._id);
-      const res = await axios.post(
-        "https://movie-book-app-backend.onrender.com/api/v1/show/reserveSeats",
-        // "http://localhost:5000/api/v1/show/reserveSeats",
-        {
-          seatIds,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    const seatIds = mySeats.map((seat) => seat._id);
 
-      if (res?.data?.success) {
-        // Navigate to the payment page and send seatIds as part of the state
-        alert(res?.data?.message);
-        bookTicketsHandler(seatIds);
-        // navigate("/make-payment", { state: { seatIds } });
-      }
-
-      setMySeats([]); // Clear selected seats after booking
-    } catch (error) {
-      alert(error.response?.data?.message);
+    const result = await dispatch(reserveSeats({ seatIds }));
+    if (reserveSeats.fulfilled.match(result)) {
+      alert(result?.payload?.message);
+      await bookTicketsHandler(seatIds);
+    } else {
+      alert(result?.payload);
       window.location.reload();
     }
+
+    setMySeats([]);
   };
 
   // Handle seat click
@@ -187,17 +158,17 @@ const ShowSeats = () => {
       console.log("Setting up socket listener...");
 
       socket.on("seatsUpdated", (updatedSeatIds) => {
-        console.log("on seatsUpdated:", updatedSeatIds);
+        // console.log("on seatsUpdated:", updatedSeatIds);
         updateSeatStatuses(updatedSeatIds, "Booked");
       });
 
       socket.on("reservedSeats", (reservedSeatIds) => {
-        console.log("on reservedSeats:", reservedSeatIds);
+        // console.log("on reservedSeats:", reservedSeatIds);
         updateSeatStatuses(reservedSeatIds, "Reserved");
       });
 
       socket.on("seatsToRevert", (seatsToRevertIds) => {
-        console.log("on seatsToRevert:", seatsToRevertIds);
+        // console.log("on seatsToRevert:", seatsToRevertIds);
         updateSeatStatuses(seatsToRevertIds, "Available");
       });
 

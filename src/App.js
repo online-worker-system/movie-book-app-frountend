@@ -24,7 +24,7 @@ import TicketBox from "./components/common/TicketBox";
 
 function App() {
   return (
-    <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
+    <div className="w-full flex flex-col bg-richblack-900 font-inter">
       <div>
         <Toaster position="top-center" />
       </div>

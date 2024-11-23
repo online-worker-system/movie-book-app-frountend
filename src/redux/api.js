@@ -32,4 +32,5 @@ export const bookingEndPoints = {
   GET_ALL_BOOKINGS_API: BASE_URL + "/booking/fetchBookings",
   CAPTURE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
   VERIFICATION_PAYMENT_API: BASE_URL + "/payment/verifyPayment",
+  RESERVE_SEATS_API: BASE_URL + "/show/reserveSeats",
 };

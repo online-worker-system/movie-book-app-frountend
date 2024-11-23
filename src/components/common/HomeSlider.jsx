@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import sliderPictureArray from "../../utils/sliderPicture";
 
-const HomeSlider = () => {
+const HomeSlider = ({ isShow = true }) => {
   const [index, setIndex] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -16,8 +16,8 @@ const HomeSlider = () => {
   }, []);
 
   return (
-    <div className="w-full h-max-h flex flex-col items-center justify-center bg-[rgb(245,245,245)]">
-      <div className="bg-[rgb(245,245,245)] flex items-center justify-between w-[90%] px-0 py-3">
+    <div className="w-full flex flex-col items-center justify-center bg-[rgb(245,245,245)]">
+      {/* <div className="bg-[rgb(245,245,245)] flex flex-wrap items-center justify-between w-[90%] px-0 py-3">
         <div className="flex items-center justify-center gap-3">
           <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
             <li>
@@ -59,6 +59,7 @@ const HomeSlider = () => {
             </ul>
           </div>
         )}
+
         {user?.accountType === "Admin" && (
           <div className="flex items-center justify-center">
             <ul className="flex items-center justify-center gap-5 text-[14px] font-sans font-[450] text-[rgb(51,51,51)]">
@@ -90,15 +91,15 @@ const HomeSlider = () => {
             </ul>
           </div>
         )}
-      </div>
-      <div className="bg-[rgb(235,235,235)] w-full h-[320px] flex items-center justify-center">
-        {
+      </div> */}
+      {isShow && (
+        <div className="w-full home-banner-height sm:!h-full p-2 sm:px-3 sm:py-3 md:px-5 md:py-4 bg-[rgb(235,235,235)]">
           <img
             src={sliderPictureArray[index].img}
-            className="w-[90%] h-[300px] object-cover"
-          ></img>
-        }
-      </div>
+            className="w-full h-full rounded-lg"
+          />
+        </div>
+      )}
     </div>
   );
 };

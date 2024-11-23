@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import NavBar from "../common/NavBar";
 import HomeSlider from "../common/HomeSlider";
+import MovieCard from "../common/MovieCard";
 import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { allMovies, isLoading } = useSelector((state) => state.home);
 
   useEffect(() => {
@@ -26,52 +25,19 @@ const Home = () => {
     fetchMovies();
   }, [dispatch]);
 
-  const movieClickHandler = (movieName, movieId) => {
-    navigate(`/movie/${movieName}/${movieId}`);
-  };
-
   return (
     <div>
       <NavBar />
-      <HomeSlider></HomeSlider>
+      <HomeSlider />
       {isLoading ? (
-        <div className="w-screen flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <div className="custom-loader text-center"></div>
         </div>
       ) : (
-        <div className="flex items-center justify-center gap-8 flex-wrap py-8 bg-[rgb(245,245,245)]">
+        <div className="w-full mt-8 sm:mt-10 lg:mt-12 flex items-center justify-center gap-5 lg:gap-8 flex-wrap">
           {allMovies.length ? (
             allMovies.map((movie) => (
-              <div
-                key={movie._id}
-                onClick={() => {
-                  movieClickHandler(movie.movieName, movie._id);
-                }}
-              >
-                <div className="w-[220px] h-[370px]">
-                  <img
-                    src={movie.thumbnail}
-                    className="w-[100%] h-[100%] object-cover rounded-lg"
-                    alt={movie.movieName}
-                  />
-                </div>
-                <div className="flex flex-col items-start justify-center">
-                  <span className="text-[20px] font-[500]">
-                    {movie.movieName}
-                  </span>
-                  <div className="flex items-start justify-center">
-                    {movie.genres.map((genre, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-center text-[rgb(105,105,100)] font-[400]"
-                      >
-                        <div>{genre}</div>
-                        {index !== movie.genres.length - 1 && <div>/</div>}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <MovieCard movie={movie} key={movie._id} />
             ))
           ) : (
             <p>No movies found</p>
