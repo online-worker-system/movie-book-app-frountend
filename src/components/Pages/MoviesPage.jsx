@@ -200,7 +200,7 @@ const MoviesPage = () => {
             </div>
 
             <div>
-              <div className="mt-5 flex justify-between items-center">
+              <div className="mt-3 flex justify-between items-center">
                 <h4 className="text-xl sm:text-2xl lg:text-[28px] leading-8 font-bold tracking-[0.2px]">
                   You might also like
                 </h4>
@@ -211,7 +211,7 @@ const MoviesPage = () => {
                   View All
                 </Link>
               </div>
-              <div className="mt-5 sm:mt-7 flex gap-8 overflow-x-scroll scrollbar-hide bg-[rgb(245,245,245)]">
+              <div className="mt-5 sm:mt-7 flex gap-5 md:gap-8 overflow-x-scroll scrollbar-hide bg-[rgb(245,245,245)]">
                 {recommendedArray?.slice(0, 6)?.map((recommmovie) => (
                   <MovieCard movie={recommmovie} key={recommmovie._id} />
                 ))}
