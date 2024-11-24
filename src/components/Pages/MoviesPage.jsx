@@ -15,12 +15,6 @@ const MoviesPage = () => {
   const { allMovies, isLoading } = useSelector((state) => state.home);
 
   const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
-  const backgroundImageStyle = {
-    backgroundImage: isMobile
-      ? "none"
-      : `linear-gradient(90deg, rgb(26, 26, 26) 24.97%, rgb(26, 26, 26) 38.3%, rgba(26, 26, 26, 0.04) 97.47%, rgb(26, 26, 26) 100%), 
-        url('https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/bhool-bhulaiyaa-3-et00353996-1728474428.jpg')`,
-  };
 
   const [movie, setMovie] = useState(null);
   const [recommendedArray, setRecommendedArray] = useState([]);
@@ -83,7 +77,12 @@ const MoviesPage = () => {
             <HomeSlider isShow={false} />
           </div>
           <div
-            style={backgroundImageStyle}
+            style={{
+              backgroundImage: isMobile
+                ? "none"
+                : `linear-gradient(90deg, rgb(26, 26, 26) 24.97%, rgb(26, 26, 26) 38.3%, rgba(26, 26, 26, 0.04) 97.47%, rgb(26, 26, 26) 100%), 
+        url(${movie?.banner})`,
+            }}
             className="w-full min-h-[280px] sm:min-h-[320px] md:min-h-[370px] xl:min-h-[500px] mx-auto sm:px-6 md:px-10 xl:px-12 flex items-center bg-no-repeat bg-right-top relative"
           >
             <div className="w-full h-full mt-2 flex flex-col sm:flex-row sm:gap-8 z-50">
@@ -152,7 +151,7 @@ const MoviesPage = () => {
                     onClick={() => {
                       movieBookHandler(movie.movieName, movie._id);
                     }}
-                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-5 rounded-lg lg:rounded-xl text-white bg-[rgb(245,69,100)] font-medium"
+                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-[18px] rounded-lg lg:rounded-xl text-white bg-[rgb(245,69,100)] font-medium"
                   >
                     Book Tickets
                   </button>
@@ -176,10 +175,7 @@ const MoviesPage = () => {
               </h4>
               <div className="mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
                 {movie?.cast?.map((cast, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center"
-                  >
+                  <div key={index} className="flex flex-col items-center">
                     <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px]">
                       <img
                         className="w-full h-full rounded-full"
@@ -204,10 +200,7 @@ const MoviesPage = () => {
               </h4>
               <div className="relative mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
                 {movie?.crew?.map((crew, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center"
-                  >
+                  <div key={index} className="flex flex-col items-center">
                     <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px]">
                       <img
                         className="w-full h-full rounded-full"
