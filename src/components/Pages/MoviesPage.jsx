@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import NavBar from "../common/NavBar";
 import MovieCard from "../common/MovieCard";
 import HomeSlider from "../common/HomeSlider";
 import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
 
 const MoviesPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { movie_id } = useParams();
-  const { allMovies, isLoading } = useSelector((state) => state.home);
   const user = JSON.parse(localStorage.getItem("user"));
+  const { allMovies, isLoading } = useSelector((state) => state.home);
+
+  const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
+  const backgroundImageStyle = {
+    backgroundImage: isMobile
+      ? "none"
+      : `linear-gradient(90deg, rgb(26, 26, 26) 24.97%, rgb(26, 26, 26) 38.3%, rgba(26, 26, 26, 0.04) 97.47%, rgb(26, 26, 26) 100%), 
+        url('https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/bhool-bhulaiyaa-3-et00353996-1728474428.jpg')`,
+  };
 
   const [movie, setMovie] = useState(null);
   const [recommendedArray, setRecommendedArray] = useState([]);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString("en-US", { month: "short" });
+    const year = date.getFullYear();
+
+    return `${day} ${month}, ${year}`;
+  };
+
+  const movieBookHandler = (movieName, movie_id) => {
+    navigate(`/shows/${movieName}/${movie_id}`);
+  };
+
+  const updateMovieHandler = (movie_id) => {
+    navigate(`/movie/updatemovie/${movie_id}`);
+  };
 
   // Fetch movies if not already available
   useEffect(() => {
@@ -48,14 +74,6 @@ const MoviesPage = () => {
     );
   }
 
-  const movieBookHandler = (movieName, movie_id) => {
-    navigate(`/shows/${movieName}/${movie_id}`);
-  };
-
-  const updateMovieHandler = (movie_id) => {
-    navigate(`/movie/updatemovie/${movie_id}`);
-  };
-
   return (
     <div>
       {movie ? (
@@ -64,30 +82,33 @@ const MoviesPage = () => {
           <div className="hidden md:block">
             <HomeSlider isShow={false} />
           </div>
-          <div className="custom-bg-image w-full min-h-[280px] sm:min-h-[320px] md:min-h-[370px] xl:min-h-[470px] mx-auto sm:px-6 md:px-10 xl:px-12 flex items-center bg-no-repeat bg-right-top relative">
+          <div
+            style={backgroundImageStyle}
+            className="w-full min-h-[280px] sm:min-h-[320px] md:min-h-[370px] xl:min-h-[500px] mx-auto sm:px-6 md:px-10 xl:px-12 flex items-center bg-no-repeat bg-right-top relative"
+          >
             <div className="w-full h-full mt-2 flex flex-col sm:flex-row sm:gap-8 z-50">
               <p className="sm:hidden px-5 mb-2 text-2xl font-semibold">
                 {movie?.movieName}
               </p>
               <img
                 src={movie?.thumbnail || ""}
-                className="hidden sm:block w-[175px] md:w-[205px] xl:w-[265px] rounded-lg"
+                className="hidden sm:block w-[175px] md:w-[205px] xl:w-[295px] rounded-lg"
                 alt={movie?.movieName || "Movie Thumbnail"}
               />
               <div className="px-4 sm:hidden">
                 <img
-                  src="https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/bhool-bhulaiyaa-3-et00353996-1728474428.jpg"
+                  src={movie?.banner || ""}
                   className="w-full rounded-md"
-                  alt={movie?.movieName || "Movie Thumbnail"}
+                  alt={movie?.banner || "Movie Banner"}
                 />
               </div>
 
-              <div className="px-6 sm:px-3 md:px-4 xl:px-7 py-4 sm:py-7 md:py-9 xl:py-12 flex flex-col gap-3 sm:gap-4 xl:gap-5">
+              <div className="px-6 sm:px-3 md:px-4 xl:px-7 py-4 sm:py-7 md:py-9 xl:py-12 flex flex-col gap-3 sm:gap-4 xl:gap-6">
                 <p className="hidden sm:block text-lg sm:text-2xl md:text-3xl xl:text-5xl sm:text-white font-semibold">
                   {movie?.movieName}
                 </p>
 
-                <div className="flex font-medium gap-3">
+                <div className="flex font-medium gap-2 sm:gap-3">
                   {movie?.supportingLanguages?.map((lang, index) => (
                     <div
                       key={index}
@@ -102,17 +123,17 @@ const MoviesPage = () => {
                   <span>2h 24m</span>
                   <span className="mx-2">•</span>
                   <div>
-                    {movie.genres.map((genre, index) => (
+                    {movie?.genres?.map((genre, index) => (
                       <span key={index}>
                         {genre}
-                        {index < movie.genres.length - 1 && ", "}
+                        {index < movie?.genres?.length - 1 && ", "}
                       </span>
                     ))}
                   </div>
                   <span className="mx-2">•</span>
                   <span>UA</span>
                   <span className="mx-2">•</span>
-                  <span>1 Nov, 2024</span>
+                  <span>{formatDate(movie?.releaseDate)}</span>
                 </div>
 
                 {user?.accountType === "SuperAdmin" && (
@@ -131,7 +152,7 @@ const MoviesPage = () => {
                     onClick={() => {
                       movieBookHandler(movie.movieName, movie._id);
                     }}
-                    className="w-fit text-sm sm:text-base px-4 sm:px-6 md:text-lg md:px-8 py-2 xl:text-xl xl:py-3 xl:px-10 rounded-md text-white bg-[rgb(245,69,100)] font-medium"
+                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-5 rounded-lg lg:rounded-xl text-white bg-[rgb(245,69,100)] font-medium"
                   >
                     Book Tickets
                   </button>
@@ -139,36 +160,37 @@ const MoviesPage = () => {
               </div>
             </div>
           </div>
-
-          <div className="mx-auto mt-7 sm:mt-10 px-6 md:px-10 xl:px-12 flex flex-col gap-8 sm:gap-12">
+          <div className="mx-auto mt-7 sm:mt-10 px-6 md:px-12 lg:px-16 flex flex-col gap-8 sm:gap-12">
             <div>
-              <h4 className="text-xl sm:text-2xl lg:text-[28px] leading-8 font-bold">
+              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold">
                 About the movie
               </h4>
-              <p className="mt-2 sm:mt-4 tracking-[0.2px] text-sm sm:text-base">
+              <p className="mt-3 sm:mt-5 tracking-[0.2px] text-sm md:text-base lg:text-lg lg:w-[75%]">
                 {movie?.summary}
               </p>
             </div>
 
             <div>
-              <h4 className="text-xl sm:text-2xl lg:text-[28px] leading-8 font-bold">
+              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold">
                 Cast
               </h4>
               <div className="mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
-                {movie?.castMembers?.map((cast, index) => (
+                {movie?.cast?.map((cast, index) => (
                   <div
                     key={index}
-                    className="flex flex-col items-center justify-center"
+                    className="flex flex-col items-center"
                   >
-                    <img
-                      className="h-[75px] w-[75px] md:h-[100px] md:w-[100px] rounded-full"
-                      src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
-                      alt="cast-image"
-                    />
-                    <h5 className="text-sm md:text-base mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
+                    <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px]">
+                      <img
+                        className="w-full h-full rounded-full"
+                        src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
+                        alt="cast-image"
+                      />
+                    </div>
+                    <h5 className="text-sm text-center md:text-base lg:text-lg mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
                       {cast}
                     </h5>
-                    <h5 className="text-xs md:text-sm text-gray-500 tracking-[0.2px]">
+                    <h5 className="text-xs text-center md:text-sm lg:text-base text-gray-500 tracking-[0.2px]">
                       Actor
                     </h5>
                   </div>
@@ -177,25 +199,27 @@ const MoviesPage = () => {
             </div>
 
             <div>
-              <h4 className="text-xl sm:text-2xl lg:text-[28px] leading-8 font-bold">
+              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold">
                 Crew
               </h4>
-              <div className="mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
-                {movie?.castMembers?.map((cast, index) => (
+              <div className="relative mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
+                {movie?.crew?.map((crew, index) => (
                   <div
                     key={index}
-                    className="flex flex-col items-center justify-center"
+                    className="flex flex-col items-center"
                   >
-                    <img
-                      className="h-[75px] w-[75px] md:h-[100px] md:w-[100px] rounded-full"
-                      src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
-                      alt="cast-image"
-                    />
-                    <h5 className="text-sm md:text-base mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
-                      {cast}
+                    <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px]">
+                      <img
+                        className="w-full h-full rounded-full"
+                        src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
+                        alt="cast-image"
+                      />
+                    </div>
+                    <h5 className="text-sm text-center md:text-base lg:text-lg mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
+                      {crew?.name}
                     </h5>
-                    <h5 className="text-xs md:text-sm text-gray-500 tracking-[0.2px]">
-                      Actor
+                    <h5 className="text-xs text-center md:text-sm lg:text-base text-gray-500 tracking-[0.2px]">
+                      {crew?.profession}
                     </h5>
                   </div>
                 ))}
@@ -204,7 +228,7 @@ const MoviesPage = () => {
 
             <div>
               <div className="mt-2 flex justify-between items-center">
-                <h4 className="text-xl sm:text-2xl lg:text-[28px] leading-8 font-bold tracking-[0.2px]">
+                <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold tracking-[0.2px]">
                   You might also like
                 </h4>
                 <Link
@@ -223,7 +247,10 @@ const MoviesPage = () => {
           </div>
         </>
       ) : (
-        <div className="text-center">Movie not found</div>
+        <div>
+          <NavBar />
+          <div className="text-2xl text-center mt-14">Movie not found</div>
+        </div>
       )}
     </div>
   );
