@@ -111,14 +111,14 @@ const MoviesPage = () => {
                   {movie?.supportingLanguages?.map((lang, index) => (
                     <div
                       key={index}
-                      className="text-sm sm:text-base py-1 xl:py-2 px-3 xl:px-4 bg-gray-300 rounded-sm"
+                      className="text-sm md:text-base py-1 xl:py-2 px-3 xl:px-4 bg-gray-300 rounded-sm"
                     >
                       <p>{lang}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap text-sm md:text-lg xl:text-xl font-medium sm:text-white">
+                <div className="flex flex-wrap text-sm sm:text-base md:text-lg xl:text-xl font-medium sm:text-white">
                   <span>2h 24m</span>
                   <span className="mx-2">•</span>
                   <div>
