@@ -140,7 +140,7 @@ const MoviesPage = () => {
                     onClick={() => {
                       updateMovieHandler(movie_id);
                     }}
-                    className="text-[18px] rounded-md text-white bg-[rgb(245,69,100)] font-medium leading-[24px] tracking-[0.2px] p-[12px_8px] whitespace-nowrap overflow-hidden text-ellipsis"
+                    className="text-[18px] rounded-md text-white bg-rose-500 font-medium leading-[24px] tracking-[0.2px] p-[12px_8px] whitespace-nowrap overflow-hidden text-ellipsis"
                   >
                     Update Movie
                   </button>
@@ -151,7 +151,7 @@ const MoviesPage = () => {
                     onClick={() => {
                       movieBookHandler(movie.movieName, movie._id);
                     }}
-                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-[18px] rounded-lg lg:rounded-xl text-white bg-[rgb(245,69,100)] font-medium"
+                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-[18px] rounded-lg lg:rounded-xl text-white bg-rose-500 font-medium"
                   >
                     Book Tickets
                   </button>
@@ -226,7 +226,7 @@ const MoviesPage = () => {
                 </h4>
                 <Link
                   to="/"
-                  className="text-sm sm:text-lg font-medium text-[#dc354b]"
+                  className="text-sm sm:text-lg font-medium text-rose-500"
                 >
                   View All
                 </Link>
