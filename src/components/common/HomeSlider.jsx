@@ -17,7 +17,7 @@ const HomeSlider = ({ isShow = true }) => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center bg-[rgb(245,245,245)]">
-      <div className="w-[90%] px-0 py-3 flex flex-wrap gap-2 items-center justify-between bg-[rgb(245,245,245)]">
+      <div className="w-full py-3 px-5 md:px-7 flex flex-wrap gap-2 items-center justify-between bg-[rgb(245,245,245)]">
         <div>
           <ul className="text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
             <li>
