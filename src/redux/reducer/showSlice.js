@@ -15,7 +15,9 @@ export const fetchShowDetailes = createAsyncThunk(
   "show/cinema",
   async ({ movieId }, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.post(GET_SHOWS_CINEMAS_API, { movieId });
+      const response = await AxiosInstance.post(GET_SHOWS_CINEMAS_API, {
+        movieId,
+      });
       return response.data; // Return the movie data if successful
     } catch (error) {
       // Handle errors properly

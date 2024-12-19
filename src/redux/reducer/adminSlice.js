@@ -26,7 +26,6 @@ export const getAllCinemas = createAsyncThunk(
   async ({ rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(GET_ALL_CINEMAS_API);
-      console.log("getCinemaDetails Response:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -46,7 +45,6 @@ export const addCinema = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(ADD_CINEMA_API, formData);
-      console.log("addCinema res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -67,7 +65,6 @@ export const updateScreen = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(UPDATE_SCREEN_API, formData);
-      console.log("updateScreen res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -88,7 +85,6 @@ export const getAdminCinemas = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get(GET_ADMIN_CINEMAS_API);
-      console.log("getAdminCinemas res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -108,7 +104,6 @@ export const addShow = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(ADD_SHOW_API, formData);
-      console.log("addShow Response:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -129,7 +124,6 @@ export const liveYourShow = createAsyncThunk(
   async (showId, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(LIVE_YOUR_SHOW_API, { showId });
-      console.log("liveYourShow Response:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -150,7 +144,6 @@ export const getUnliveShows = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get(GET_UNLIVE_SHOWS_API);
-      console.log("getUnliveShows Response:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -172,7 +165,6 @@ export const getCities = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get(GET_CITIES_API);
-      console.log("getCities Response:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);

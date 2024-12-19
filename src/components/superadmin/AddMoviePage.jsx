@@ -51,7 +51,7 @@ const AddMoviePage = () => {
       await dispatch(addMovie(formData));
       dispatch(resetFormData());
     } catch (err) {
-      console.error(err);
+      console.error("Error while adding movie: ", err);
     }
   };
 

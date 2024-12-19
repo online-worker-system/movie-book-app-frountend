@@ -1,23 +1,20 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(isLoggedIn);
 
   async function checkTokenIsValid() {
     const token = localStorage.getItem("accessToken");
-    const decodedToken = jwtDecode(token);
-    console.log("Decoded Token:", decodedToken);
+    // const decodedToken = jwtDecode(token);
 
     try {
       if (response.ok) {
-        console.log("shi khel gya bc");
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error in auth.js: ", error);
     }
   }
 

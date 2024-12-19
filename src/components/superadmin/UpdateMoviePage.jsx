@@ -35,7 +35,7 @@ const UpdateMoviePage = () => {
         })
       );
     } else {
-      console.log("Fetch failed:", result.payload || result.error);
+      console.log("Fetch failed in update movie: ", result.payload || result.error);
     }
   };
 

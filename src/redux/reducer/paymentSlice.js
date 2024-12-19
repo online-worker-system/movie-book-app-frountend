@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosInstance from "../utils/apiConnector";
 import { bookingEndPoints } from "../api";
 
-const { CAPTURE_PAYMENT_API, VERIFICATION_PAYMENT_API, RESERVE_SEATS_API } = bookingEndPoints;
+const { CAPTURE_PAYMENT_API, VERIFICATION_PAYMENT_API, RESERVE_SEATS_API } =
+  bookingEndPoints;
 
 const initialState = {
   seats: [],
