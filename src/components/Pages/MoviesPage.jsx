@@ -140,7 +140,7 @@ const MoviesPage = () => {
                     onClick={() => {
                       updateMovieHandler(movie_id);
                     }}
-                    className="text-[18px] rounded-md text-white bg-rose-500 font-medium leading-[24px] tracking-[0.2px] p-[12px_8px] whitespace-nowrap overflow-hidden text-ellipsis"
+                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-[18px] rounded-lg lg:rounded-xl text-white bg-rose-500 font-medium"
                   >
                     Update Movie
                   </button>
@@ -161,7 +161,7 @@ const MoviesPage = () => {
           </div>
           <div className="mx-auto mt-7 sm:mt-10 px-6 md:px-12 lg:px-16 flex flex-col gap-8 sm:gap-12">
             <div>
-              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold">
+              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-medium">
                 About the movie
               </h4>
               <p className="mt-3 sm:mt-5 tracking-[0.2px] text-sm md:text-base lg:text-lg lg:w-[75%]">
@@ -170,23 +170,23 @@ const MoviesPage = () => {
             </div>
 
             <div>
-              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold">
+              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-medium">
                 Cast
               </h4>
               <div className="mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
                 {movie?.cast?.map((cast, index) => (
                   <div key={index} className="flex flex-col items-center">
-                    <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px]">
+                    <div className="h-[75px] w-[75px] md:h-[90px] md:w-[90px]">
                       <img
                         className="w-full h-full rounded-full"
                         src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                         alt="cast-image"
                       />
                     </div>
-                    <h5 className="text-sm text-center md:text-base lg:text-lg mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
+                    <h5 className="text-sm text-center md:text-base mt-2 tracking-[0.2px] whitespace-nowrap">
                       {cast}
                     </h5>
-                    <h5 className="text-xs text-center md:text-sm lg:text-base text-gray-500 tracking-[0.2px]">
+                    <h5 className="text-xs text-center md:text-sm text-gray-500 tracking-[0.2px]">
                       Actor
                     </h5>
                   </div>
@@ -195,23 +195,23 @@ const MoviesPage = () => {
             </div>
 
             <div>
-              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold">
+              <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-medium">
                 Crew
               </h4>
               <div className="relative mt-3 sm:mt-5 flex gap-7 sm:gap-10 overflow-x-scroll scrollbar-hide">
                 {movie?.crew?.map((crew, index) => (
                   <div key={index} className="flex flex-col items-center">
-                    <div className="h-[75px] w-[75px] md:h-[100px] md:w-[100px]">
+                    <div className="h-[75px] w-[75px] md:h-[90px] md:w-[90px]">
                       <img
                         className="w-full h-full rounded-full"
                         src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
                         alt="cast-image"
                       />
                     </div>
-                    <h5 className="text-sm text-center md:text-base lg:text-lg mt-2 font-medium tracking-[0.2px] whitespace-nowrap">
+                    <h5 className="text-sm text-center md:text-base mt-2 tracking-[0.2px] whitespace-nowrap">
                       {crew?.name}
                     </h5>
-                    <h5 className="text-xs text-center md:text-sm lg:text-base text-gray-500 tracking-[0.2px]">
+                    <h5 className="text-xs text-center md:text-sm text-gray-500 tracking-[0.2px]">
                       {crew?.profession}
                     </h5>
                   </div>
@@ -221,7 +221,7 @@ const MoviesPage = () => {
 
             <div>
               <div className="mt-2 flex justify-between items-center">
-                <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-semibold md:font-bold tracking-[0.2px]">
+                <h4 className="text-xl sm:text-2xl lg:text-[32px] leading-8 font-medium tracking-[0.2px]">
                   You might also like
                 </h4>
                 <Link

@@ -12,10 +12,12 @@ const initialState = {
   categories: [],
   releaseDate: "",
   summary: "",
-  castMembers: "",
-  supportingLanguages: "",
-  thumbnailImage: null,
   genres: [],
+  cast: [],
+  crew: [],
+  supportingLanguages: [],
+  thumbnailImage: "",
+  bannerImage: "",
   loading: false,
   error: null,
   movie: {},
@@ -109,12 +111,7 @@ const movieSlice = createSlice({
     setFormData: (state, action) => {
       const { name, value } = action.payload;
       state[name] = value;
-    },
-    setMovie: (state, action) => {
-      state.movie = action.payload.data;
-    },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
+      console.log("jii: ", name, value, action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -152,18 +149,18 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovieApi.fulfilled, (state, action) => {
         state.loading = false;
-        state.movie = action.payload.data;
+        state.error = null;
         const movie = action.payload.data;
-
         state.movieName = movie.movieName;
         state.releaseDate = movie.releaseDate;
         state.summary = movie.summary;
-        state.castMembers = movie.castMembers;
-        state.supportingLanguages = movie.supportingLanguages;
-        state.thumbnailImage = movie.thumbnailImage;
         state.genres = movie.genres;
-
-        state.error = null;
+        state.cast = movie.cast;
+        state.crew = movie.crew;
+        state.supportingLanguages = movie.supportingLanguages;
+        state.thumbnailImage = movie.thumbnail;
+        state.bannerImage = movie.banner;
+        state.movie = movie;
       })
       .addCase(fetchMovieApi.rejected, (state, action) => {
         state.loading = false;
@@ -172,5 +169,5 @@ const movieSlice = createSlice({
   },
 });
 
-export const { setFormData, setLoading, setMovie } = movieSlice.actions;
+export const { setFormData, setLoading } = movieSlice.actions;
 export default movieSlice.reducer;

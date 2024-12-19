@@ -38,8 +38,8 @@ const AddCity = () => {
       <div className="hidden sm:block">
         <HomeSlider isShow={false} />
       </div>
-      <div className="mt-10 flex flex-col justify-center items-center">
-        <h1 className="text-2xl sm:text-[26px] lg:text-4xl text-rose-500 font-medium">
+      <div className="mt-8 flex flex-col justify-center items-center">
+        <h1 className="text-2xl sm:text-[26px] lg:text-[34px] text-rose-500 font-medium">
           Add City
         </h1>
         <form
