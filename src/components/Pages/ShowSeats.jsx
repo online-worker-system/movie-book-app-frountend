@@ -338,7 +338,7 @@ const ShowSeats = () => {
 
               <div className="text-center my-5">
                 <button
-                  className="bg-blue-500 text-white px-5 py-2 rounded"
+                  className="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2 rounded"
                   onClick={handleBookNow}
                   disabled={mySeats.length === 0}
                 >

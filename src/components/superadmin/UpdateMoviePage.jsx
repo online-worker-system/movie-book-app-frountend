@@ -93,7 +93,7 @@ const UpdateMoviePage = () => {
               minWidth: isMobile ? "0px" : "400px",
               padding: isMobile ? "22px" : "32px",
             }}
-            className="mx-auto my-5 bg-gray-200 shadow-lg rounded-lg space-y-5"
+            className="mx-auto my-3 sm:my-5 bg-gray-200 shadow-lg rounded-lg space-y-5"
           >
             {/* Movie Name */}
             <div>
@@ -318,7 +318,7 @@ const UpdateMoviePage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+              className="w-full bg-rose-500 text-white py-2 rounded-lg hover:bg-rose-600 transition"
             >
               {loading ? "Updating..." : "Update Movie"}
             </button>

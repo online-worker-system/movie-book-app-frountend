@@ -51,7 +51,7 @@ const LiveYourShow = () => {
                 <button
                   onClick={() => handleLiveYourShow(show._id)}
                   disabled={isLoading}
-                  className="w-full mt-3 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                  className="w-full mt-3 bg-rose-500 text-white py-2 rounded-lg hover:bg-rose-600 transition"
                 >
                   {isLoading ? "Updating..." : "Live Show"}
                 </button>
