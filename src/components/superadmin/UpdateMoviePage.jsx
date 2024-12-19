@@ -17,32 +17,27 @@ const UpdateMoviePage = () => {
 
   const isMobile = useMediaQuery({ query: "(max-width: 400px)" });
 
-  useEffect(() => {
-    const getMovie = async (movie_id) => {
-      const result = await dispatch(fetchMovieApi({ movieId: movie_id }));
-      console.log("Movie fetched: ", result);
+  const getMovie = async (movie_id) => {
+    const result = await dispatch(fetchMovieApi({ movieId: movie_id }));
 
-      if (fetchMovieApi.fulfilled.match(result)) {
-        // Dispatch the movie data to setFormData
-        dispatch(
-          setFormData({
-            movieName: result.payload.movieName,
-            categories: result.payload.categories,
-            releaseDate: result.payload.releaseDate,
-            summary: result.payload.summary,
-            castMembers: result.payload.castMembers,
-            supportingLanguages: result.payload.supportingLanguages,
-            thumbnailImage: result.payload.thumbnailImage,
-            genres: result.payload.genres,
-          })
-        );
-      } else {
-        console.log("Fetch failed:", result.payload || result.error);
-      }
-    };
-
-    getMovie(movie_id);
-  }, [dispatch, movie_id]);
+    if (fetchMovieApi.fulfilled.match(result)) {
+      // Dispatch the movie data to setFormData
+      dispatch(
+        setFormData({
+          movieName: result.payload.movieName,
+          categories: result.payload.categories,
+          releaseDate: result.payload.releaseDate,
+          summary: result.payload.summary,
+          castMembers: result.payload.castMembers,
+          supportingLanguages: result.payload.supportingLanguages,
+          thumbnailImage: result.payload.thumbnailImage,
+          genres: result.payload.genres,
+        })
+      );
+    } else {
+      console.log("Fetch failed:", result.payload || result.error);
+    }
+  };
 
   // Handle text input changes
   const handleInputChange = (e) => {
@@ -60,39 +55,24 @@ const UpdateMoviePage = () => {
     dispatch(setFormData({ name: field, value: updatedList }));
   };
 
-  // Handle file input changes
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    dispatch(setFormData({ name, value: files[0] }));
-  };
+  // // Handle file input changes
+  // const handleFileChange = (e) => {
+  //   const { name, files } = e.target;
+  //   dispatch(setFormData({ name, value: files[0] }));
+  // };
 
   // Handle form submission (for updating movie)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
-    const movieFormData = new FormData();
-    movieFormData.append("movieId", movie_id);
-    movieFormData.append("movieName", formData.movieName);
-    movieFormData.append("releaseDate", formData.releaseDate);
-    movieFormData.append("summary", formData.summary);
-    movieFormData.append("castMembers", formData.castMembers);
-    movieFormData.append("supportingLanguages", formData.supportingLanguages);
-
-    // Append categories and genres
-    formData.categories.forEach((category) =>
-      movieFormData.append("categories[]", category)
-    );
-    formData.genres.forEach((genre) => movieFormData.append("genres", genre));
-
-    // Append the thumbnail image if available
-    if (formData.thumbnailImage) {
-      movieFormData.append("thumbnailImage", formData.thumbnailImage);
-    }
-
-    // Dispatch the form data to Redux for API submission (update the movie)
-    const res = await dispatch(updateMovie(movieFormData));
+    let movieFormData = { ...formData, movieId: movie_id };
+    await dispatch(updateMovie(movieFormData));
+    getMovie(movie_id);
   };
+
+  useEffect(() => {
+    getMovie(movie_id);
+  }, [dispatch, movie_id]);
 
   return (
     <div className="bg-gray-100">

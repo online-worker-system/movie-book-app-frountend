@@ -31,7 +31,7 @@ const ChipInput = ({ name, label, editCast, disabled }) => {
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
         {label}
       </label>
-      <div className="flex flex-wrap gap-2 mt-3 mb-2 mx-1">
+      <div className="flex flex-wrap gap-2 mt-3 mb-1 mx-1">
         {tags.map((tag, index) => (
           <div
             key={index}

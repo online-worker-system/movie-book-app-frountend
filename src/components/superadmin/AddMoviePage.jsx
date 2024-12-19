@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
-import { setFormData, submitMovieForm } from "../../redux/reducer/movieSlice";
+import {
+  setFormData,
+  resetFormData,
+  addMovie,
+} from "../../redux/reducer/movieSlice";
 import NavBar from "../common/NavBar";
 import HomeSlider from "../common/HomeSlider";
 import ChipInput from "./ChipInput";
@@ -32,7 +36,6 @@ const AddMoviePage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("form: ", formData);
 
     if (
       formData.genres.length === 0 ||
@@ -43,14 +46,18 @@ const AddMoviePage = () => {
       return;
     }
 
-    // // Dispatch the form data to Redux for API submission
-    // try {
-    //   const res = await dispatch(submitMovieForm(movieFormData));
-    //   console.log(res);
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    // Dispatch the form data to Redux for API submission
+    try {
+      await dispatch(addMovie(formData));
+      dispatch(resetFormData());
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  useEffect(() => {
+    dispatch(resetFormData());
+  }, []);
 
   return (
     <div className="bg-gray-100">
