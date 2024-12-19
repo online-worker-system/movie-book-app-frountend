@@ -153,21 +153,19 @@ const CinemasShowPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-full px-3 md:px-4 lg:mr-16 flex flex-wrap  gap-2 sm:gap-4">
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((ind) => (
-                    <div
-                      onClick={() =>
-                        showClickHandler(
-                          movie_id,
-                          cinema?.cinemaId,
-                          cinema?.timing
-                        )
-                      }
-                      className="w-fit px-5 sm:px-7 py-2 border border-gray-400 rounded-md text-green-500 text-xs md:text-sm cursor-pointer text-center"
-                    >
-                      {cinema?.timing}
-                    </div>
-                  ))}
+                <div className="w-full h-fit mt-1 px-3 md:px-4 lg:mr-16 flex flex-wrap gap-2 sm:gap-4">
+                  <div
+                    onClick={() =>
+                      showClickHandler(
+                        movie_id,
+                        cinema?.cinemaId,
+                        cinema?.timing
+                      )
+                    }
+                    className="w-fit px-5 sm:px-7 py-2 border border-gray-400 rounded-md text-green-500 text-xs md:text-sm cursor-pointer text-center"
+                  >
+                    {cinema?.timing}
+                  </div>
                 </div>
               </div>
             ))}
