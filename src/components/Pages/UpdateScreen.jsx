@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { updateScreen } from "../../redux/reducer/adminSlice";
 import NavBar from "../common/NavBar";
@@ -7,6 +8,7 @@ import HomeSlider from "../common/HomeSlider";
 
 const UpdateScreen = () => {
   const dispatch = useDispatch();
+  const { screenId } = useParams();
   const { isLoading, error } = useSelector((state) => state.admin);
   const isMobile = useMediaQuery({ query: "(max-width: 400px)" });
 
@@ -26,7 +28,7 @@ const UpdateScreen = () => {
       seat: "",
       price: "",
     },
-    screenId: "673769dd0fcd6f4ce3954fee",
+    screenId,
   };
   const [formData, setFormData] = useState(initialState);
 

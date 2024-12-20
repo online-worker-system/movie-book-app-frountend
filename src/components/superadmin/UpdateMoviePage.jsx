@@ -35,7 +35,10 @@ const UpdateMoviePage = () => {
         })
       );
     } else {
-      console.log("Fetch failed in update movie: ", result.payload || result.error);
+      console.log(
+        "Fetch failed in update movie: ",
+        result.payload || result.error
+      );
     }
   };
 
@@ -85,7 +88,11 @@ const UpdateMoviePage = () => {
           Update Movie
         </h1>
 
-        {movie && movie.movieName ? (
+        {loading ? (
+          <div className="mt-20 sm:mt-28 flex items-center justify-center">
+            <div className="custom-loader"></div>
+          </div>
+        ) : movie && movie.movieName ? (
           <form
             onSubmit={handleSubmit}
             style={{

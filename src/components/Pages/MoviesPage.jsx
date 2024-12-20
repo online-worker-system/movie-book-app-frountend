@@ -36,6 +36,10 @@ const MoviesPage = () => {
     navigate(`/movie/updatemovie/${movie_id}`);
   };
 
+  const addShowHandler = (movie_id) => {
+    navigate(`/show/addShow/${movie_id}`);
+  };
+
   // Fetch movies if not already available
   useEffect(() => {
     const fetchMovies = async () => {
@@ -143,6 +147,17 @@ const MoviesPage = () => {
                     className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-[18px] rounded-lg lg:rounded-xl text-white bg-rose-500 font-medium"
                   >
                     Update Movie
+                  </button>
+                )}
+
+                {user?.accountType === "Admin" && (
+                  <button
+                    onClick={() => {
+                      addShowHandler(movie_id);
+                    }}
+                    className="w-fit mt-3 sm:mt-5 text-sm sm:text-base md:text-lg xl:text-xl px-6 sm:px-8 xl:px-14 py-3 xl:py-[18px] rounded-lg lg:rounded-xl text-white bg-rose-500 font-medium"
+                  >
+                    Add Show
                   </button>
                 )}
 

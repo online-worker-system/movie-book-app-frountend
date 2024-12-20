@@ -7,7 +7,6 @@ export const endpoints = {
 };
 
 export const adminendpoints = {
-  GET_ALL_CINEMAS_API: BASE_URL + "/cinema/getCinemaDetailes",
   ADD_CINEMA_API: BASE_URL + "/cinema/addCinema",
   UPDATE_SCREEN_API: BASE_URL + "/cinema/updateScreen",
   GET_SHOW_CINEMA_API: BASE_URL + "/cinema/getShowCinema",

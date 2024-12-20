@@ -12,6 +12,7 @@ import AddMoviePage from "./components/superadmin/AddMoviePage";
 import UpdateMoviePage from "./components/superadmin/UpdateMoviePage";
 import AddCity from "./components/Pages/AddCity";
 import UpdateScreen from "./components/Pages/UpdateScreen";
+import AdminCinemas from "./components/Pages/AdminCinemas";
 import AdminProtected from "./components/protected/AdminProtected";
 import SuperAdminProtected from "./components/protected/SuperAdminProtected";
 import ShowSeats from "./components/Pages/ShowSeats";
@@ -89,7 +90,15 @@ function App() {
           }
         ></Route>
         <Route
-          path="/cinema/updateScreen"
+          path="/cinema/adminCinemas"
+          element={
+            <AdminProtected>
+              <AdminCinemas />
+            </AdminProtected>
+          }
+        ></Route>
+        <Route
+          path="/cinema/:cinemaId/updateScreen/:screenId"
           element={
             <AdminProtected>
               <UpdateScreen />
@@ -97,7 +106,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/show/addShow"
+          path="/show/addShow/:movie_id"
           element={
             <AdminProtected>
               <AddShow />

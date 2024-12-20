@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 import { adminendpoints } from "../api";
 
 const {
-  GET_ALL_CINEMAS_API,
   ADD_CINEMA_API,
   UPDATE_SCREEN_API,
   GET_ADMIN_CINEMAS_API,
@@ -20,25 +19,6 @@ const {
 //     "Content-Type": "multipart/form-data",
 //   },
 // }
-
-export const getAllCinemas = createAsyncThunk(
-  "cinema/getCinemaDetails",
-  async ({ rejectWithValue }) => {
-    try {
-      const response = await AxiosInstance.post(GET_ALL_CINEMAS_API);
-
-      if (!response.data.success) {
-        throw new Error(response.data.message);
-      }
-
-      return response.data.data;
-    } catch (error) {
-      toast.error(error.response.data.message);
-      console.error("getCinemaDetails error:", error);
-      return rejectWithValue(error.message || "Error during getCinemaDetails");
-    }
-  }
-);
 
 export const addCinema = createAsyncThunk(
   "cinema/addCinema",
@@ -188,17 +168,6 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // ------------------- getCinemaDetails -------------------
-      .addCase(getAllCinemas.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getAllCinemas.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(getAllCinemas.rejected, (state) => {
-        state.isLoading = false;
-      })
-
       // ------------------- addCinema -------------------
       .addCase(addCinema.pending, (state) => {
         state.isLoading = true;

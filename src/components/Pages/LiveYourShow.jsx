@@ -6,6 +6,7 @@ const LiveYourShow = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.admin);
   const [shows, setShows] = useState([]);
+  console.log(shows);
 
   const fetchShows = async () => {
     const result = await dispatch(getUnliveShows());
@@ -25,19 +26,24 @@ const LiveYourShow = () => {
     fetchShows();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="w-screen h-screen flex items-center justify-center">
-        <div className="custom-loader text-center"></div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="w-screen h-screen flex items-center justify-center">
+  //       <div className="custom-loader text-center"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="mt-10 flex flex-col justify-center items-center">
       <h1 className="text-2xl font-medium">Live Your Show</h1>
       <div className="mt-5 grid grid-cols-4 gap-5">
-        {shows.length > 0 &&
+        {isLoading ? (
+          <div className="mt-20 sm:mt-28 flex items-center justify-center">
+            <div className="custom-loader"></div>
+          </div>
+        ) : (
+          shows.length > 0 &&
           shows.map((show) => {
             return (
               <div key={show._id} className="bg-gray-100 border rounded-md p-8">
@@ -57,7 +63,8 @@ const LiveYourShow = () => {
                 </button>
               </div>
             );
-          })}
+          })
+        )}
       </div>
     </div>
   );

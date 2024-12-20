@@ -59,6 +59,14 @@ const AddMoviePage = () => {
     dispatch(resetFormData());
   }, []);
 
+  if (loading) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="custom-loader"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gray-100">
       <NavBar />

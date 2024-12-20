@@ -67,10 +67,7 @@ const HomeSlider = ({ isShow = true }) => {
                 <NavLink to="/cinema/addCinema">Add Cinema</NavLink>
               </li>
               <li>
-                <NavLink to="/cinema/updateScreen">Update Screen</NavLink>
-              </li>
-              <li>
-                <NavLink to="/show/addShow">Add Show</NavLink>
+                <NavLink to="/cinema/adminCinemas">Update Screen</NavLink>
               </li>
               <li>
                 <NavLink to="/show/liveYourShow">Live Show</NavLink>

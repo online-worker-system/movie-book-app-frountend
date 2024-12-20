@@ -13,12 +13,19 @@ const CinemasShowPage = () => {
     (state) => state.show
   );
 
-  useEffect(() => {
-    const fetchShowsDetailesData = async (movie_id) => {
-      await dispatch(fetchShowDetailes({ movieId: movie_id }));
-    };
-    fetchShowsDetailesData(movie_id);
-  }, [dispatch, movie_id]);
+  const consolidateData = (data) => {
+    const map = new Map();
+    for (const item of data) {
+      const key = `${item.cinemaId}-${item.screens[0]}`;
+      if (!map.has(key)) {
+        map.set(key, { ...item, timing: [item.timing] });
+      } else {
+        map.get(key).timing.push(item.timing);
+      }
+    }
+
+    return Array.from(map.values());
+  };
 
   // const formatTime = (isoTimestamp) => {
   //   const date = new Date(isoTimestamp);
@@ -33,9 +40,12 @@ const CinemasShowPage = () => {
   //   return `${hours}:${minutes} ${amPm}`;
   // };
 
-  const showClickHandler = (movie_id, cinema_id, timing) => {
-    navigate(`/buytickets/${movie_id}/${cinema_id}/${timing}/seats`);
-  };
+  useEffect(() => {
+    const fetchShowsDetailesData = async (movie_id) => {
+      await dispatch(fetchShowDetailes({ movieId: movie_id }));
+    };
+    fetchShowsDetailesData(movie_id);
+  }, [dispatch, movie_id]);
 
   if (loading) {
     return (
@@ -93,8 +103,11 @@ const CinemasShowPage = () => {
                 </div>
               </div>
             </div>
-            {cinemas?.map((cinema, index) => (
-              <div key={index} className="w-full border-t-[1px] py-4 flex flex-col lg:flex-row gap-5 lg:gap-0">
+            {consolidateData(cinemas)?.map((cinema, index) => (
+              <div
+                key={index}
+                className="w-full border-t-[1px] py-4 flex flex-col lg:flex-row gap-5 lg:gap-0"
+              >
                 <div className="lg:w-[45%] text-sm sm:font-medium">
                   <div className="mb-3 w-fit cursor-pointer hover:underline">
                     {cinema?.cinemaName}
@@ -153,18 +166,19 @@ const CinemasShowPage = () => {
                   </div>
                 </div>
                 <div className="w-full h-fit mt-1 px-3 md:px-4 lg:mr-16 flex flex-wrap gap-2 sm:gap-4">
-                  <div
-                    onClick={() =>
-                      showClickHandler(
-                        movie_id,
-                        cinema?.cinemaId,
-                        cinema?.timing
-                      )
-                    }
-                    className="w-fit px-5 sm:px-7 py-2 border border-gray-400 rounded-md text-green-500 text-xs md:text-sm cursor-pointer text-center"
-                  >
-                    {cinema?.timing}
-                  </div>
+                  {cinema?.timing.map((time, index) => (
+                    <div
+                      key={index}
+                      onClick={() =>
+                        navigate(
+                          `/buytickets/${movie_id}/${cinema?.cinemaId}/${time}/seats`
+                        )
+                      }
+                      className="w-fit px-5 sm:px-7 py-2 border border-gray-400 rounded-md text-green-500 text-xs md:text-sm cursor-pointer text-center"
+                    >
+                      {time}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
