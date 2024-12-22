@@ -68,7 +68,7 @@ const AddMoviePage = () => {
   }
 
   return (
-    <div className="bg-gray-100">
+    <div className="h-screen bg-gray-100">
       <NavBar />
       <div className="hidden sm:block">
         <HomeSlider isShow={false} />

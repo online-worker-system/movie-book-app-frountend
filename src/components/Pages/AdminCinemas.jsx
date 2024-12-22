@@ -15,7 +15,6 @@ const AdminCinemas = () => {
     const fetchAdminCinemas = async () => {
       const result = await dispatch(getAdminCinemas());
       if (getAdminCinemas.fulfilled.match(result)) {
-        console.log(result?.payload?.data);
         setAdminCinemas(result?.payload?.data || []);
       }
     };
@@ -23,7 +22,7 @@ const AdminCinemas = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100">
+    <div className="h-screen bg-gray-100">
       <NavBar />
       <div className="hidden sm:block">
         <HomeSlider isShow={false} />
