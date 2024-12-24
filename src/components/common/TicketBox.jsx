@@ -1,7 +1,6 @@
 import React from "react";
 
 const TicketBox = ({ booking }) => {
-  console.log(booking);
   if (!booking) {
     return null; // Or display a loading message
   }

@@ -7,7 +7,6 @@ export const endpoints = {
 };
 
 export const adminendpoints = {
-  GET_ALL_CINEMAS_API: BASE_URL + "/cinema/getCinemaDetailes",
   ADD_CINEMA_API: BASE_URL + "/cinema/addCinema",
   UPDATE_SCREEN_API: BASE_URL + "/cinema/updateScreen",
   GET_SHOW_CINEMA_API: BASE_URL + "/cinema/getShowCinema",
@@ -32,4 +31,5 @@ export const bookingEndPoints = {
   GET_ALL_BOOKINGS_API: BASE_URL + "/booking/fetchBookings",
   CAPTURE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
   VERIFICATION_PAYMENT_API: BASE_URL + "/payment/verifyPayment",
+  RESERVE_SEATS_API: BASE_URL + "/show/reserveSeats",
 };

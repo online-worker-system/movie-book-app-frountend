@@ -11,7 +11,6 @@ export const sendOtpApi = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(SENDOTP_API, { email });
-      console.log("SENDOTP_API res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -51,7 +50,6 @@ export const signUpApi = createAsyncThunk(
         confirmPassword,
         otp,
       });
-      console.log("SIGNUP_API res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -72,7 +70,6 @@ export const loginApi = createAsyncThunk(
   async (formData, { dispatch, rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(LOGIN_API, formData);
-      console.log("LOGIN_API res:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message || "Unexpected login error");

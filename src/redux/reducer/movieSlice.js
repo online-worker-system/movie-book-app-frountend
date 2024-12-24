@@ -12,10 +12,12 @@ const initialState = {
   categories: [],
   releaseDate: "",
   summary: "",
-  castMembers: "",
-  supportingLanguages: "",
-  thumbnailImage: null,
   genres: [],
+  cast: [],
+  crew: [],
+  supportingLanguages: [],
+  thumbnailImage: "",
+  bannerImage: "",
   loading: false,
   error: null,
   movie: {},
@@ -27,8 +29,7 @@ export const fetchMovieApi = createAsyncThunk(
   async ({ movieId }, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(GET_MOVIE_DETAILS, { movieId });
-      console.log("fetchMovies res: ", response.data);
-      return response.data; // Return the movie data if successful
+      return response.data;
     } catch (error) {
       // Handle errors properly
       if (error.response) {
@@ -50,32 +51,41 @@ export const fetchMovieApi = createAsyncThunk(
 //update movie
 export const updateMovie = createAsyncThunk(
   "movie/updateMovie",
-  async (movieFormData, { dispatch, rejectWithValue }) => {
-    console.log(movieFormData);
+  async (movieFormData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.put(UPDATE_MOVIE_API, movieFormData);
-      return response.data; // Assuming the response contains the updated movie info or a success message
-    } catch (error) {
-      if (error.response) {
-        return rejectWithValue(
-          error.response.data.message || "Failed to update movie"
-        );
-      } else {
-        return rejectWithValue("Network error");
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
       }
+
+      toast.success("Movie Updated Successfully");
+      return response?.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.error("updateMovie error:", error);
+      return rejectWithValue(error.message || "Error while updating movie");
     }
   }
 );
 
 // Async action to submit the movie form
-export const submitMovieForm = createAsyncThunk(
+export const addMovie = createAsyncThunk(
   "movie/addMovie",
   async (formData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(ADD_MOVIE_API, formData);
-      return response.data; // Return response on success
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success("Movie Added Successfully");
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.message || "Failed to submit movie");
+      toast.error(error?.response?.data?.message);
+      console.error("addMovie error:", error);
+      return rejectWithValue(error.message || "Error while adding movie");
     }
   }
 );
@@ -85,7 +95,6 @@ export const addCity = createAsyncThunk(
   async (cityName, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(ADD_CITY_API, { cityName });
-      console.log("addCity res: ", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -110,24 +119,19 @@ const movieSlice = createSlice({
       const { name, value } = action.payload;
       state[name] = value;
     },
-    setMovie: (state, action) => {
-      state.movie = action.payload.data;
-    },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
+    resetFormData: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(submitMovieForm.pending, (state) => {
+      .addCase(addMovie.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(submitMovieForm.fulfilled, (state, action) => {
+      .addCase(addMovie.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
       })
-      .addCase(submitMovieForm.rejected, (state, action) => {
+      .addCase(addMovie.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -152,18 +156,18 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovieApi.fulfilled, (state, action) => {
         state.loading = false;
-        state.movie = action.payload.data;
+        state.error = null;
         const movie = action.payload.data;
-
         state.movieName = movie.movieName;
         state.releaseDate = movie.releaseDate;
         state.summary = movie.summary;
-        state.castMembers = movie.castMembers;
-        state.supportingLanguages = movie.supportingLanguages;
-        state.thumbnailImage = movie.thumbnailImage;
         state.genres = movie.genres;
-
-        state.error = null;
+        state.cast = movie.cast;
+        state.crew = movie.crew;
+        state.supportingLanguages = movie.supportingLanguages;
+        state.thumbnailImage = movie.thumbnail;
+        state.bannerImage = movie.banner;
+        state.movie = movie;
       })
       .addCase(fetchMovieApi.rejected, (state, action) => {
         state.loading = false;
@@ -172,5 +176,5 @@ const movieSlice = createSlice({
   },
 });
 
-export const { setFormData, setLoading, setMovie } = movieSlice.actions;
+export const { setFormData, resetFormData, setLoading } = movieSlice.actions;
 export default movieSlice.reducer;

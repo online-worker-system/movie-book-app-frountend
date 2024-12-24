@@ -1,41 +1,42 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, isShow = true }) => {
   const navigate = useNavigate();
-  const movieClickHandler = (movieName, movieId) => {
-    navigate(`/movie/${movieName}/${movieId}`);
-  };
+
 
   return (
     <div
-      key={movie._id}
-      onClick={() => {
-        movieClickHandler(movie.movieName, movie._id);
-      }}
-      className="cursor-pointer"
+      onClick={() => navigate(`/movie/${movie.movieName}/${movie._id}`)}
+      className="cursor-pointer movieCard"
     >
-      <div className="w-[220px] h-[370px]">
+      <div className="w-[135px] h-[210px] md:w-[175px] md:h-[270px] lg:w-[220px] lg:h-[330px]">
         <img
-          src={movie.thumbnail}
-          alt="#"
-          className="w-[100%] h-[100%] object-cover rounded-lg"
-        ></img>
+          src={movie?.thumbnail}
+          alt="movie-thumbnail"
+          className="w-full h-full rounded-lg"
+        />
       </div>
-      <div className="flex flex-col items-start justify-center">
-        <span className="text-[20px] font-[500]">{movie.movieName}</span>
-        <div className="flex items-start justify-center">
-          {movie.genres.map((genre, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-center text-[rgb(105,105,100)] font-[400]"
-            >
-              <div>{genre}</div>
-              {index !== movie.genres.length - 1 && <div>/</div>}
-            </div>
-          ))}
+      {isShow && (
+        <div className="flex flex-col items-start justify-center">
+          <span className="sm:text-lg lg:text-xl font-medium">
+            {movie?.movieName}
+          </span>
+          <div className="text-xs sm:text-sm lg:text-base flex items-start justify-center">
+            {movie?.supportingLanguages?.map((lang, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-center text-[rgb(105,105,100)]"
+              >
+                <div>{lang}</div>
+                {index !== movie?.supportingLanguages?.length - 1 && (
+                  <div>/</div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -11,6 +11,12 @@ const NavBar = () => {
 
   const [isLogedIn, setIsLogedIn] = useState(false);
 
+
+  
+
+
+  const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png")
+console.log(logo)
   useEffect(() => {
     if (token) {
       setIsLogedIn(true);
@@ -27,17 +33,17 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-full min-h-[50px] bg-white flex items-start justify-center mt-4">
-      <div className="w-[90%] max-h-max flex items-center justify-between">
-        <div className=" w-[60%] flex items-center justify-start gap-4">
+    <div className="w-full flex items-start justify-center py-5 px-5 md:px-7">
+      <div className="w-full flex items-center justify-between">
+        <div className="w-[60%] flex items-center gap-4">
           <NavLink
             to="/"
-            className="flex items-center gap-1 justify-center text-[rgb(47,47,47)] font-sans font-[500] text-[16px] transform scale-y-150"
+            className="flex items-center  justify-center text-[rgb(47,47,47)] text-sm sm:text-base lg:text-lg font-medium transform scale-y-150"
           >
             <h2>book</h2>
-            <div className="bg-red-500 text-white rotate-12 inline-block">
-              <div className="-rotate-12  w-[25px] h-[20px] flex items-center justify-center">
-                <h2>my</h2>
+            <div className=" text-white rotate-12 inline-block">
+              <div className="-rotate-12  w-max h-[30px] flex items-center justify-center">
+                <h2><img src={logo} className="w-[40px] h-[20px]"></img></h2>
               </div>
             </div>
             <h2>cinema</h2>
@@ -45,10 +51,10 @@ const NavBar = () => {
           <div className="w-[75%] flex items-center justify-center">
             <div className="relative w-full">
               <input
-                className="w-full h-[35px] text-[14px] font-[400] border-[rgb(238,238,238)] border-[1px] rounded-[4px] pl-10 pr-3 outline-none font-sans"
+                className="w-full text-xs lg:text-sm h-[30px] sm:h-[33px] lg:h-[36px] border-gray-300 border rounded-md pl-10 pr-3 outline-none font-sans"
                 placeholder="Search for Movies, Events, Plays, Sports and Activities"
               />
-              <div className="absolute left-1 top-1/2 transform -translate-y-1/2 text-gray-400">
+              <div className="absolute left-1 top-1/2 transform -translate-y-1/2 text-gray-500">
                 <GrFormSearch className="w-[30px] h-[25px]" />
               </div>
             </div>

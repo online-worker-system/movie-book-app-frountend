@@ -1,85 +1,125 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import NavBar from "../common/NavBar";
 import HomeSlider from "../common/HomeSlider";
+import MovieCard from "../common/MovieCard";
 import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import liveEventsArray from "../../utils/sliderTwoPcitures";
+import Footer from "../common/Footer";
+import SliderComponent from "../common/SliderComponent";
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { allMovies, isLoading } = useSelector((state) => state.home);
+
+  // Tracks if animation has run
+  const movieCardRef = useRef();
+  const anotherRef = useRef();
+  const pinnedContentRef = useRef();
+
+  useLayoutEffect(() => {
+    if (movieCardRef.current && anotherRef.current && allMovies.length) {
+      const elements = anotherRef.current.querySelectorAll(".movieCard");
+
+      if (elements.length) {
+        gsap.from(elements, {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: anotherRef.current,
+            start: "top 70%",
+            end: "top -20%",
+          },
+        });
+      }
+
+      // Pin the content below the movie cards while the animation runs
+      gsap.to(anotherRef.current, {
+        x: "-115%",
+        scrollTrigger: {
+          trigger: movieCardRef.current,
+          start: "top 5%",
+          end: "top -10%",
+          scrub: true,
+          pin: true, // Pin the content below while the animation plays
+        },
+      });
+
+      // Pin the content below the movie cards while the animation runs
+      gsap.to(pinnedContentRef.current, {
+        scrollTrigger: {
+          trigger: movieCardRef.current,
+          start: "top 5%",
+          end: "top -10%",
+          pin: true, // Pin the content until the movie card animation completes
+        },
+      });
+    }
+  }, [allMovies]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       const resultAction = await dispatch(getAllMoviesApi());
-
       if (getAllMoviesApi.fulfilled.match(resultAction)) {
+        console.log("Movies fetched successfully");
       } else {
-        console.log(
-          "Data not fetched",
-          resultAction.payload || resultAction.error
-        );
+        console.log("Error fetching movies", resultAction.payload || resultAction.error);
       }
     };
-
     fetchMovies();
   }, [dispatch]);
-
-  const movieClickHandler = (movieName, movieId) => {
-    navigate(`/movie/${movieName}/${movieId}`);
-  };
 
   return (
     <div>
       <NavBar />
-      <HomeSlider></HomeSlider>
+      <HomeSlider />
       {isLoading ? (
-        <div className="w-screen flex items-center justify-center">
-          <div className="custom-loader text-center"></div>
+        <div className="flex items-center justify-center w-screen h-[400px]">
+          {/* Loader component can go here */}
         </div>
       ) : (
-        <div className="flex items-center justify-center gap-8 flex-wrap py-8 bg-[rgb(245,245,245)]">
-          {allMovies.length ? (
-            allMovies.map((movie) => (
-              <div
-                key={movie._id}
-                onClick={() => {
-                  movieClickHandler(movie.movieName, movie._id);
-                }}
-              >
-                <div className="w-[220px] h-[370px]">
-                  <img
-                    src={movie.thumbnail}
-                    className="w-[100%] h-[100%] object-cover rounded-lg"
-                    alt={movie.movieName}
-                  />
-                </div>
-                <div className="flex flex-col items-start justify-center">
-                  <span className="text-[20px] font-[500]">
-                    {movie.movieName}
-                  </span>
-                  <div className="flex items-start justify-center">
-                    {movie.genres.map((genre, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-center text-[rgb(105,105,100)] font-[400]"
-                      >
-                        <div>{genre}</div>
-                        {index !== movie.genres.length - 1 && <div>/</div>}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No movies found</p>
-          )}
+        <div ref={movieCardRef} className="overflow-x-hidden">
+          <div ref={anotherRef} className="w-full mt-8 flex gap-5 p-3 mb-5">
+            {allMovies.length ? (
+              allMovies.map((movie) => <MovieCard movie={movie} key={movie._id} />)
+            ) : (
+              <p>No movies found</p>
+            )}
+          </div>
         </div>
       )}
+      <div
+        ref={pinnedContentRef}
+        className="w-screen h-max p-2 flex mt-5 items-center justify-center"
+      >
+        <div className="w-[90%] flex flex-col items-start justify-center">
+          <h1 className="text-[rgb(51,51,51)] font-[700] font-[roboto] text-[30px]">
+            The Best Live Events
+          </h1>
+          <div className="w-[100%] h-max flex items-center justify-between">
+            {liveEventsArray.map((elem, index) => (
+              <img
+                src={elem.img}
+                className="w-[230px] h-[230px] rounded-md"
+                key={index}
+              />
+            ))}
+          </div>
+        </div>
+        
+      </div>
+      <div className="w-screen h-max p-18 mt-5 mb-5">
+      <SliderComponent></SliderComponent>
+      </div>
+      <Footer />
     </div>
   );
+
+
 };
 
 export default Home;
