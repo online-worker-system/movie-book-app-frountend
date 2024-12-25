@@ -95,7 +95,7 @@ export default function App() {
           cursor: "pointer",
         }}
 
-        className="sm:top-[50%] absolute top-[45%]"
+        className="sm:top-[50%] absolute top-[46%]"
       >
         &lt;
       </button>

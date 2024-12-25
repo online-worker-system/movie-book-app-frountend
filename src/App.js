@@ -25,6 +25,7 @@ import TransactionPage from "./components/Pages/TransactionPage";
 import LoaderPage from "./utils/LoaderPage";
 import ScrollTop from "./utils/ScrollTop";
 import BottomNavBar from "./components/common/BottomNavBar";
+import PageNotFound from "./components/Pages/PageNotFound";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -124,6 +125,7 @@ function App() {
             </AdminProtected>
           }
         />
+        <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
       </Routes>
 
     </div>
