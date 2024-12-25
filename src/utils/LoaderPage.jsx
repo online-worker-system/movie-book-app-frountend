@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import clapBoard from './clapBoard.png';
+import popcornLoaderfour from './popcornLoader4.png'
 import '../App.css';
 const LoaderPage = () => {
   const imageRef = useRef(null);
@@ -21,6 +22,7 @@ const LoaderPage = () => {
     t1.from(imageRef.current, {
       scale: 0,
       duration: 1,
+      yoyo:true,
       
     });
 
@@ -39,11 +41,11 @@ const LoaderPage = () => {
     <div className="w-screen h-screen bg-black text-white flex-col items-center justify-center flex">
       <img
         ref={imageRef}
-        src={clapBoard}
-        className="w-[100px] h-[100px]"
+        src={popcornLoaderfour}
+        className="w-[200px] h-[150px]"
         alt="Clap Board"
       />
-      <div className="w-full h-[50px] overflow-hidden flex items-center justify-center">
+      <div className="w-full h-[30px] overflow-hidden flex items-center justify-center">
         <h1
           id="title"
           

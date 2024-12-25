@@ -9,7 +9,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import liveEventsArray from "../../utils/sliderTwoPcitures";
 import Footer from "../common/Footer";
 import SliderComponent from "../common/SliderComponent";
-
+import PremiereComponent from "../common/PremiereComponent";
+import gifVedio from "../../utils/GifVedio.mp4"
+import offerBanner from "../../utils/lastBanner.jpeg"
+import BottomNavBar from "../common/BottomNavBar";
+import EventComponent from "../common/EventComponent";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,7 +71,10 @@ const Home = () => {
       if (getAllMoviesApi.fulfilled.match(resultAction)) {
         console.log("Movies fetched successfully");
       } else {
-        console.log("Error fetching movies", resultAction.payload || resultAction.error);
+        console.log(
+          "Error fetching movies",
+          resultAction.payload || resultAction.error
+        );
       }
     };
     fetchMovies();
@@ -76,16 +83,20 @@ const Home = () => {
   return (
     <div>
       <NavBar />
+     
       <HomeSlider />
       {isLoading ? (
         <div className="flex items-center justify-center w-screen h-[400px]">
           {/* Loader component can go here */}
         </div>
       ) : (
-        <div ref={movieCardRef} className="overflow-x-hidden">
-          <div ref={anotherRef} className="w-full mt-8 flex gap-5 p-3 mb-5">
+        <div  className="sm:overflow-x-hidden mt-8 overflow-y-auto flex flex-col items-start justify-center bg-white">
+         <p className="p-3 text-[18px] font-sans font-[500]">Recommend Movies</p>
+          <div  className="w-full flex gap-5 p-3 mb-5">
             {allMovies.length ? (
-              allMovies.map((movie) => <MovieCard movie={movie} key={movie._id} />)
+              allMovies.map((movie) => (
+                <MovieCard movie={movie} key={movie._id} />
+              ))
             ) : (
               <p>No movies found</p>
             )}
@@ -94,32 +105,49 @@ const Home = () => {
       )}
       <div
         ref={pinnedContentRef}
-        className="w-screen h-max p-2 flex mt-5 items-center justify-center"
+        className="w-screen h-max sm:p-2 flex mt-5 items-center justify-center"
       >
         <div className="w-[90%] flex flex-col items-start justify-center">
-          <h1 className="text-[rgb(51,51,51)] font-[700] font-[roboto] text-[30px]">
+          <h1 className="text-[rgb(51,51,51)] font-[700] font-[roboto] sm:text-[30px] text-[18px]">
             The Best Live Events
           </h1>
-          <div className="w-[100%] h-max flex items-center justify-between">
+          <div className="w-[100%] h-max flex items-center justify-between overflow-y-auto gap-2">
             {liveEventsArray.map((elem, index) => (
               <img
                 src={elem.img}
-                className="w-[230px] h-[230px] rounded-md"
+                className="sm:w-[230px] sm:h-[230px] rounded-md w-[150px]"
                 key={index}
               />
             ))}
           </div>
         </div>
-        
+      </div>
+      <div className="w-screen flex items-center justify-center p-2 mt-3 sm:opacity-0 opacity-100">
+        <img src={offerBanner}></img>
       </div>
       <div className="w-screen h-max p-18 mt-5 mb-5">
-      <SliderComponent></SliderComponent>
+        <SliderComponent></SliderComponent>
+      </div>
+      <div className="w-[100vw]">
+      <video
+        src={gifVedio}
+        autoPlay
+        loop
+        muted
+        className="w-full h-[150px] sm:opacity-0 opacity-100 pointer-events-none"
+      ></video>
+      </div>
+      <div className="mt-8 mb-8">
+        <PremiereComponent></PremiereComponent>
+      </div>
+      <div>
+        <EventComponent></EventComponent>
       </div>
       <Footer />
+
+      <BottomNavBar></BottomNavBar>
     </div>
   );
-
-
 };
 
 export default Home;

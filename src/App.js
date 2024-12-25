@@ -24,6 +24,7 @@ import TermsAndCounditionPage from "./components/Pages/TermsAndCounditionPage";
 import TransactionPage from "./components/Pages/TransactionPage";
 import LoaderPage from "./utils/LoaderPage";
 import ScrollTop from "./utils/ScrollTop";
+import BottomNavBar from "./components/common/BottomNavBar";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -124,6 +125,7 @@ function App() {
           }
         />
       </Routes>
+
     </div>
   );
 }

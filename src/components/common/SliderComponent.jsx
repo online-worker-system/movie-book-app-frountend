@@ -35,7 +35,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ position: "relative", width: "100vw", height:"90vh", margin: "0 auto" }} className="bg-[rgb(0,0,0)] flex items-center justify-center">
+    <div style={{ position: "relative", width: "100vw", margin: "0 auto" }} className="bg-[rgb(0,0,0)] sm:h-[90vh] flex items-center justify-center">
       <Swiper
         effect={"coverflow"}
         grabCursor={true}
@@ -57,9 +57,8 @@ export default function App() {
               <div onClick={handleVideoClick}>
                 <iframe
                   data-index={index} // Custom attribute to identify the video iframe
-                  width="300px"
-                  height="300px"
-                  src={`${element.vedioSrc}?${isVideoPlaying ? "autoplay=1" : "autoplay=0"}&controls=0&modestbranding=1&rel=0&showinfo=0`}
+                 className="w-[300px] h-[300px]"
+                  src={`${element.vedioSrc}?${isVideoPlaying ? "autoplay=0" : "autoplay=0"}&controls=0&modestbranding=1&rel=0&showinfo=0`}
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -84,8 +83,7 @@ export default function App() {
       <button
         onClick={() => swiperRef.current.slidePrev()} // Move to previous slide
         style={{
-          position: "absolute",
-          top: "50%",
+          
           left: "10%",
           zIndex:"999",
           backgroundColor: "rgb(153,153,153)",
@@ -96,6 +94,8 @@ export default function App() {
           height: "40px",
           cursor: "pointer",
         }}
+
+        className="sm:top-[50%] absolute top-[45%]"
       >
         &lt;
       </button>

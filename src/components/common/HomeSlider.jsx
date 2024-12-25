@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import sliderPictureArray from "../../utils/sliderPicture";
 import bannerImgTwo from "../../utils/bannerTwo.jpg";
+import sliderArrayMobile from "../../utils/sliderArrayMobileData";
 import { gsap } from "gsap";
 
 const HomeSlider = ({ isShow = true }) => {
   const [index, setIndex] = useState(0);
+  const [newIndex,setNewIndex]=useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
 
   const sliderRef = useRef();
@@ -86,9 +88,24 @@ const HomeSlider = ({ isShow = true }) => {
     return () => clearInterval(interval);
   }, [index]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (newIndex < sliderArrayMobile.length - 1) {
+        var p = newIndex + 1;
+
+        setNewIndex(p);
+      } else {
+        setNewIndex(0);
+      }
+    }, 3000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, [newIndex]);
+
   return (
-    <div className="w-full flex flex-col items-center justify-center bg-[rgb(245,245,245)]">
-      <div className="w-full py-3 px-5 md:px-7 flex flex-wrap gap-2 items-center justify-between bg-[rgb(245,245,245)]">
+    <div className="w-full flex flex-col items-center justify-center bg-white sm:bg-[rgb(245,245,245)]">
+      <div className="w-full sm:h-auto h-[0px] opacity-0 sm:opacity-100 py-3 px-5 md:px-7 flex flex-wrap gap-2 items-center justify-between bg-white sm:bg-[rgb(245,245,245)]">
         <div>
           <ul ref={topLiRef} className="text-[11px] sm:text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
             <li>
@@ -161,38 +178,50 @@ const HomeSlider = ({ isShow = true }) => {
         )}
       </div>
       {isShow && (
-        <div className="w-full relative sm:py-3  md:py-4 bg-[rgb(235,235,235)] overflow-hidden overflow-y-hidden">
+        <div className="w-full mt-0  relative sm:py-3  md:py-4 sm:bg-[rgb(235,235,235)] overflow-hidden overflow-y-hidden">
           <div
             ref={sliderRef}
-            className="w-full h-full  flex items-center justify-center overflow-hidden overflow-y-hidden gap-4"
+            className="sm:w-full sm:opacity-100 opacity-0 sm:h-full h-[0] w-[600px]  flex items-center justify-center overflow-hidden overflow-y-hidden gap-4"
           >
             {index === 0 ? (
               <img
                 src={sliderPictureArray[3].img}
-                className="w-full h-full rounded-lg"
+                className="w-full h-full sm:rounded-lg sm:opacity-100 opacity-0"
               />
             ) : (
               <img
                 src={sliderPictureArray[index - 1].img}
-                className="w-full h-full rounded-lg"
+                className="w-full h-full sm:rounded-lg sm:opacity-100 opacity-0"
               />
             )}
             <img
               src={sliderPictureArray[index].img}
-              className="w-full h-full rounded-lg"
+              className="w-full h-full sm:rounded-lg sm:opacity-100 opacity-0"
             />
             {index === 3 ? (
               <img
                 src={sliderPictureArray[0].img}
-                className="w-full h-full rounded-lg"
+                className="w-full h-full sm:rounded-lg sm:opacity-100 opacity-0"
               />
             ) : (
               <img
                 src={sliderPictureArray[index + 1].img}
-                className="w-full h-full rounded-lg"
+                className="w-full h-full sm:rounded-lg sm:opacity-100 opacity-0"
               />
             )}
           </div>
+
+          <div 
+            className="sm:opacity-0 opacity-100 sm:h-full   flex items-center justify-center overflow-hidden overflow-y-hidden gap-4"
+          >
+           
+              <img
+                src={sliderArrayMobile[newIndex].img}
+                className="w-full h-full sm:rounded-lg"
+              />
+           
+          </div>
+          
           <div
             ref={dotRef}
             className="w-full h-[15px] absolute bottom-5 flex items-center justify-center gap-2"
@@ -213,8 +242,8 @@ const HomeSlider = ({ isShow = true }) => {
 
      {
       isShow && (
-        <div className="w-full h-max flex items-center justify-center mt-5">
-        <img ref={bannerImgRef} re src={bannerImgTwo} className="w-[80%]"></img>
+        <div className="sm:w-full sm:h-max w-screen flex items-center justify-center sm:mt-5 sm:pt-0 pt-3 ">
+        <img ref={bannerImgRef}  src={bannerImgTwo} className="sm:w-[80%] sm:h-max w-[330px] h-[60px]"></img>
       </div>
       )
      }

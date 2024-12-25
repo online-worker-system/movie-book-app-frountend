@@ -2,15 +2,17 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
+
+  const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png")
   return (
-    <div className="w-screen pl-16 pr-16 h-max bg-[rgb(52,51,56)] text-[rgb(118,120,119)]">
+    <div className="w-screen sm:pl-16 sm:pr-16 h-max bg-[rgb(52,51,56)] text-[rgb(118,120,119)]">
       {/* Partner Section */}
       <div className="w-full h-max flex items-center justify-between gap-3 mb-3 p-4">
-        <div className="text-left font-[600] text-[18px] font-sans text-white">
+        <div className="text-left font-[600] sm:text-[18px] text-[12px] font-sans text-white">
           List Your Show, Got a show, event, activity or a great experience?
           Partner with us & get listed on BookMyShow
         </div>
-        <div className="w-[200px] h-[40px] bg-red-500 text-white text-center font-sans font-semibold rounded-md flex items-center justify-center">
+        <div className="w-[200px] sm:opacity-100 opacity-0 h-[40px] bg-red-500 text-white text-center font-sans font-semibold rounded-md flex items-center justify-center">
           <button>Contact Today!</button>
         </div>
       </div>
@@ -26,7 +28,7 @@ const Footer = () => {
                   <h2 className="mb-[20px] uppercase text-left text-[14px] text-[rgb(165,165,165)] font-[400]">
                     Movies Now Showing In Indore
                   </h2>
-                  <ul className="flex flex-wrap items-center justify-start text-[12px] pr-[5px]">
+                  <ul className="flex flex-wrap items-center justify-start text-[12px] sm:pr-[5px]">
                     <NavLink to="/pushpa-2" className="no-underline">
                       <li className="mr-[5px] mb-[5px] hover:text-white cursor-pointer">
                         Pushpa 2: The Rule |
@@ -449,22 +451,15 @@ const Footer = () => {
             </tr>
             <tr>
               <td>
-              <div className="pt-8 gap-4 flex items-center justify-center">
-        <div className="w-[40%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
+              <div className="pt-8 sm:gap-4 gap-1 flex items-center justify-center">
+        <div className="sm:w-[40%] w-[30%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
         <div className=" h-[50px] overflow-hidden flex items-center justify-center">
        
-        <div className="w-full h-[50px] overflow-hidden flex items-center justify-center">
-        <h1
-          id="title"
-          
-         
-          className="uppercase font-sans font-[400] text-[20px] siteTitle"
-        >
-         𝖇𝖔𝖔𝖐 𝖒𝖞 𝖈𝖎𝖓𝖊𝖒𝖆
-        </h1>
+        <div className="w-[80px] h-[80px] overflow-hidden flex items-center justify-center">
+       <img src={logo}></img>
       </div>
       </div>
-      <div className="w-[40%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
+      <div className="sm:w-[40%] w-[30%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
       </div>
               </td>
             </tr>
@@ -475,7 +470,7 @@ const Footer = () => {
       {/* Additional Sections (if any) */}
       
       
-      <div className="text-center p-[30px] text-[11px] text-[rgb(102,102,102)]">
+      <div className="text-center sm:p-[30px] p-[10px] text-[11px] text-[rgb(102,102,102)]">
         
         Copyright 2024 © Bigtree Entertainment Pvt. Ltd. All Rights Reserved.
         <br></br>

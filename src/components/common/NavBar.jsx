@@ -16,7 +16,7 @@ const NavBar = () => {
 
 
   const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png")
-console.log(logo)
+
   useEffect(() => {
     if (token) {
       setIsLogedIn(true);
@@ -48,7 +48,7 @@ console.log(logo)
             </div>
             <h2>cinema</h2>
           </NavLink>
-          <div className="w-[75%] flex items-center justify-center">
+          <div className="w-[75%] opacity-0 sm:opacity-100 flex items-center justify-center">
             <div className="relative w-full">
               <input
                 className="w-full text-xs lg:text-sm h-[30px] sm:h-[33px] lg:h-[36px] border-gray-300 border rounded-md pl-10 pr-3 outline-none font-sans"
@@ -64,12 +64,12 @@ console.log(logo)
           {isLogedIn ? (
             <button
               onClick={logoutClickHandler}
-              className="w-[67px] h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]"
+              className="w-[67px] sm:opacity-100 opacity-0 h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]"
             >
               Log Out
             </button>
           ) : (
-            <button className="w-[67px] h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
+            <button className="w-[67px] sm:opacity-100 opacity-0 h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
               <NavLink to="/login">Sign in</NavLink>
             </button>
           )}
