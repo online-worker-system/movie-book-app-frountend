@@ -122,7 +122,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="w-screen flex items-center justify-center p-2 mt-3 sm:opacity-0 opacity-100">
+      <div className="w-screen h-auto sm:h-[0] flex items-center justify-center p-2 mt-3 sm:opacity-0 opacity-100">
         <img src={offerBanner}></img>
       </div>
       <div className="w-screen h-max p-18 mt-5 mb-5">

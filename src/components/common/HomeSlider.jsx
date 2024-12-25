@@ -212,7 +212,7 @@ const HomeSlider = ({ isShow = true }) => {
           </div>
 
           <div 
-            className="sm:opacity-0 opacity-100 sm:h-full   flex items-center justify-center overflow-hidden overflow-y-hidden gap-4"
+            className="sm:opacity-0 opacity-100 h-auto sm:h-[0]  flex items-center justify-center overflow-hidden overflow-y-hidden gap-4"
           >
            
               <img
