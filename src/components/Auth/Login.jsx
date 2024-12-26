@@ -50,8 +50,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen ">
-      <div className="w-[30%] h-[85%] bg-white flex flex-col items-center justify-center gap-1 p-2 rounded-lg shadow-xl transform scale-105">
+    <div className="flex flex-col justify-center items-center w-screen h-screen bg-white ">
+      <div className="md:w-[30%] md:h-[85%] w-[90%] h-max bg-white flex flex-col items-center justify-center gap-1 p-2 rounded-lg shadow-xl transform scale-105">
         <div className="w-full flex flex-col items-center justify-center">
           <span className="text-[rgb(51,51,51)] text-[16px] font-[500] leading-[24px]">
             Hi, Welcome Back
@@ -61,13 +61,13 @@ const Login = () => {
           </span>
         </div>
         <div className="w-full my-3 flex items-center justify-around py-3">
-          <button className="w-[120px] h-[50px] flex items-center justify-center text-[25px] border rounded-lg hover:scale-105 transition duration-200 ease-in-out">
+          <button className="md:w-[120px] w-[100px] h-[50px] flex items-center justify-center text-[25px] border rounded-lg hover:scale-105 transition duration-200 ease-in-out">
             <SiApple />
           </button>
-          <button className="w-[120px] h-[50px] flex items-center justify-center text-[25px] border rounded-lg hover:scale-105 transition duration-200 ease-in-out">
+          <button className="md:w-[120px] w-[100px] h-[50px] flex items-center justify-center text-[25px] border rounded-lg hover:scale-105 transition duration-200 ease-in-out">
             <FcGoogle />
           </button>
-          <button className="w-[120px] h-[50px] flex items-center justify-center text-[25px] border rounded-lg hover:scale-105 transition duration-200 ease-in-out">
+          <button className="md:w-[120px] w-[100px] h-[50px] flex items-center justify-center text-[25px] border rounded-lg hover:scale-105 transition duration-200 ease-in-out">
             <FaTwitter className="text-[rgb(26,156,244)]" />
           </button>
         </div>
@@ -82,7 +82,7 @@ const Login = () => {
 
         <form
           onSubmit={handleOnSubmit}
-          className="w-full mx-auto p-8 rounded-lg  flex flex-col items-center justify-center  gap-2"
+          className="w-full mx-auto md:p-8 p-2 rounded-lg  flex flex-col items-center justify-center  gap-2"
         >
           <div className="w-full">
             <label

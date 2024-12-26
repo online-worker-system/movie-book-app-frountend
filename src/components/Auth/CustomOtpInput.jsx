@@ -99,7 +99,7 @@ const CustomOtpInput = () => {
 
 
   return (
-   <div className="mt-20 flex flex-col justify-center items-center px-4">
+   <div className="w-screen  flex  justify-center items-center px-4">
 
   <form
     className="mt-5 w-full max-w-md p-4 bg-gray-100  shadow-lg rounded-lg space-y-6 shadow-gray-400"
@@ -118,26 +118,23 @@ const CustomOtpInput = () => {
 
 
     <OtpInput
-      value={otp}
-      onChange={setOtp}
-      numInputs={6}
-      separator={<span>-</span>}
-      inputStyle={{
-        width: "clamp(2.5rem, 5vw, 3rem)", 
-        height: "clamp(2.5rem, 5vw, 3rem)", 
-        margin: "0.5rem",
-        fontSize: "clamp(1rem, 2vw, 1.5rem)", 
-        border: "1px solid #ccc",
-        borderRadius: "0.375rem",
+  value={otp}
+  onChange={setOtp}
+  numInputs={6}
+  separator={<span>-</span>}
+  containerStyle="flex sm:justify-center sm:gap-0 justify-center gap-2 flex-wrap"
+  renderInput={(props) => (
+    <input
+      {...props}
+      className="text-center border border-gray-300 sm:m-[0.5rem] rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+      style={{
+        width: "40px", // Inline style to enforce the width
+        height: "40px", // Inline style to enforce the height
       }}
-      containerStyle="flex justify-center flex-wrap"
-      renderInput={(props) => (
-        <input
-          {...props}
-          className="text-center border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-        />
-      )}
     />
+  )}
+/>
+
 
    
     <div className="text-center text-red-500 font-semibold">

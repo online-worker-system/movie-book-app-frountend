@@ -26,44 +26,44 @@ const Home = () => {
   const anotherRef = useRef();
   const pinnedContentRef = useRef();
 
-  useLayoutEffect(() => {
-    if (movieCardRef.current && anotherRef.current && allMovies.length) {
-      const elements = anotherRef.current.querySelectorAll(".movieCard");
+  // useLayoutEffect(() => {
+  //   if (movieCardRef.current && anotherRef.current && allMovies.length) {
+  //     const elements = anotherRef.current.querySelectorAll(".movieCard");
 
-      if (elements.length) {
-        gsap.from(elements, {
-          opacity: 0,
-          scrollTrigger: {
-            trigger: anotherRef.current,
-            start: "top 70%",
-            end: "top -20%",
-          },
-        });
-      }
+  //     if (elements.length) {
+  //       gsap.from(elements, {
+  //         opacity: 0,
+  //         scrollTrigger: {
+  //           trigger: anotherRef.current,
+  //           start: "top 70%",
+  //           end: "top -20%",
+  //         },
+  //       });
+  //     }
 
-      // Pin the content below the movie cards while the animation runs
-      gsap.to(anotherRef.current, {
-        x: "-115%",
-        scrollTrigger: {
-          trigger: movieCardRef.current,
-          start: "top 5%",
-          end: "top -10%",
-          scrub: true,
-          pin: true, // Pin the content below while the animation plays
-        },
-      });
+  //     // Pin the content below the movie cards while the animation runs
+  //     gsap.to(anotherRef.current, {
+  //       x: "-115%",
+  //       scrollTrigger: {
+  //         trigger: movieCardRef.current,
+  //         start: "top 5%",
+  //         end: "top -10%",
+  //         scrub: true,
+  //         pin: true, // Pin the content below while the animation plays
+  //       },
+  //     });
 
-      // Pin the content below the movie cards while the animation runs
-      gsap.to(pinnedContentRef.current, {
-        scrollTrigger: {
-          trigger: movieCardRef.current,
-          start: "top 5%",
-          end: "top -10%",
-          pin: true, // Pin the content until the movie card animation completes
-        },
-      });
-    }
-  }, [allMovies]);
+  //     // Pin the content below the movie cards while the animation runs
+  //     gsap.to(pinnedContentRef.current, {
+  //       scrollTrigger: {
+  //         trigger: movieCardRef.current,
+  //         start: "top 5%",
+  //         end: "top -10%",
+  //         pin: true, // Pin the content until the movie card animation completes
+  //       },
+  //     });
+  //   }
+  // }, [allMovies]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -92,7 +92,8 @@ const Home = () => {
       ) : (
         <div  className="sm:overflow-x-hidden mt-8 overflow-y-auto flex flex-col items-start justify-center bg-white">
          <p className="p-3 text-[18px] font-sans font-[500]">Recommend Movies</p>
-          <div  className="w-full flex gap-5 p-3 mb-5">
+          <div  className="w-full flex gap-5 p-3 mb-5 flex-wrap items-center justify-center
+          ">
             {allMovies.length ? (
               allMovies.map((movie) => (
                 <MovieCard movie={movie} key={movie._id} />
@@ -104,7 +105,7 @@ const Home = () => {
         </div>
       )}
       <div
-        ref={pinnedContentRef}
+       
         className="w-screen h-max sm:p-2 flex mt-5 items-center justify-center"
       >
         <div className="w-[90%] flex flex-col items-start justify-center">
