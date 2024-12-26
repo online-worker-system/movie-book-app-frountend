@@ -52,11 +52,20 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/otp" element={<CustomOtpInput />} />
-        <Route path="/book/terms-countditions" element={<TermsAndCounditionPage />} />
+        <Route
+          path="/book/terms-conditions"
+          element={<TermsAndCounditionPage />}
+        />
         <Route path="/book/transactions" element={<TransactionPage />} />
         <Route path="/movie/:movieName/:movie_id" element={<MoviesPage />} />
-        <Route path="/buytickets/:movie_id/:cinema_id/:timing/seats" element={<ShowSeats />} />
-        <Route path="/shows/:movieName/:movie_id" element={<CinemasShowPage />} />
+        <Route
+          path="/buytickets/:movie_id/:cinema_id/:timing/seats"
+          element={<ShowSeats />}
+        />
+        <Route
+          path="/shows/:movieName/:movie_id"
+          element={<CinemasShowPage />}
+        />
 
         {/* Super-Admin Routes */}
         <Route
@@ -125,9 +134,8 @@ function App() {
             </AdminProtected>
           }
         />
-        <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
-
     </div>
   );
 }

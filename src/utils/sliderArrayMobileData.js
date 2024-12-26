@@ -1,20 +1,20 @@
-import ottImage from "./OttBanner.jpeg"
-import indoreBanner from "./indoreBanner.jpeg"
-import edBanner from "./edBanner.jpeg"
+import ottImage from "./OttBanner.jpeg";
+import indoreBanner from "./indoreBanner.jpeg";
+import edBanner from "./edBanner.jpeg";
 
-const sliderArrayMobile =[
+const sliderArrayMobile = [
   {
     index: 0,
-    img:ottImage,
+    img: ottImage,
   },
   {
     index: 1,
-    img:indoreBanner,
+    img: indoreBanner,
   },
   {
     index: 2,
-    img:edBanner,
-  }
-]
+    img: edBanner,
+  },
+];
 
 export default sliderArrayMobile;

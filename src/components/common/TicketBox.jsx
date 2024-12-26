@@ -1,6 +1,6 @@
 import React from "react";
 
-const TicketBox = ({ booking }) => {
+const TicketBox = ({ booking, onClose }) => {
   if (!booking) {
     return null; // Or display a loading message
   }
@@ -44,7 +44,7 @@ const TicketBox = ({ booking }) => {
 
         {/* Close Button */}
         <button
-          onClick={() => window.location.reload()}
+          onClick={() => onClose()}
           className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
         >
           Close

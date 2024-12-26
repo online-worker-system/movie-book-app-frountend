@@ -1,21 +1,18 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GrFormSearch } from "react-icons/gr";
-import { setToken } from "../../redux/reducer/homeSlice";
+import { setToken } from "../../redux/reducer/authSlice";
 
 const NavBar = () => {
-  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
   const [isLogedIn, setIsLogedIn] = useState(false);
 
-
-  
-
-
-  const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png")
+  const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png");
 
   useEffect(() => {
     if (token) {
@@ -26,25 +23,24 @@ const NavBar = () => {
   }, []);
 
   const logoutClickHandler = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    dispatch(setToken(""));
+    localStorage.clear();
+    dispatch(setToken(null));
     setIsLogedIn(false);
+    navigate("/");
+    toast.success("Logout Successfully");
   };
 
   return (
-    <div className="w-full flex items-start justify-center py-5 px-5 md:px-7">
+    <div className="w-full flex items-start justify-center py-5 px-3 sm:px-5 md:px-7">
       <div className="w-full flex items-center justify-between">
-        <div className="w-[60%] flex items-center gap-4">
+        <div className="w-[60%] flex items-center gap-3 sm:gap-4">
           <NavLink
             to="/"
-            className="flex items-center  justify-center text-[rgb(47,47,47)] text-sm sm:text-base lg:text-lg font-medium transform scale-y-150"
+            className="flex items-center gap-1 justify-center text-[rgb(47,47,47)] text-base lg:text-lg font-medium transform scale-y-150"
           >
             <h2>book</h2>
-            <div className=" text-white rotate-12 inline-block">
-              <div className="-rotate-12  w-max h-[30px] flex items-center justify-center">
-                <h2><img src={logo} className="w-[40px] h-[20px]"></img></h2>
-              </div>
+            <div className="-ml-[10px] -mr-3 w-[52px] h-[28px] sm:w-[52px] sm:h-[28px] text-white rotate-12 inline-block">
+              <img src={logo} className="-rotate-12 w-full h-full"></img>
             </div>
             <h2>cinema</h2>
           </NavLink>
@@ -60,21 +56,21 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-5">
+        <div className="flex items-center justify-between gap-3 sm:gap-5">
           {isLogedIn ? (
             <button
               onClick={logoutClickHandler}
-              className="w-[67px]  h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]"
+              className="px-3 sm:px-4 py-1 text-xs sm:text-sm font-medium text-center bg-rose-500 text-white border-rose-500 rounded-md border"
             >
               Log Out
             </button>
           ) : (
-            <button className="w-[67px]  h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
-              <NavLink to="/login">Sign in</NavLink>
-            </button>
+            <NavLink to="/login" className="px-3 sm:px-4 py-1 text-[11px] sm:text-sm font-medium text-center bg-rose-500 text-white border-rose-500 rounded-md border">
+              Sign in
+            </NavLink>
           )}
           <span>
-            <RxHamburgerMenu className="w-[30px] h-[25px] text-[gray]" />
+            <RxHamburgerMenu className="text-[22px] sm:text-[26px] cursor-pointer text-[gray]" />
           </span>
         </div>
       </div>

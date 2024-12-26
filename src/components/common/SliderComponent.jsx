@@ -1,17 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
-
 import "./styles.css";
-
-import sliderArray from "../../utils/SliderData"; // Import the sliderArray
-
-// import required modules
+import sliderArray from "../../utils/SliderData";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
 export default function App() {
@@ -21,11 +14,15 @@ export default function App() {
 
   // Effect to handle autoplay when the slide becomes active
   useEffect(() => {
-    const videoIframe = document.querySelector(`iframe[data-index="${activeIndex}"]`);
+    const videoIframe = document.querySelector(
+      `iframe[data-index="${activeIndex}"]`
+    );
     if (videoIframe) {
       // Trigger autoplay when video is active
       const videoSrc = sliderArray[activeIndex].vedioSrc.split("?")[0];
-      videoIframe.src = `${videoSrc}?${isVideoPlaying ? "autoplay=1" : "autoplay=0"}&controls=0&modestbranding=1&rel=0&showinfo=0`;
+      videoIframe.src = `${videoSrc}?${
+        isVideoPlaying ? "autoplay=1" : "autoplay=0"
+      }&controls=0&modestbranding=1&rel=0&showinfo=0`;
     }
   }, [activeIndex, isVideoPlaying]);
 
@@ -35,7 +32,10 @@ export default function App() {
   };
 
   return (
-    <div style={{ position: "relative", width: "100vw", margin: "0 auto" }} className="bg-[rgb(0,0,0)] sm:h-[90vh] flex items-center justify-center">
+    <div
+      style={{ position: "relative", width: "100vw", margin: "0 auto" }}
+      className="bg-[rgb(0,0,0)] sm:h-[90vh] flex items-center justify-center"
+    >
       <Swiper
         effect={"coverflow"}
         grabCursor={true}
@@ -57,8 +57,10 @@ export default function App() {
               <div onClick={handleVideoClick}>
                 <iframe
                   data-index={index} // Custom attribute to identify the video iframe
-                 className="w-[300px] h-[300px]"
-                  src={`${element.vedioSrc}?${isVideoPlaying ? "autoplay=0" : "autoplay=0"}&controls=0&modestbranding=1&rel=0&showinfo=0`}
+                  className="w-[300px] h-[300px]"
+                  src={`${element.vedioSrc}?${
+                    isVideoPlaying ? "autoplay=0" : "autoplay=0"
+                  }&controls=0&modestbranding=1&rel=0&showinfo=0`}
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -83,9 +85,8 @@ export default function App() {
       <button
         onClick={() => swiperRef.current.slidePrev()} // Move to previous slide
         style={{
-          
           left: "10%",
-          zIndex:"999",
+          zIndex: "999",
           backgroundColor: "rgb(153,153,153)",
           color: "#fff",
           border: "none",
@@ -94,7 +95,6 @@ export default function App() {
           height: "40px",
           cursor: "pointer",
         }}
-
         className="sm:top-[50%] absolute top-[46%]"
       >
         &lt;
@@ -104,8 +104,8 @@ export default function App() {
         style={{
           position: "absolute",
           top: "50%",
-          right:"10%",
-          zIndex:"999",
+          right: "10%",
+          zIndex: "999",
           transform: "translateY(-50%)",
           backgroundColor: "rgb(153,153,153)",
           color: "#fff",

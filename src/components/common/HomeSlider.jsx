@@ -6,29 +6,33 @@ import sliderArrayMobile from "../../utils/sliderArrayMobileData";
 import { gsap } from "gsap";
 
 const HomeSlider = ({ isShow = true }) => {
-  const [index, setIndex] = useState(0);
-  const [newIndex,setNewIndex]=useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [index, setIndex] = useState(0);
+  const [newIndex, setNewIndex] = useState(0);
 
   const sliderRef = useRef();
-  const topLiRef= useRef();
+  const topLiRef = useRef();
   const dotRef = useRef();
   const bannerImgRef = useRef();
-  const topLiRightRef=useRef();
-  
-  const[animation,setAnimation]=useState(false);
+  const topLiRightRef = useRef();
+
+  const [animation, setAnimation] = useState(false);
   useEffect(() => {
-    if (!animation && topLiRef.current && topLiRightRef.current && dotRef.current && sliderRef.current && bannerImgRef.current ) {
+    if (
+      !animation &&
+      topLiRef.current &&
+      topLiRightRef.current &&
+      dotRef.current &&
+      sliderRef.current &&
+      bannerImgRef.current
+    ) {
       setAnimation(true);
-    
+
       const elements1 = topLiRef.current.querySelectorAll("li");
       const elements2 = topLiRightRef.current.querySelectorAll("li");
       const dots = dotRef.current.querySelectorAll("div");
-
-      console.log("Hello ",animation)
-      
       const t1 = gsap.timeline();
-  
+
       // Animate top left list items
       t1.from(elements1, {
         opacity: 0,
@@ -37,7 +41,7 @@ const HomeSlider = ({ isShow = true }) => {
         stagger: 0.2,
         ease: "power1.out",
       });
-  
+
       // Animate top right list items (if present)
       t1.from(elements2, {
         opacity: 0,
@@ -46,21 +50,21 @@ const HomeSlider = ({ isShow = true }) => {
         stagger: 0.2,
         ease: "power1.out",
       });
-  
+
       // Animate the slider
       t1.from(sliderRef.current, {
         y: 500,
         duration: 2,
         ease: "back.out(1.7)",
       });
-  
+
       // Animate dots
       t1.from(dots, {
         scale: 0,
         duration: 0.1,
         stagger: 0.2,
       });
-  
+
       // Animate the banner image
       t1.from(bannerImgRef.current, {
         scale: 0,
@@ -68,10 +72,7 @@ const HomeSlider = ({ isShow = true }) => {
         ease: "bounce.out",
       });
     }
-
-   
   }, [animation]); // Empty dependency array ensures it runs once after mount
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -107,7 +108,10 @@ const HomeSlider = ({ isShow = true }) => {
     <div className="w-full flex flex-col items-center justify-center bg-white sm:bg-[rgb(245,245,245)]">
       <div className="w-full sm:h-auto h-[0px] opacity-0 sm:opacity-100 py-3 px-5 md:px-7 flex flex-wrap gap-2 items-center justify-between bg-white sm:bg-[rgb(245,245,245)]">
         <div>
-          <ul ref={topLiRef} className="text-[11px] sm:text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
+          <ul
+            ref={topLiRef}
+            className="text-[11px] sm:text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]"
+          >
             <li>
               <NavLink>Movies</NavLink>
             </li>
@@ -131,18 +135,21 @@ const HomeSlider = ({ isShow = true }) => {
 
         {user?.accountType === "Viewer" && (
           <div>
-            <ul ref={topLiRightRef} className="text-[11px] sm:text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]">
+            <ul
+              ref={topLiRightRef}
+              className="text-[11px] sm:text-xs lg:text-sm flex flex-wrap gap-3 lg:gap-5 text-[rgb(51,51,51)]"
+            >
               <li>
                 <NavLink>ListYourShow</NavLink>
-              </li>
-              <li>
-                <NavLink>Corporates</NavLink>
               </li>
               <li>
                 <NavLink>Offers</NavLink>
               </li>
               <li>
                 <NavLink>Gift Cards</NavLink>
+              </li>
+              <li>
+                <NavLink to="/book/transactions">Transactions</NavLink>
               </li>
             </ul>
           </div>
@@ -211,17 +218,13 @@ const HomeSlider = ({ isShow = true }) => {
             )}
           </div>
 
-          <div 
-            className="sm:opacity-0 opacity-100 h-auto sm:h-[0]  flex items-center justify-center overflow-hidden overflow-y-hidden gap-4"
-          >
-           
-              <img
-                src={sliderArrayMobile[newIndex].img}
-                className="w-full h-full sm:rounded-lg"
-              />
-           
+          <div className="sm:opacity-0 opacity-100 h-auto sm:h-[0]  flex items-center justify-center overflow-hidden overflow-y-hidden gap-4">
+            <img
+              src={sliderArrayMobile[newIndex].img}
+              className="w-full h-full sm:rounded-lg"
+            />
           </div>
-          
+
           <div
             ref={dotRef}
             className="w-full h-[15px] absolute bottom-5 flex items-center justify-center gap-2"
@@ -240,13 +243,15 @@ const HomeSlider = ({ isShow = true }) => {
         </div>
       )}
 
-     {
-      isShow && (
+      {isShow && (
         <div className="sm:w-full sm:h-max w-screen flex items-center justify-center sm:mt-5 sm:pt-0 pt-3 ">
-        <img ref={bannerImgRef}  src={bannerImgTwo} className="sm:w-[80%] sm:h-max w-[330px] h-[60px]"></img>
-      </div>
-      )
-     }
+          <img
+            ref={bannerImgRef}
+            src={bannerImgTwo}
+            className="sm:w-[80%] sm:h-max w-[330px] h-[60px]"
+          ></img>
+        </div>
+      )}
     </div>
   );
 };

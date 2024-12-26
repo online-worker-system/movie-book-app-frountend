@@ -2,16 +2,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
-
-  const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png")
+  const logo = require("../../utils/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png");
   return (
-    <div className="w-screen sm:pl-16 sm:pr-16 h-max bg-[rgb(52,51,56)] text-[rgb(118,120,119)]">
+    <div className="w-screen sm:pl-16 sm:pr-16 h-max mb-[50px] bg-[rgb(52,51,56)] text-[rgb(118,120,119)]">
       {/* Partner Section */}
       <div className="w-full h-max flex items-center justify-between gap-3 mb-3 p-4">
         <div className="sm:text-left text-center font-[600] sm:text-[18px] text-[12px] font-sans text-white">
-          Design & Developed By 
+          Design & Developed By
           <br></br>
-          Shivanshu Bhawsar, Sandeep Dubliya, Rohit Jaiswal, Yashwant Patel, Uday Malakar
+          Shivanshu Bhawsar, Sandeep Dubliya, Rohit Jaiswal, Yashwant Patel,
+          Uday Malakar
         </div>
         <div className="sm:w-[200px] sm:opacity-100 opacity-0 w-0 h-[40px] bg-red-500 text-white text-center font-sans font-semibold rounded-md flex items-center justify-center">
           <button>Contact Today!</button>
@@ -452,16 +452,15 @@ const Footer = () => {
             </tr>
             <tr>
               <td>
-              <div className="pt-8 sm:gap-4 gap-1 flex items-center justify-center">
-        <div className="sm:w-[40%] w-[30%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
-        <div className=" h-[50px] overflow-hidden flex items-center justify-center">
-       
-        <div className="w-[80px] h-[80px] overflow-hidden flex items-center justify-center">
-       <img src={logo}></img>
-      </div>
-      </div>
-      <div className="sm:w-[40%] w-[30%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
-      </div>
+                <div className="pt-8 sm:gap-4 gap-1 flex items-center justify-center">
+                  <div className="sm:w-[40%] w-[30%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
+                  <div className=" h-[50px] overflow-hidden flex items-center justify-center">
+                    <div className="w-[80px] h-[80px] overflow-hidden flex items-center justify-center">
+                      <img src={logo}></img>
+                    </div>
+                  </div>
+                  <div className="sm:w-[40%] w-[30%] h-[0.5px] bg-[rgb(132,131,136)]"></div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -469,15 +468,15 @@ const Footer = () => {
       </div>
 
       {/* Additional Sections (if any) */}
-      
-      
+
       <div className="text-center sm:p-[30px] p-[10px] text-[11px] text-[rgb(102,102,102)]">
-        
         Copyright 2024 © Bigtree Entertainment Pvt. Ltd. All Rights Reserved.
         <br></br>
-        
-        The content and images used on this site are copyright protected and copyrights vests with the respective owners. The usage of the content and images on this website is intended to promote the works and no endorsement of the artist shall be implied. Unauthorized use is prohibited and punishable by law.
-       
+        The content and images used on this site are copyright protected and
+        copyrights vests with the respective owners. The usage of the content
+        and images on this website is intended to promote the works and no
+        endorsement of the artist shall be implied. Unauthorized use is
+        prohibited and punishable by law.
       </div>
     </div>
   );

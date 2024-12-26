@@ -1,19 +1,20 @@
 import React, { useEffect, useRef, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
 import NavBar from "../common/NavBar";
 import HomeSlider from "../common/HomeSlider";
 import MovieCard from "../common/MovieCard";
-import { getAllMoviesApi } from "../../redux/reducer/homeSlice";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import liveEventsArray from "../../utils/sliderTwoPcitures";
 import Footer from "../common/Footer";
 import SliderComponent from "../common/SliderComponent";
 import PremiereComponent from "../common/PremiereComponent";
-import gifVedio from "../../utils/GifVedio.mp4"
-import offerBanner from "../../utils/lastBanner.jpeg"
 import BottomNavBar from "../common/BottomNavBar";
 import EventComponent from "../common/EventComponent";
+import liveEventsArray from "../../utils/sliderTwoPcitures";
+import gifVedio from "../../utils/GifVedio.mp4";
+import offerBanner from "../../utils/lastBanner.jpeg";
+
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,15 +68,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const resultAction = await dispatch(getAllMoviesApi());
-      if (getAllMoviesApi.fulfilled.match(resultAction)) {
-        console.log("Movies fetched successfully");
-      } else {
-        console.log(
-          "Error fetching movies",
-          resultAction.payload || resultAction.error
-        );
-      }
+      await dispatch(getAllMoviesApi());
     };
     fetchMovies();
   }, [dispatch]);
@@ -83,17 +76,20 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-     
       <HomeSlider />
       {isLoading ? (
         <div className="flex items-center justify-center w-screen h-[400px]">
-          {/* Loader component can go here */}
+          <div className="custom-loader text-center"></div>
         </div>
       ) : (
-        <div  className="sm:overflow-x-hidden mt-8 overflow-y-auto flex flex-col items-start justify-center bg-white">
-         <p className="p-3 text-[18px] font-sans font-[500]">Recommend Movies</p>
-          <div  className="w-full flex gap-5 p-3 mb-5 flex-wrap items-center justify-center
-          ">
+        <div className="sm:overflow-x-hidden mt-8 overflow-y-auto flex flex-col items-start justify-center bg-white">
+          <p className="p-3 text-[18px] font-sans font-[500]">
+            Recommend Movies
+          </p>
+          <div
+            className="w-full flex gap-5 p-3 mb-5 flex-wrap items-center justify-center
+          "
+          >
             {allMovies.length ? (
               allMovies.map((movie) => (
                 <MovieCard movie={movie} key={movie._id} />
@@ -104,10 +100,7 @@ const Home = () => {
           </div>
         </div>
       )}
-      <div
-       
-        className="w-screen h-max sm:p-2 flex mt-5 items-center justify-center"
-      >
+      <div className="w-screen h-max sm:p-2 flex mt-5 items-center justify-center">
         <div className="w-[90%] flex flex-col items-start justify-center">
           <h1 className="text-[rgb(51,51,51)] font-[700] font-[roboto] sm:text-[30px] text-[18px]">
             The Best Live Events
@@ -130,23 +123,23 @@ const Home = () => {
         <SliderComponent></SliderComponent>
       </div>
       <div className="w-[100vw]">
-      <video
-        src={gifVedio}
-        autoPlay
-        loop
-        muted
-        className="w-full h-[150px] sm:opacity-0 opacity-100 pointer-events-none"
-      ></video>
+        <video
+          src={gifVedio}
+          autoPlay
+          loop
+          muted
+          className="w-full h-[150px] sm:opacity-0 opacity-100 pointer-events-none"
+        ></video>
       </div>
       <div className="mt-8 mb-8">
-        <PremiereComponent></PremiereComponent>
+        <PremiereComponent />
       </div>
       <div>
-        <EventComponent></EventComponent>
+        <EventComponent />
       </div>
       <Footer />
 
-      <BottomNavBar></BottomNavBar>
+      <BottomNavBar />
     </div>
   );
 };

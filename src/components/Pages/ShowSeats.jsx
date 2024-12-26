@@ -155,7 +155,7 @@ const ShowSeats = () => {
 
   useEffect(() => {
     const handleSocketEvents = () => {
-      console.log("Setting up socket listener...");
+      // console.log("Setting up socket listener...");
 
       socket.on("seatsUpdated", (updatedSeatIds) => {
         // console.log("on seatsUpdated:", updatedSeatIds);
@@ -172,26 +172,26 @@ const ShowSeats = () => {
         updateSeatStatuses(seatsToRevertIds, "Available");
       });
 
-      socket.on("connect", () => {
-        console.log("Connected to the server:", socket.id);
-      });
+      // socket.on("connect", () => {
+      //   console.log("Connected to the server:", socket.id);
+      // });
 
-      socket.on("disconnect", () => {
-        console.log("Disconnected from the server");
-      });
+      // socket.on("disconnect", () => {
+      //   console.log("Disconnected from the server");
+      // });
 
-      socket.on("error", (err) => {
-        console.error("Socket.IO error:", err);
-      });
+      // socket.on("error", (err) => {
+      //   console.error("Socket.IO error:", err);
+      // });
 
-      console.log("Socket listener is set up...");
+      // console.log("Socket listener is set up...");
     };
 
     handleSocketEvents();
 
     return () => {
       // Cleanup socket listeners
-      console.log("Socket listener clean up...");
+      // console.log("Socket listener clean up...");
       socket.off("seatsUpdated");
       socket.off("reservedSeats");
       socket.off("seatsToRevert");
@@ -340,7 +340,7 @@ const ShowSeats = () => {
                 <button
                   className="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2 rounded"
                   onClick={handleBookNow}
-                  disabled={mySeats.length === 0}
+                  disabled={mySeats.length === 0 || loading}
                 >
                   Book Now
                 </button>

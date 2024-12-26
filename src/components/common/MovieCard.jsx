@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 const MovieCard = ({ movie, isShow = true }) => {
   const navigate = useNavigate();
 
-
   return (
     <div
       onClick={() => navigate(`/movie/${movie.movieName}/${movie._id}`)}
-      className="cursor-pointer movieCard"
+      className="cursor-pointer"
     >
       <div className="w-[135px] h-[210px] md:w-[175px] md:h-[270px] lg:w-[220px] lg:h-[330px]">
         <img
