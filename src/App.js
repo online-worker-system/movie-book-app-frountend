@@ -1,5 +1,6 @@
 import "./App.css";
 import "./index.css";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./components/Pages/Home";
@@ -21,40 +22,52 @@ import LiveYourShow from "./components/Pages/LiveYourShow";
 import CinemasShowPage from "./components/Pages/CinemasShowPage";
 import TermsAndCounditionPage from "./components/Pages/TermsAndCounditionPage";
 import TransactionPage from "./components/Pages/TransactionPage";
-import TicketBox from "./components/common/TicketBox";
+import LoaderPage from "./utils/LoaderPage";
+import ScrollTop from "./utils/ScrollTop";
+import BottomNavBar from "./components/common/BottomNavBar";
+import PageNotFound from "./components/Pages/PageNotFound";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 7000); // Loader duration
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <LoaderPage />;
+  }
+
   return (
     <div className="w-full flex flex-col bg-richblack-900 font-inter">
-      <div>
-        <Toaster position="top-center" />
-      </div>
+      <Toaster position="top-center" />
+      <ScrollTop />
       <Routes>
-        {/* ------------------ Open Routes ------------------- */}
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/otp" element={<CustomOtpInput />}></Route>
+        {/* Open Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/otp" element={<CustomOtpInput />} />
         <Route
-          path="/book/terms-countditions"
+          path="/book/terms-conditions"
           element={<TermsAndCounditionPage />}
-        ></Route>
-        <Route path="/book/transactions" element={<TransactionPage />}></Route>
-
-        <Route
-          path="/movie/:movieName/:movie_id"
-          element={<MoviesPage />}
-        ></Route>
+        />
+        <Route path="/book/transactions" element={<TransactionPage />} />
+        <Route path="/movie/:movieName/:movie_id" element={<MoviesPage />} />
         <Route
           path="/buytickets/:movie_id/:cinema_id/:timing/seats"
           element={<ShowSeats />}
-        ></Route>
+        />
         <Route
           path="/shows/:movieName/:movie_id"
           element={<CinemasShowPage />}
-        ></Route>
+        />
 
-        {/* ------------------ Super-Admin Routes ------------------- */}
+        {/* Super-Admin Routes */}
         <Route
           path="/movie/addMovie"
           element={
@@ -62,7 +75,7 @@ function App() {
               <AddMoviePage />
             </SuperAdminProtected>
           }
-        ></Route>
+        />
         <Route
           path="/movie/updatemovie/:movie_id"
           element={
@@ -70,7 +83,7 @@ function App() {
               <UpdateMoviePage />
             </SuperAdminProtected>
           }
-        ></Route>
+        />
         <Route
           path="/addCity"
           element={
@@ -78,9 +91,9 @@ function App() {
               <AddCity />
             </SuperAdminProtected>
           }
-        ></Route>
+        />
 
-        {/* ------------------ Admin Routes ------------------- */}
+        {/* Admin Routes */}
         <Route
           path="/cinema/addCinema"
           element={
@@ -88,7 +101,7 @@ function App() {
               <AddCinema />
             </AdminProtected>
           }
-        ></Route>
+        />
         <Route
           path="/cinema/adminCinemas"
           element={
@@ -96,7 +109,7 @@ function App() {
               <AdminCinemas />
             </AdminProtected>
           }
-        ></Route>
+        />
         <Route
           path="/cinema/:cinemaId/updateScreen/:screenId"
           element={
@@ -104,7 +117,7 @@ function App() {
               <UpdateScreen />
             </AdminProtected>
           }
-        ></Route>
+        />
         <Route
           path="/show/addShow/:movie_id"
           element={
@@ -112,7 +125,7 @@ function App() {
               <AddShow />
             </AdminProtected>
           }
-        ></Route>
+        />
         <Route
           path="/show/liveYourShow"
           element={
@@ -120,7 +133,8 @@ function App() {
               <LiveYourShow />
             </AdminProtected>
           }
-        ></Route>
+        />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

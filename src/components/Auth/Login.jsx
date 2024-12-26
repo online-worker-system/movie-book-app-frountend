@@ -14,7 +14,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
-
   const isMobile = useMediaQuery({ query: "(max-width: 430px)" });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -60,15 +59,15 @@ const Login = () => {
       <div className="hidden sm:block">
         <HomeSlider isShow={false} />
       </div>
-      <div className="mt-1 flex flex-col justify-center items-center">
-        <h1 className="text-2xl sm:text-[26px] lg:text-[34px] text-rose-500 font-medium">
+      <div className="mt-3 flex flex-col justify-center items-center">
+        {/* <h1 className="text-2xl sm:text-[26px] lg:text-[34px] text-rose-500 font-medium">
           Login
-        </h1>
+        </h1> */}
         <div
           style={{
             width: isMobile && "85%",
           }}
-          className="mt-2 sm:mt-4 mb-5 p-2 flex flex-col items-center justify-center gap-1 bg-white rounded-lg shadow-xl"
+          className="mb-5 p-2 flex flex-col items-center justify-center gap-1 bg-white rounded-lg shadow-xl"
         >
           <div className="w-full mt-3 text-[rgb(51,51,51)] text-sm sm:text-base font-medium flex flex-col items-center justify-center">
             <span>Hi, Welcome Back</span>

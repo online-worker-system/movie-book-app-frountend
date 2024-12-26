@@ -194,7 +194,7 @@ const MoviesPage = () => {
                     <div className="h-[75px] w-[75px] md:h-[90px] md:w-[90px]">
                       <img
                         className="w-full h-full rounded-full"
-                        src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
+                        src="https://th.bing.com/th/id/OIP.kqOLyWHQPVOCDVOgCDRvvAHaHa?w=215&h=215&c=7&r=0&o=5&dpr=1.5&pid=1.7"
                         alt="cast-image"
                       />
                     </div>
@@ -219,7 +219,7 @@ const MoviesPage = () => {
                     <div className="h-[75px] w-[75px] md:h-[90px] md:w-[90px]">
                       <img
                         className="w-full h-full rounded-full"
-                        src="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshay-kumar-94-1681713982.jpg"
+                        src="https://th.bing.com/th/id/OIP.kqOLyWHQPVOCDVOgCDRvvAHaHa?w=215&h=215&c=7&r=0&o=5&dpr=1.5&pid=1.7"
                         alt="cast-image"
                       />
                     </div>
