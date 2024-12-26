@@ -13,7 +13,7 @@ const LiveYourShow = () => {
   const fetchShows = async () => {
     const result = await dispatch(getUnliveShows());
     if (getUnliveShows.fulfilled.match(result)) {
-      setShows(result?.payload?.data);
+      setShows(result?.payload?.data || []);
     }
   };
 
