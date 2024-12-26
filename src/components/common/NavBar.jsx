@@ -64,12 +64,12 @@ const NavBar = () => {
           {isLogedIn ? (
             <button
               onClick={logoutClickHandler}
-              className="w-[67px] sm:opacity-100 opacity-0 h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]"
+              className="w-[67px]  h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]"
             >
               Log Out
             </button>
           ) : (
-            <button className="w-[67px] sm:opacity-100 opacity-0 h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
+            <button className="w-[67px]  h-[25px] text-[13px] font-[500] text-center bg-[rgb(248,68,100)] text-white border-[rgb(248,68,100)] rounded-[4px] border-[1px]">
               <NavLink to="/login">Sign in</NavLink>
             </button>
           )}
