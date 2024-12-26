@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0ecd7d8f.css",
+    "main.js": "/static/js/main.a477a6c4.js",
+    "static/media/popcornLoader4.png": "/static/media/popcornLoader4.038c5c4fa55b74e86377.png",
+    "static/media/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.png": "/static/media/png-clipart-bookmyshow-office-android-ticket-android-text-logo-removebg-preview.370aaa76998aa9669460.png",
+    "static/media/GifVedio.mp4": "/static/media/GifVedio.8ffcdf04dbf64df92051.mp4",
+    "static/media/edBanner.jpeg": "/static/media/edBanner.2a1d3902b8041ed47682.jpeg",
+    "static/media/indoreBanner.jpeg": "/static/media/indoreBanner.c9f614d89a58d3d04b96.jpeg",
+    "static/media/OttBanner.jpeg": "/static/media/OttBanner.e1c9c800f9d5be74da8e.jpeg",
+    "static/media/clapBoard.png": "/static/media/clapBoard.82e840f5993ccc87a580.png",
+    "static/media/lastBanner.jpeg": "/static/media/lastBanner.3f4aa0af7b0aa7008bb9.jpeg",
+    "static/media/bannerTwo.jpg": "/static/media/bannerTwo.8578a3b525d4d7354a83.jpg",
+    "static/media/planTommorow.jpeg": "/static/media/planTommorow.134960f5bba49f77b483.jpeg",
+    "static/media/weekendPlan.jpeg": "/static/media/weekendPlan.b0d875179505d36b1f4c.jpeg",
+    "static/media/planToday.jpeg": "/static/media/planToday.a2d03acaeebd9b7aa1e2.jpeg",
+    "index.html": "/index.html",
+    "main.0ecd7d8f.css.map": "/static/css/main.0ecd7d8f.css.map",
+    "main.a477a6c4.js.map": "/static/js/main.a477a6c4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ecd7d8f.css",
+    "static/js/main.a477a6c4.js"
+  ]
+}
