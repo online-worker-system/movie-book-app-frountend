@@ -119,7 +119,7 @@ const Home = () => {
       <div className="w-screen h-auto sm:h-[0] flex items-center justify-center p-2 mt-3 sm:opacity-0 opacity-100">
         <img src={offerBanner}></img>
       </div>
-      <div className="w-screen h-max p-18 mt-5 mb-5">
+      <div className="w-screen h-max p-18 mt-5 mb-0 sm:mb-5">
         <SliderComponent></SliderComponent>
       </div>
       <div className="w-[100vw]">
@@ -128,10 +128,10 @@ const Home = () => {
           autoPlay
           loop
           muted
-          className="w-full h-[150px] sm:opacity-0 opacity-100 pointer-events-none"
+          className="w-full h-[150px] sm:h-0 opacity-100 sm:opacity-0 pointer-events-none"
         ></video>
       </div>
-      <div className="mt-8 mb-8">
+      <div className="">
         <PremiereComponent />
       </div>
       <div>

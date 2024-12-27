@@ -12,7 +12,7 @@ const BottomNavBar = () => {
       style={{
         zIndex: "999",
       }}
-      className="sm:opacity-0 opacity-100 w-screen h-[50px] mb-3 p-3  fixed bottom-0 bg-white flex"
+      className="sm:opacity-0 opacity-100 w-screen h-[50px] p-3 fixed bottom-0 bg-white flex"
     >
       <ul className="flex items-center justify-between bg-white w-full">
         <NavLink
